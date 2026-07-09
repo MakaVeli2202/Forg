@@ -1,0 +1,754 @@
+<UserControl x:Class="Forge.Views.AppsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header Summary -->
+
+        <StackPanel Grid.Row="0"
+            Margin="2,0,0,8">
+
+            <TextBlock Text="Application Management"
+               FontSize="20"
+                   FontWeight="SemiBold"
+                   Foreground="White"/>
+
+            <TextBlock Text="Install, update and manage software packages."
+                   Foreground="#A0A8B4"
+               Margin="0,2,0,0"
+               FontSize="11"/>
+
+        </StackPanel>
+
+        <!-- Statistics Bar -->
+
+        <UniformGrid x:Name="StatsSection"
+                 Grid.Row="1"
+             Columns="4"
+                Margin="0,0,0,8">
+
+            <Border Background="#2D2D30"
+            CornerRadius="10"
+            Margin="4"
+            Padding="8">
+
+                <StackPanel>
+                    <TextBlock Text="Total Apps"
+                              Foreground="#AAAAAA"
+                              FontSize="11"/>
+                    <TextBlock x:Name="TotalAppsText"
+                       Text="0"
+                              FontSize="18"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+                </StackPanel>
+
+            </Border>
+
+            <Border Background="#2D2D30"
+            CornerRadius="10"
+            Margin="4"
+            Padding="8">
+
+                <StackPanel>
+                    <TextBlock Text="Installed"
+                              Foreground="#AAAAAA"
+                              FontSize="11"/>
+                    <TextBlock x:Name="InstalledAppsText"
+                       Text="0"
+                              FontSize="18"
+                       FontWeight="Bold"
+                       Foreground="#107C10"/>
+                </StackPanel>
+
+            </Border>
+
+            <Border Background="#2D2D30"
+            CornerRadius="10"
+            Margin="4"
+            Padding="8">
+
+                <StackPanel>
+                    <TextBlock Text="Selected"
+                              Foreground="#AAAAAA"
+                              FontSize="11"/>
+                    <TextBlock x:Name="SelectedAppsText"
+                       Text="0"
+                              FontSize="18"
+                       FontWeight="Bold"
+                              Foreground="#5BC0EB"/>
+                </StackPanel>
+
+            </Border>
+
+            <Border Background="#2D2D30"
+            CornerRadius="10"
+            Margin="4"
+            Padding="8">
+
+                <StackPanel>
+                    <TextBlock Text="Recommended"
+                              Foreground="#AAAAAA"
+                              FontSize="11"/>
+                    <TextBlock x:Name="RecommendedAppsText"
+                       Text="0"
+                              FontSize="18"
+                       FontWeight="Bold"
+                              Foreground="#FFB155"/>
+                </StackPanel>
+
+            </Border>
+
+        </UniformGrid>
+
+
+        <!-- Search -->
+
+        <Border x:Name="SearchSection"
+            Grid.Row="2"
+                Background="#2D2D30"
+                CornerRadius="12"
+            Padding="8"
+            Margin="0,0,0,8">
+
+            <Grid>
+
+                <TextBox x:Name="SearchBox"
+                         Height="34"
+                         FontSize="13"
+                         Padding="40,0,10,0"
+                         VerticalContentAlignment="Center"
+                         Background="#1E1E1E"
+                         Foreground="White"
+                         BorderBrush="#404040"
+                         BorderThickness="1"/>
+
+                <TextBlock Text="🔍"
+                           Margin="12,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#AAAAAA"
+                           IsHitTestVisible="False"/>
+
+                <TextBlock x:Name="PlaceholderText"
+                           Text="Search applications..."
+                           Margin="40,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#777777"
+                           FontSize="12"
+                           IsHitTestVisible="False"/>
+
+            </Grid>
+
+        </Border>
+
+        <!-- Category Chips -->
+
+        <ScrollViewer x:Name="FiltersSection"
+                  Grid.Row="3"
+                      Margin="0,0,0,8"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Disabled">
+
+            <ListBox x:Name="CategoriesList"
+                     SelectionChanged="CategoriesList_SelectionChanged"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     SelectedIndex="0">
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.Resources>
+
+                    <Style TargetType="ListBoxItem">
+
+                        <Setter Property="Margin" Value="0,0,6,6"/>
+                        <Setter Property="Foreground" Value="White"/>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+
+                                <ControlTemplate TargetType="ListBoxItem">
+
+                                    <Border x:Name="Chip"
+                                            Background="#2D2D30"
+                                            BorderBrush="#404040"
+                                            BorderThickness="1"
+                                            CornerRadius="14"
+                                            Padding="12,6">
+
+                                        <ContentPresenter
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+
+                                        <Trigger Property="IsSelected"
+                                                 Value="True">
+
+                                            <Setter TargetName="Chip"
+                                                    Property="Background"
+                                                    Value="#F28C28"/>
+
+                                            <Setter TargetName="Chip"
+                                                    Property="BorderBrush"
+                                                    Value="#F28C28"/>
+
+                                        </Trigger>
+
+                                    </ControlTemplate.Triggers>
+
+                                </ControlTemplate>
+
+                            </Setter.Value>
+                        </Setter>
+
+                    </Style>
+
+                </ListBox.Resources>
+
+                <ListBoxItem Content="All"/>
+                <ListBoxItem Content="Installed"/>
+                <ListBoxItem Content="Not Installed"/>
+                <ListBoxItem Content="Recommended"/>
+
+                <ListBoxItem Content="Development"/>
+                <ListBoxItem Content="Utilities"/>
+                <ListBoxItem Content="Gaming"/>
+                <ListBoxItem Content="AI"/>
+                <ListBoxItem Content="Microsoft"/>
+                <ListBoxItem Content="Multimedia"/>
+
+
+            </ListBox>
+
+        </ScrollViewer>
+
+        <!-- Applications Toolbar -->
+
+        <StackPanel Grid.Row="4"
+                    Margin="0,0,0,8">
+
+            <DockPanel Margin="2,0,0,6">
+
+                <TextBlock x:Name="AppsHeaderText"
+                           Text="Apps (0)"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           DockPanel.Dock="Left"/>
+
+            </DockPanel>
+
+            <Border
+                x:Name="SelectionSection"
+                Background="#20242A"
+                BorderBrush="#313841"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="8"
+                Margin="0">
+
+            <DockPanel>
+
+                <TextBlock Text="Selection"
+                               FontSize="11"
+                           FontWeight="SemiBold"
+                   Foreground="#A9B0BB"
+                           VerticalAlignment="Center"
+                           Margin="0,0,20,0"/>
+
+                <WrapPanel>
+
+                    <Button x:Name="BtnSelectAll"
+                            Content="Select All"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Background="#2B2D31"
+                            Width="96"
+                            Height="32"
+                            Margin="0,0,8,0"
+                            Click="BtnSelectAll_Click"/>
+
+                    <Button x:Name="BtnSelectRecommended"
+                            Content="Recommended"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Background="#2B2D31"
+                            Width="110"
+                            Height="32"
+                            Margin="0,0,8,0"
+                            Click="BtnSelectRecommended_Click"/>
+
+                    <Button x:Name="BtnClearSelection"
+                            Content="Clear"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Background="#2B2D31"
+                            Width="74"
+                            Height="32"
+                            Click="BtnClearSelection_Click"/>
+                    </WrapPanel>
+
+            </DockPanel>
+
+        </Border>
+
+                </StackPanel>
+
+                  <Grid Grid.Row="5"
+                      VerticalAlignment="Stretch">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Background="#2D2D30"
+                    CornerRadius="12"
+                    Padding="4"
+                    Margin="0,0,12,0"
+                    VerticalAlignment="Stretch">
+
+                <Border.Effect>
+
+                    <DropShadowEffect BlurRadius="10"
+                                      ShadowDepth="0"
+                                      Color="#000000"
+                                      Opacity="0.25"/>
+
+                </Border.Effect>
+
+                <ScrollViewer Margin="12"
+                              Background="Transparent"
+                              BorderThickness="0"
+                              VerticalAlignment="Stretch"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+
+                    <ItemsControl x:Name="AppsList"
+                                  Background="Transparent"
+                                  BorderThickness="0">
+
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+
+                            <DataTemplate>
+
+                                <Border Margin="3"
+                                        Padding="8"
+                                        MinWidth="180"
+                                        MinHeight="128"
+                                        Cursor="Hand"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                        MouseLeftButtonUp="AppCard_MouseLeftButtonUp">
+
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="6"
+                                                          ShadowDepth="0"
+                                                          Color="#000000"
+                                                          Opacity="0.16"/>
+                                    </Border.Effect>
+
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="#20242A"/>
+                                            <Setter Property="BorderBrush" Value="#323841"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="CornerRadius" Value="12"/>
+
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#262B31"/>
+                                                    <Setter Property="BorderBrush" Value="#535B66"/>
+                                                </Trigger>
+
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Background" Value="#362514"/>
+                                                    <Setter Property="BorderBrush" Value="#FFB155"/>
+                                                    <Setter Property="BorderThickness" Value="1.5"/>
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding IsInstalled}" Value="True">
+                                                    <Setter Property="Background" Value="#18251D"/>
+                                                    <Setter Property="BorderBrush" Value="#2C8C5F"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                                <Border Width="28"
+                                                    Height="28"
+                                                    CornerRadius="8"
+                                                    Background="#262B31"
+                                                    VerticalAlignment="Top">
+                                                <Image Source="{Binding Icon}"
+                                                       Width="15"
+                                                       Height="15"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                            </Border>
+
+                                            <Border Grid.Column="1"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Top"
+                                                    Padding="0"
+                                                    Margin="0,0,0,0">
+                                                <TextBlock Text="RECOMMENDED"
+                                                           Foreground="#FFB155"
+                                                           FontWeight="SemiBold"
+                                                           FontSize="7.25"
+                                                           HorizontalAlignment="Right">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Recommended}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Border>
+                                        </Grid>
+
+                                        <TextBlock Grid.Row="1"
+                                                   Text="{Binding Name}"
+                                             Margin="0,6,0,0"
+                                                   Foreground="White"
+                                                   FontWeight="SemiBold"
+                                             FontSize="11.5"
+                                                   TextTrimming="CharacterEllipsis"/>
+
+                                        <TextBlock Grid.Row="2"
+                                                   Text="{Binding Category}"
+                                                 Margin="0,1,0,0"
+                                                   Foreground="#93A0AD"
+                                                 FontSize="8.75"
+                                                   TextTrimming="CharacterEllipsis"/>
+
+                                        <Border Grid.Row="3"
+                                            Padding="4,1"
+                                                CornerRadius="4"
+                                            Margin="0,6,0,0"
+                                                HorizontalAlignment="Left">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="#2A2F35"/>
+                                                    <Setter Property="BorderBrush" Value="#3A4048"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Installed">
+                                                            <Setter Property="Background" Value="#2C8C5F"/>
+                                                            <Setter Property="BorderBrush" Value="#2C8C5F"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Installing">
+                                                            <Setter Property="Background" Value="#B97917"/>
+                                                            <Setter Property="BorderBrush" Value="#B97917"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Upgrading">
+                                                            <Setter Property="Background" Value="#4A6DAA"/>
+                                                            <Setter Property="BorderBrush" Value="#4A6DAA"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Uninstalling">
+                                                            <Setter Property="Background" Value="#A14B3F"/>
+                                                            <Setter Property="BorderBrush" Value="#A14B3F"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Failed">
+                                                            <Setter Property="Background" Value="#B0504A"/>
+                                                            <Setter Property="BorderBrush" Value="#B0504A"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Cancelling">
+                                                            <Setter Property="Background" Value="#A14B3F"/>
+                                                            <Setter Property="BorderBrush" Value="#A14B3F"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <TextBlock Text="{Binding StatusDisplay}"
+                                                       Foreground="White"
+                                                       FontWeight="SemiBold"
+                                                       FontSize="7.75"/>
+                                        </Border>
+
+                                        <Border Grid.RowSpan="4"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Bottom"
+                                                Margin="0,0,0,0"
+                                                Width="18"
+                                                Height="18"
+                                                CornerRadius="9"
+                                                Background="#2E3238"
+                                                BorderBrush="#4A515B"
+                                                BorderThickness="1"
+                                                IsHitTestVisible="False">
+                                            <Path Data="M 4 9 L 7.5 12.5 L 13 5.5"
+                                                  Stroke="#F28C28"
+                                                  StrokeThickness="1.7"
+                                                  StrokeStartLineCap="Round"
+                                                  StrokeEndLineCap="Round"
+                                                  StrokeLineJoin="Round">
+                                                <Path.Style>
+                                                    <Style TargetType="Path">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Path.Style>
+                                            </Path>
+                                        </Border>
+                                    </Grid>
+
+                                </Border>
+
+                            </DataTemplate>
+
+                        </ItemsControl.ItemTemplate>
+
+                    </ItemsControl>
+
+                </ScrollViewer>
+
+            </Border>
+
+            <StackPanel x:Name="EmptyState"
+                        Visibility="Collapsed"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsHitTestVisible="False">
+
+                <TextBlock Text="No apps found"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Foreground="White"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Try adjusting your search or filters."
+                           Foreground="#A0A8B4"
+                           Margin="0,4,0,0"
+                           HorizontalAlignment="Center"/>
+
+            </StackPanel>
+
+        </Grid>
+
+            <Popup x:Name="AppPreviewPopup"
+                   AllowsTransparency="True"
+                   Placement="MousePoint"
+                   StaysOpen="False"
+                   PopupAnimation="Fade">
+
+                <Border Background="#252526"
+                    x:Name="AppPreviewBorder"
+                        CornerRadius="12"
+                        Padding="14"
+                        Width="340"
+                        BorderBrush="#3D4652"
+                        BorderThickness="1"
+                        Opacity="0.98">
+
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="18"
+                                          ShadowDepth="4"
+                                          Color="#000000"
+                                          Opacity="0.35"/>
+                    </Border.Effect>
+
+                    <StackPanel>
+                        <TextBlock Text="Application Preview"
+                                   FontWeight="Bold"
+                                   FontSize="16"
+                                   Foreground="White"/>
+
+                        <TextBlock x:Name="PreviewAppName"
+                                   Margin="0,8,0,0"
+                                   Foreground="White"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Text="Hover an app card"/>
+
+                        <TextBlock x:Name="PreviewAppCategory"
+                                   Foreground="#AAAAAA"
+                                   Margin="0,2,0,0"/>
+
+                        <TextBlock x:Name="PreviewAppStatus"
+                                   Foreground="#8FB8FF"
+                                   Margin="0,2,0,0"/>
+
+                        <TextBlock x:Name="PreviewAppDescription"
+                                   Margin="0,8,0,0"
+                                   Foreground="#DDDDDD"
+                                   TextWrapping="Wrap"/>
+
+                        <Border Background="#31343A"
+                                CornerRadius="8"
+                                Margin="0,10,0,0"
+                                Padding="8,6">
+                            <TextBlock x:Name="PreviewAppMeta"
+                                       Foreground="#B6BCCA"
+                                       FontSize="11"
+                                       TextWrapping="Wrap"/>
+                        </Border>
+                    </StackPanel>
+
+                </Border>
+
+            </Popup>
+
+        <!-- Activity Log -->
+    
+        <Border x:Name="ActivitySection"
+            Grid.Row="6"
+                Background="#252526"
+                CornerRadius="10"
+                                Padding="8"
+                Margin="0,10,0,0">
+
+            <Grid>
+
+                <TextBlock Text="Activity"
+                                                     Foreground="White"
+                                                     FontWeight="SemiBold"
+                                                     FontSize="12"
+                                                     Margin="0,0,0,6"/>
+
+                <TextBox x:Name="ActivityLog"
+                                                 Margin="0,18,0,0"
+                                                 Background="Transparent"
+                                                 Foreground="#D0D4DB"
+                                                 BorderThickness="0"
+                                                 IsReadOnly="True"
+                                                 FontSize="12"
+                                                 TextWrapping="Wrap"
+                                                 VerticalScrollBarVisibility="Auto"/>
+
+            </Grid>
+
+        </Border>
+
+        <!-- Status -->
+
+        <Border x:Name="StatusSection"
+            Grid.Row="7"
+                Background="#252526"
+                CornerRadius="10"
+                                Padding="8"
+                Margin="0,10,0,0">
+
+            <StackPanel>
+                <TextBlock x:Name="StatusText"
+                           Text="Status: Ready"
+                           Foreground="White"
+                                                     FontWeight="SemiBold"
+                                                     FontSize="12"/>
+
+                <ProgressBar x:Name="InstallProgressBar"
+                                                         Height="12"
+                                                         Margin="0,4,0,0"
+                             Minimum="0"
+                             Maximum="100"
+                             Visibility="Collapsed"/>
+
+            </StackPanel>
+
+        </Border>
+
+        <!-- Buttons -->
+
+        <Border x:Name="ActionsSection"
+            Grid.Row="8"
+            Background="#252526"
+            CornerRadius="10"
+            Padding="8"
+            Margin="0,10,0,0">
+
+            <WrapPanel HorizontalAlignment="Right">
+
+            <Button x:Name="BtnInstall"
+                Style="{StaticResource ForgeButtonStyle}"
+                Background="#F28C28"
+                Content="Install Selected"
+                MinWidth="150"
+                Margin="0,0,8,8"
+                Click="BtnInstall_Click"/>
+
+            <Button x:Name="BtnUpgrade"
+                Style="{StaticResource ForgeButtonStyle}"
+                Background="#0078D4"
+                Content="Upgrade"
+                MinWidth="110"
+                Margin="0,0,8,8"
+                Click="BtnUpgrade_Click"/>
+
+            <Button x:Name="BtnDetectInstalled"
+                Style="{StaticResource ForgeButtonStyle}"
+                Background="#404040"
+                Content="Detect Installed"
+                MinWidth="140"
+                Margin="0,0,8,8"
+                Click="BtnDetectInstalled_Click"/>
+
+            <Button x:Name="BtnUninstall"
+                Style="{StaticResource ForgeButtonStyle}"
+                Background="#D13438"
+                Content="Uninstall"
+                MinWidth="110"
+                Margin="0,0,8,8"
+                Click="BtnUninstall_Click"/>
+
+            <Button x:Name="BtnCancel"
+                Style="{StaticResource ForgeButtonStyle}"
+                Background="#666666"
+                Content="Cancel"
+                MinWidth="100"
+                Margin="0,0,0,8"
+                IsEnabled="False"
+                Click="BtnCancel_Click"/>
+
+            </WrapPanel>
+
+        </Border>
+
+    </Grid>
+
+</UserControl>

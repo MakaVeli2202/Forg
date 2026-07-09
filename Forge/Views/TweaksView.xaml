@@ -1,0 +1,41 @@
+<UserControl x:Class="Forge.Views.TweaksView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Margin="30">
+
+        <StackPanel>
+
+            <TextBlock Text="Tweaks"
+                       FontSize="30"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+
+            <TextBlock Text="Recommended Tweaks"
+                       Margin="0,20,0,10"
+                       FontSize="18"
+                       Foreground="White"/>
+
+            <CheckBox Content="Show File Extensions" Foreground="White"/>
+            <CheckBox Content="Show Hidden Files" Foreground="White"/>
+            <CheckBox Content="Enable Dark Mode" Foreground="White"/>
+            <CheckBox Content="Disable Widgets" Foreground="White"/>
+
+            <TextBlock Text="Advanced Tweaks"
+                       Margin="0,20,0,10"
+                       FontSize="18"
+                       Foreground="White"/>
+
+            <CheckBox Content="Disable Copilot" Foreground="White"/>
+            <CheckBox Content="Disable Recall" Foreground="White"/>
+            <CheckBox Content="Disable Telemetry" Foreground="White"/>
+
+            <Button Content="Apply Tweaks"
+                    Width="200"
+                    Margin="0,20,0,0"/>
+
+        </StackPanel>
+
+    </Grid>
+
+</UserControl>

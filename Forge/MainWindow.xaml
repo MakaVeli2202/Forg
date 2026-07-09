@@ -1,0 +1,365 @@
+﻿<Window x:Class="Forge.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Forge"
+        Width="1700"
+        Height="1000"
+        MinWidth="1400"
+        MinHeight="900"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E1E1E"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        AllowsTransparency="False">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- TITLE BAR -->
+
+        <Border Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Background="#252526"
+                BorderThickness="0"
+                SnapsToDevicePixels="True"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Branding -->
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="12,0"
+                            VerticalAlignment="Center">
+
+                    <Image Source="/Assets/Images/forge-logo.png"
+                           Width="18"
+                           Height="18"
+                           Margin="0,0,8,0">
+
+                        <Image.Effect>
+
+                            <DropShadowEffect Color="#FF7A00"
+                                              BlurRadius="15"
+                                              ShadowDepth="0"
+                                              Opacity="0.7"/>
+
+                        </Image.Effect>
+
+                    </Image>
+
+                    <TextBlock Text="F"
+                               Foreground="#FF7A00"
+                               FontWeight="Bold"
+                               FontSize="16">
+
+                        <TextBlock.Effect>
+
+                            <DropShadowEffect Color="#FF7A00"
+                                              BlurRadius="8"
+                                              ShadowDepth="0"
+                                              Opacity="0.8"/>
+
+                        </TextBlock.Effect>
+
+                    </TextBlock>
+
+                    <TextBlock Text="orge"
+                               Foreground="White"
+                               FontWeight="SemiBold"
+                               FontSize="16"/>
+
+                </StackPanel>
+
+                                <Menu Grid.Column="1"
+                                            Background="Transparent"
+                                            Foreground="White"
+                                            VerticalAlignment="Center"
+                                            Margin="0,0,12,0"
+                                            FontSize="12">
+
+                                        <MenuItem Header="View">
+                                                <MenuItem Header="Counters"
+                                                                    IsCheckable="True"
+                                                                    IsChecked="True"
+                                                                    Checked="ViewCounters_Checked"
+                                                                    Unchecked="ViewCounters_Checked"/>
+
+                                                <MenuItem Header="Search"
+                                                                    IsCheckable="True"
+                                                                    IsChecked="True"
+                                                                    Checked="ViewSearch_Checked"
+                                                                    Unchecked="ViewSearch_Checked"/>
+
+                                                <MenuItem Header="Filters"
+                                                                    IsCheckable="True"
+                                                                    IsChecked="True"
+                                                                    Checked="ViewFilters_Checked"
+                                                                    Unchecked="ViewFilters_Checked"/>
+
+                                                <Separator/>
+
+                                                <MenuItem Header="Selection Toolbar"
+                                                                    IsCheckable="True"
+                                                                    IsChecked="True"
+                                                                    Checked="ViewSelection_Checked"
+                                                                    Unchecked="ViewSelection_Checked"/>
+
+                                                <MenuItem Header="Activity Log"
+                                                                    IsCheckable="True"
+                                                                    IsChecked="True"
+                                                                    Checked="ViewActivity_Checked"
+                                                                    Unchecked="ViewActivity_Checked"/>
+
+                                                <MenuItem Header="Status"
+                                                                    IsCheckable="True"
+                                                                    IsChecked="True"
+                                                                    Checked="ViewStatus_Checked"
+                                                                    Unchecked="ViewStatus_Checked"/>
+
+                                                <MenuItem Header="Actions"
+                                                                    IsCheckable="True"
+                                                                    IsChecked="True"
+                                                                    Checked="ViewActions_Checked"
+                                                                    Unchecked="ViewActions_Checked"/>
+                                        </MenuItem>
+
+                                </Menu>
+
+                <!-- Window Buttons -->
+
+                                <Button Grid.Column="2"
+                        Content="—"
+                        Background="Transparent"
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontWeight="Bold"
+                        FontSize="14"
+                        Cursor="Hand"
+                        Click="Minimize_Click"/>
+
+                <Button Grid.Column="3"
+                        Content="□"
+                        Background="Transparent"
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontWeight="Bold"
+                        FontSize="12"
+                        Cursor="Hand"
+                        Click="Maximize_Click"/>
+
+                <Button Grid.Column="4"
+                        Content="✕"
+                        Background="#E81123"
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontWeight="Bold"
+                        FontSize="12"
+                        Cursor="Hand"
+                        Click="Close_Click"/>
+
+            </Grid>
+
+        </Border>
+
+        <!-- SIDEBAR -->
+
+        <Border Grid.Row="1"
+                Grid.Column="0"
+                Background="#252526">
+
+            <Border.Effect>
+
+                <DropShadowEffect BlurRadius="18"
+                                  ShadowDepth="0"
+                                  Color="#000000"
+                                  Opacity="0.45"/>
+
+            </Border.Effect>
+
+            <StackPanel>
+
+                <!-- Logo -->
+
+                <Border Height="145"
+                        Background="#2D2D30"
+                        CornerRadius="0,0,12,12">
+
+                    <StackPanel HorizontalAlignment="Center">
+
+                        <Image Source="/Assets/Images/forge-logo.png"
+                               Width="80"
+                               Height="80"
+                               Margin="0,10,0,5">
+
+                            <Image.Effect>
+
+                                <DropShadowEffect Color="#FF7A00"
+                                                  BlurRadius="35"
+                                                  ShadowDepth="0"
+                                                  Opacity="0.9"/>
+
+                            </Image.Effect>
+
+                        </Image>
+
+                        <TextBlock Text="FORGE"
+                                   FontSize="24"
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"/>
+
+                        <TextBlock Text="Build Windows Your Way"
+                                   FontSize="12"
+                                   Foreground="#AAAAAA"
+                                   HorizontalAlignment="Center"/>
+
+                    </StackPanel>
+
+                </Border>
+
+                <!-- Navigation -->
+
+                <StackPanel Margin="10">
+
+                    <Button x:Name="BtnHome"
+                            Style="{StaticResource NavButtonStyle}"
+                            Content="🏠 Home"
+                            Click="BtnHome_Click"/>
+
+                    <Button x:Name="BtnApps"
+                            Style="{StaticResource NavButtonStyle}"
+                            Content="📦 Apps"
+                            Click="BtnApps_Click"/>
+
+                    <Button x:Name="BtnTweaks"
+                            Style="{StaticResource NavButtonStyle}"
+                            Content="⚡ Tweaks"
+                            Click="BtnTweaks_Click"/>
+
+                    <Button x:Name="BtnSystem"
+                            Style="{StaticResource NavButtonStyle}"
+                            Content="🛠 System"
+                            Click="BtnSystem_Click"/>
+
+                    <Button x:Name="BtnUpdates"
+                            Style="{StaticResource NavButtonStyle}"
+                            Content="🔄 Updates"
+                            Click="BtnUpdates_Click"/>
+
+                    <Button x:Name="BtnIso"
+                            Style="{StaticResource NavButtonStyle}"
+                            Content="💿 ISO Creator"
+                            Click="BtnIso_Click"/>
+
+                    <Button x:Name="BtnSettings"
+                            Style="{StaticResource NavButtonStyle}"
+                            Content="⚙ Settings"
+                            Click="BtnSettings_Click"/>
+
+                </StackPanel>
+
+            </StackPanel>
+
+        </Border>
+
+        <!-- MAIN AREA -->
+
+        <Grid Grid.Row="1"
+              Grid.Column="1"
+              Margin="12">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+
+            <Border Grid.Row="0"
+                    Background="#2D2D30"
+                    CornerRadius="12,12,0,0">
+
+                <Border.Effect>
+
+                    <DropShadowEffect BlurRadius="10"
+                                      ShadowDepth="0"
+                                      Color="#000000"
+                                      Opacity="0.2"/>
+
+                </Border.Effect>
+
+                <Grid Margin="20,0">
+
+                    <TextBlock x:Name="PageTitle"
+                               Text="Home"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               Foreground="White"
+                               VerticalAlignment="Center"/>
+
+                </Grid>
+
+            </Border>
+
+            <!-- Content -->
+
+            <Border Grid.Row="1"
+                    Background="#202020">
+
+                <Border.Effect>
+
+                    <DropShadowEffect BlurRadius="12"
+                                      ShadowDepth="0"
+                                      Color="#000000"
+                                      Opacity="0.25"/>
+
+                </Border.Effect>
+
+                <ContentControl x:Name="MainContent"/>
+
+            </Border>
+
+            <!-- Footer -->
+
+            <Border Grid.Row="2"
+                    Background="#2D2D30"
+                    CornerRadius="0,0,12,12">
+
+                <DockPanel Margin="15,0">
+
+                    <TextBlock Text="Ready"
+                               Foreground="#CFCFCF"
+                               FontSize="12"
+                               VerticalAlignment="Center"/>
+
+                </DockPanel>
+
+            </Border>
+
+        </Grid>
+
+    </Grid>
+
+</Window>

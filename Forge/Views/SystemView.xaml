@@ -1,0 +1,43 @@
+<UserControl x:Class="Forge.Views.SystemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Margin="30">
+
+        <WrapPanel>
+
+            <Button Content="Device Manager"
+                    Width="200"
+                    Height="80"
+                    Margin="10"/>
+
+            <Button Content="Services"
+                    Width="200"
+                    Height="80"
+                    Margin="10"/>
+
+            <Button Content="Registry Editor"
+                    Width="200"
+                    Height="80"
+                    Margin="10"/>
+
+            <Button Content="Task Scheduler"
+                    Width="200"
+                    Height="80"
+                    Margin="10"/>
+
+            <Button Content="Event Viewer"
+                    Width="200"
+                    Height="80"
+                    Margin="10"/>
+
+            <Button Content="Control Panel"
+                    Width="200"
+                    Height="80"
+                    Margin="10"/>
+
+        </WrapPanel>
+
+    </Grid>
+
+</UserControl>
