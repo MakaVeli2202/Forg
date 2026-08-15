@@ -236,6 +236,10 @@
                 <ListBoxItem Content="AI"/>
                 <ListBoxItem Content="Microsoft"/>
                 <ListBoxItem Content="Multimedia"/>
+                <ListBoxItem Content="Browsers"/>
+                <ListBoxItem Content="Communications"/>
+                <ListBoxItem Content="Document"/>
+                <ListBoxItem Content="Pro Tools"/>
 
 
             </ListBox>
@@ -418,7 +422,7 @@
                                                     CornerRadius="8"
                                                     Background="#262B31"
                                                     VerticalAlignment="Top">
-                                                <Image Source="{Binding Icon}"
+                                                <Image Source="{Binding IconDisplay}"
                                                        Width="15"
                                                        Height="15"
                                                        HorizontalAlignment="Center"

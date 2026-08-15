@@ -38,7 +38,8 @@ public class InstallService
                         app.Name));
 
                 await _packageManager.InstallAsync(
-                    app.WingetId);
+                    app.WingetId,
+                    app.Source);
 
                 app.Status = AppStatus.Installed;
                 app.IsInstalled = true;
@@ -74,7 +75,8 @@ public class InstallService
                         app.Name));
 
                 await _packageManager.UpgradeAsync(
-                    app.WingetId);
+                    app.WingetId,
+                    app.Source);
 
                 app.Status = AppStatus.Installed;
             }
@@ -109,7 +111,8 @@ public class InstallService
                         app.Name));
 
                 await _packageManager.UninstallAsync(
-                    app.WingetId);
+                    app.WingetId,
+                    app.Source);
 
                 app.IsInstalled = false;
                 app.IsSelected = false;

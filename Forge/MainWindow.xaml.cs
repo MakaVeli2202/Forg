@@ -13,7 +13,7 @@ namespace Forge
         private readonly Brush SelectedBrush =
             new SolidColorBrush(Color.FromRgb(255, 122, 0));
 
-        private AppsView? CurrentAppsView => MainContent.Content as AppsView;
+        private AppsView? CurrentAppsView => MainContent?.Content as AppsView;
 
         public MainWindow()
         {

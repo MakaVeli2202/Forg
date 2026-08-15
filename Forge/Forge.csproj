@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Assets\Images\forge-logo.png" />
+    <None Remove="Assets\Images\Apps\*.png" />
     <None Remove="Config\apps.json" />
   </ItemGroup>
 
@@ -27,6 +28,7 @@
 
   <ItemGroup>
     <Resource Include="Assets\Images\forge-logo.png" />
+    <Resource Include="Assets\Images\Apps\*.png" />
   </ItemGroup>
 
 </Project>

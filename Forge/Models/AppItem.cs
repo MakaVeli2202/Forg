@@ -1,11 +1,15 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
+using System.Windows;
 
 namespace Forge.Models;
 
 public class AppItem : INotifyPropertyChanged
 {
+    private const string PlaceholderIcon =
+        "/Assets/Images/Apps/_placeholder.png";
+
     private bool _isSelected;
     private bool _isInstalled;
     private AppStatus _status = AppStatus.Available;
@@ -15,6 +19,9 @@ public class AppItem : INotifyPropertyChanged
 
     [JsonPropertyName("wingetId")]
     public string WingetId { get; set; } = string.Empty;
+
+    [JsonPropertyName("source")]
+    public string? Source { get; set; }
 
     [JsonPropertyName("category")]
     public string Category { get; set; } = string.Empty;
@@ -39,6 +46,33 @@ public class AppItem : INotifyPropertyChanged
 
     [JsonPropertyName("tags")]
     public List<string> Tags { get; set; } = [];
+
+    [JsonIgnore]
+    public string IconDisplay
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(Icon))
+            {
+                return PlaceholderIcon;
+            }
+
+            try
+            {
+                var uri = new Uri(
+                    $"pack://application:,,,{Icon}",
+                    UriKind.Absolute);
+
+                Application.GetResourceStream(uri);
+
+                return Icon;
+            }
+            catch
+            {
+                return PlaceholderIcon;
+            }
+        }
+    }
 
 
     public bool IsSelected

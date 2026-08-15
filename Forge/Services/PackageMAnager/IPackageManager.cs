@@ -2,9 +2,9 @@
 
 public interface IPackageManager
 {
-    Task InstallAsync(string packageId);
+    Task InstallAsync(string packageId, string? source = null);
 
-    Task UninstallAsync(string packageId);
+    Task UninstallAsync(string packageId, string? source = null);
 
-    Task UpgradeAsync(string packageId);
+    Task UpgradeAsync(string packageId, string? source = null);
 }
