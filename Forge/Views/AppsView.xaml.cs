@@ -23,6 +23,7 @@ public partial class AppsView : UserControl
 
         Loaded += AppsView_Loaded;
         _installService.ProgressChanged += InstallService_ProgressChanged;
+        _installService.OutputLine += InstallService_OutputLine;
     }
 
     private async void AppsView_Loaded(
@@ -551,8 +552,26 @@ public partial class AppsView : UserControl
 
             LogInfo($"{_currentOperation} {e.AppName} ({e.Current} of {e.Total})");
 
+            InstallProgressBar.IsIndeterminate = false;
             InstallProgressBar.Value = percent;
             InstallProgressBar.Visibility = Visibility.Visible;
+        });
+    }
+
+    private void InstallService_OutputLine(
+        object? sender,
+        string line)
+    {
+        Dispatcher.Invoke(() =>
+        {
+            if (string.IsNullOrWhiteSpace(_currentOperation))
+            {
+                return;
+            }
+
+            InstallProgressBar.IsIndeterminate = true;
+
+            Log($"      {line}");
         });
     }
 

@@ -9,9 +9,17 @@ public class InstallService
 
     public event EventHandler<InstallProgressEventArgs>? ProgressChanged;
 
+    public event EventHandler<string>? OutputLine;
+
     public InstallService()
     {
         _packageManager = new WingetPackageManager();
+
+        if (_packageManager is WingetPackageManager winget)
+        {
+            winget.OutputLine += (_, line) =>
+                OutputLine?.Invoke(this, line);
+        }
     }
 
     public async Task InstallAppsAsync(

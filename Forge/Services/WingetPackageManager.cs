@@ -11,6 +11,8 @@ public class WingetPackageManager : IPackageManager
 
     private Process? _currentProcess;
 
+    public event EventHandler<string>? OutputLine;
+
     public bool IsInstalling =>
         _currentProcess != null &&
         !_currentProcess.HasExited;
@@ -93,7 +95,31 @@ public class WingetPackageManager : IPackageManager
             using var sourceStream = await download.Content.ReadAsStreamAsync();
             using var fileStream = File.Create(localPath);
 
-            await sourceStream.CopyToAsync(fileStream);
+            long? totalBytes = download.Content.Headers.ContentLength;
+            long done = 0;
+            int lastPercent = -1;
+
+            byte[] buffer = new byte[81920];
+            int read;
+
+            while ((read = await sourceStream.ReadAsync(buffer)) > 0)
+            {
+                await fileStream.WriteAsync(buffer.AsMemory(0, read));
+                done += read;
+
+                if (totalBytes is > 0)
+                {
+                    int percent = (int)(done * 100 / totalBytes.Value);
+
+                    if (percent != lastPercent)
+                    {
+                        lastPercent = percent;
+                        Emit($"Downloading {fileName}... {percent}%");
+                    }
+                }
+            }
+
+            Emit($"Downloaded {fileName} ({done / 1024 / 1024} MB).");
         }
 
         try
@@ -208,9 +234,60 @@ public class WingetPackageManager : IPackageManager
             CreateNoWindow = true
         };
 
+        _currentProcess.OutputDataReceived += (_, e) =>
+        {
+            if (!string.IsNullOrWhiteSpace(e.Data))
+            {
+                Emit(CleanConsoleLine(e.Data));
+            }
+        };
+
+        _currentProcess.ErrorDataReceived += (_, e) =>
+        {
+            if (!string.IsNullOrWhiteSpace(e.Data))
+            {
+                Emit("! " + CleanConsoleLine(e.Data));
+            }
+        };
+
         _currentProcess.Start();
 
+        _currentProcess.BeginOutputReadLine();
+        _currentProcess.BeginErrorReadLine();
+
         await _currentProcess.WaitForExitAsync();
+
+        _currentProcess = null;
+    }
+
+    private void Emit(string message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+        {
+            return;
+        }
+
+        try
+        {
+            OutputLine?.Invoke(this, message);
+        }
+        catch
+        {
+        }
+    }
+
+    private static string CleanConsoleLine(string line)
+    {
+        string cleaned = System.Text.RegularExpressions.Regex.Replace(
+            line,
+            "\u001B\\[[0-9;]*[A-Za-z]",
+            string.Empty);
+
+        cleaned = cleaned
+            .Replace("\b", " ")
+            .Replace("\a", " ");
+
+        return cleaned.Trim();
     }
 
     private sealed class GitHubRelease
