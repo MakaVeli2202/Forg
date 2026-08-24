@@ -113,11 +113,11 @@ public partial class UpdatesView : UserControl
         }
     }
 
-    private static readonly HashSet<string> KnownSources = new(StringComparer.OrdinalIgnoreCase)
-    {
-        "winget",
-        "msstore"
-    };
+    private static readonly System.Text.RegularExpressions.Regex TableRowPattern =
+        new(
+            @"^(?<name>.+?)\s+(?<id>[A-Za-z0-9][A-Za-z0-9._\-]*)\s+" +
+            @"\S+\s+\S+\s+(?<source>winget|msstore)$",
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
     private void ParseOutdated(string output)
     {
@@ -137,20 +137,15 @@ public partial class UpdatesView : UserControl
 
         foreach (var line in lines.Skip(dataStart + 1))
         {
-            if (line.StartsWith("The following packages", StringComparison.OrdinalIgnoreCase) ||
-                line.Contains("packages have upgrade", StringComparison.OrdinalIgnoreCase) ||
-                line.Contains("upgrade available", StringComparison.OrdinalIgnoreCase))
+            var match = TableRowPattern.Match(line.Trim());
+
+            if (!match.Success)
             {
                 continue;
             }
 
-            var columns = System.Text.RegularExpressions.Regex
-                .Split(line.Trim(), @"\s{2,}");
-
-            if (!TryParseRow(columns, out string id, out string name))
-            {
-                continue;
-            }
+            string id = match.Groups["id"].Value;
+            string name = match.Groups["name"].Value;
 
             if (_pending.Any(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase)))
             {
@@ -160,40 +155,6 @@ public partial class UpdatesView : UserControl
             _pending.Add((id, name));
             LogLine($"Found update: {name} ({id})");
         }
-    }
-
-    private static bool TryParseRow(string[] columns, out string id, out string name)
-    {
-        id = string.Empty;
-        name = string.Empty;
-
-        if (columns.Length < 4)
-        {
-            return false;
-        }
-
-        string source = columns[^1];
-
-        if (!KnownSources.Contains(source))
-        {
-            return false;
-        }
-
-        string candidateId = columns[1];
-
-        if (string.IsNullOrWhiteSpace(candidateId) ||
-            candidateId.IndexOf(' ') >= 0 ||
-            !System.Text.RegularExpressions.Regex.IsMatch(
-                candidateId,
-                @"^[A-Za-z0-9][A-Za-z0-9._\-]*$"))
-        {
-            return false;
-        }
-
-        id = candidateId;
-        name = columns[0];
-
-        return true;
     }
 
     private async Task<bool> UpgradeSingleAsync(string id, string name)
