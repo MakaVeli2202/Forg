@@ -1,4 +1,4 @@
-using Forge.Models;
+﻿using Forge.Models;
 using Forge.Services;
 using System.Windows;
 using System.Windows.Controls;
@@ -442,7 +442,7 @@ public partial class AppsView : UserControl
 
         string appList = string.Join(
             Environment.NewLine,
-            selectedApps.Select(a => $"• {a.Name}"));
+            selectedApps.Select(a => $"- {a.Name}"));
 
         var result = MessageBox.Show(
             $"The following applications will be removed:\n\n{appList}\n\nContinue?",
@@ -680,24 +680,24 @@ public partial class AppsView : UserControl
             recommendedApps.Any(a => !a.IsSelected);
 
         BtnSelectAll.Background = CreateButtonBrush(
-            allSelected ? "#F28C28" : "#2B2D31");
+            allSelected ? "#F28C28" : "#261B12");
         BtnSelectAll.BorderBrush = CreateButtonBrush(
             allSelected ? "#FF9A2F" : "#3B4048");
         BtnSelectAll.Foreground = allSelected
             ? Brushes.White
-            : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E4E7EB"));
+            : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF3E8"));
 
         BtnSelectRecommended.Background = CreateButtonBrush(
-            recommendedSelected ? "#F28C28" : "#2B2D31");
+            recommendedSelected ? "#F28C28" : "#261B12");
         BtnSelectRecommended.BorderBrush = CreateButtonBrush(
             recommendedSelected ? "#FF9A2F" : "#3B4048");
         BtnSelectRecommended.Foreground = recommendedSelected
             ? Brushes.White
-            : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E4E7EB"));
+            : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF3E8"));
 
-        BtnClearSelection.Background = CreateButtonBrush("#2B2D31");
+        BtnClearSelection.Background = CreateButtonBrush("#261B12");
         BtnClearSelection.BorderBrush = CreateButtonBrush("#3B4048");
-        BtnClearSelection.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E4E7EB"));
+        BtnClearSelection.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF3E8"));
     }
 
     private static SolidColorBrush CreateButtonBrush(string color)

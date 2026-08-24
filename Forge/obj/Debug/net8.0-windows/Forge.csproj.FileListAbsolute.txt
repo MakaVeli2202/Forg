@@ -81,3 +81,12 @@ E:\Projects\Forg\Forge\bin\Debug\net8.0-windows\Forge.runtimeconfig.json
 E:\Projects\Forg\Forge\bin\Debug\net8.0-windows\Forge.pdb
 E:\Projects\Forg\Forge\obj\Debug\net8.0-windows\Forge.genruntimeconfig.cache
 E:\Projects\Forg\Forge\obj\Debug\net8.0-windows\ref\Forge.dll
+E:\Projects\Forg\Forge\bin\Debug\net8.0-windows\Config\tweaks.json
+E:\Projects\Forg\Forge\bin\Debug\net8.0-windows\Config\dns.json
+E:\Projects\Forg\Forge\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
+E:\Projects\Forg\Forge\bin\Debug\net8.0-windows\System.ServiceProcess.ServiceController.dll
+E:\Projects\Forg\Forge\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+E:\Projects\Forg\Forge\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+E:\Projects\Forg\Forge\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.ServiceProcess.ServiceController.dll
+E:\Projects\Forg\Forge\obj\Debug\net8.0-windows\Forge.csproj.AssemblyReference.cache
+E:\Projects\Forg\Forge\obj\Debug\net8.0-windows\Forge.csproj.Up2Date

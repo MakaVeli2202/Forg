@@ -2,14 +2,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!-- Navigation buttons: warm iron panels that ignite on hover -->
+
     <Style x:Key="NavButtonStyle"
            TargetType="Button">
 
         <Setter Property="Height" Value="42"/>
         <Setter Property="Margin" Value="0,4"/>
-        <Setter Property="Foreground" Value="#E5E7EB"/>
-        <Setter Property="Background" Value="#23272D"/>
-        <Setter Property="BorderBrush" Value="#343A42"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="Background" Value="{StaticResource PanelAltBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource IronBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="FontSize" Value="13.5"/>
         <Setter Property="Padding" Value="14,0"/>
@@ -23,7 +25,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="8"
+                            CornerRadius="10"
                             SnapsToDevicePixels="True">
                         <ContentPresenter HorizontalAlignment="Left"
                                           VerticalAlignment="Center"
@@ -31,12 +33,27 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="#4A515B"/>
-                            <Setter TargetName="Border" Property="Background" Value="#2A3037"/>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource EmberBorderStrongBrush}"/>
+                            <Setter TargetName="Border" Property="Background" Value="#2A1C11"/>
+                            <Setter TargetName="Border" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="#FF7A00"
+                                                      BlurRadius="12"
+                                                      ShadowDepth="0"
+                                                      Opacity="0.25"/>
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="#1E2228"/>
-                            <Setter TargetName="Border" Property="BorderBrush" Value="#F28C28"/>
+                            <Setter TargetName="Border" Property="Background" Value="#241709"/>
+                            <Setter TargetName="Border" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="#FF7A00"
+                                                      BlurRadius="16"
+                                                      ShadowDepth="0"
+                                                      Opacity="0.4"/>
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -48,21 +65,23 @@
             <Trigger Property="IsMouseOver"
                      Value="True">
                 <Setter Property="Foreground"
-                        Value="White"/>
+                        Value="#FFD9AD"/>
             </Trigger>
 
         </Style.Triggers>
 
     </Style>
-    
+
+    <!-- Ghost / secondary buttons: dark steel with ember hover glow -->
+
     <Style x:Key="ForgeButtonStyle"
        TargetType="Button">
 
-        <Setter Property="Foreground" Value="#E5E7EB"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
 
-        <Setter Property="Background" Value="#2B2D31"/>
+        <Setter Property="Background" Value="{StaticResource PanelAltBrush}"/>
 
-        <Setter Property="BorderBrush" Value="#3A4048"/>
+        <Setter Property="BorderBrush" Value="{StaticResource IronBorderBrush}"/>
 
         <Setter Property="BorderThickness" Value="1"/>
 
@@ -86,7 +105,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="8"
+                        CornerRadius="10"
                         SnapsToDevicePixels="True">
 
                         <ContentPresenter HorizontalAlignment="Center"
@@ -102,11 +121,21 @@
 
                             <Setter TargetName="Border"
                                 Property="BorderBrush"
-                                Value="#F28C28"/>
+                                Value="{StaticResource EmberBorderStrongBrush}"/>
 
                             <Setter TargetName="Border"
                                 Property="Background"
-                                Value="#31353B"/>
+                                Value="#2A1C11"/>
+
+                            <Setter TargetName="Border"
+                                Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="#FF7A00"
+                                                      BlurRadius="14"
+                                                      ShadowDepth="0"
+                                                      Opacity="0.35"/>
+                                </Setter.Value>
+                            </Setter>
 
                         </Trigger>
 
@@ -115,12 +144,224 @@
 
                             <Setter TargetName="Border"
                                 Property="Background"
-                                Value="#1E2126"/>
+                                Value="#241709"/>
 
                             <Setter TargetName="Border"
                                 Property="BorderBrush"
-                                Value="#FF9A2F"/>
+                                Value="{StaticResource BrandGoldBrush}"/>
 
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+
+            </Setter.Value>
+
+        </Setter>
+
+    </Style>
+
+    <!-- Primary action: molten metal gradient, ignites on hover -->
+
+    <Style x:Key="PrimaryButtonStyle"
+           TargetType="Button">
+
+        <Setter Property="Foreground" Value="#1A0F05"/>
+
+        <Setter Property="Background" Value="{StaticResource PrimaryButtonGradient}"/>
+
+        <Setter Property="BorderBrush" Value="{StaticResource BrandGoldBrush}"/>
+
+        <Setter Property="BorderThickness" Value="1"/>
+
+        <Setter Property="Padding" Value="18,9"/>
+
+        <Setter Property="Cursor" Value="Hand"/>
+
+        <Setter Property="FontWeight" Value="Bold"/>
+
+        <Setter Property="FontSize" Value="13"/>
+
+        <Setter Property="MinHeight" Value="36"/>
+
+        <Setter Property="Template">
+
+            <Setter.Value>
+
+                <ControlTemplate TargetType="Button">
+
+                    <Border x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="12"
+                        SnapsToDevicePixels="True">
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Margin="{TemplateBinding Padding}"/>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+
+                            <Setter TargetName="Border" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="#FF7A00"
+                                                      BlurRadius="20"
+                                                      ShadowDepth="0"
+                                                      Opacity="0.6"/>
+                                </Setter.Value>
+                            </Setter>
+
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#E8380D" Offset="0"/>
+                                        <GradientStop Color="#D96A00" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Opacity" Value="0.45"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+
+            </Setter.Value>
+
+        </Setter>
+
+    </Style>
+
+    <!-- Danger: red-hot gradient like SoundFX DangerGradient -->
+
+    <Style x:Key="DangerButtonStyle"
+           TargetType="Button">
+
+        <Setter Property="Foreground" Value="#FFF3E8"/>
+
+        <Setter Property="Background" Value="{StaticResource DangerButtonGradient}"/>
+
+        <Setter Property="BorderBrush" Value="#E11D48"/>
+
+        <Setter Property="BorderThickness" Value="1"/>
+
+        <Setter Property="Padding" Value="18,9"/>
+
+        <Setter Property="Cursor" Value="Hand"/>
+
+        <Setter Property="FontWeight" Value="Bold"/>
+
+        <Setter Property="FontSize" Value="13"/>
+
+        <Setter Property="MinHeight" Value="36"/>
+
+        <Setter Property="Template">
+
+            <Setter.Value>
+
+                <ControlTemplate TargetType="Button">
+
+                    <Border x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="12"
+                        SnapsToDevicePixels="True">
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Margin="{TemplateBinding Padding}"/>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+
+                            <Setter TargetName="Border" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="#F43F5E"
+                                                      BlurRadius="22"
+                                                      ShadowDepth="0"
+                                                      Opacity="0.55"/>
+                                </Setter.Value>
+                            </Setter>
+
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Opacity" Value="0.85"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Opacity" Value="0.45"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+
+            </Setter.Value>
+
+        </Setter>
+
+    </Style>
+
+    <!-- Title bar caption buttons: transparent, ember on hover -->
+
+    <Style x:Key="TitleBarButtonStyle"
+           TargetType="Button">
+
+        <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}"/>
+
+        <Setter Property="Background" Value="Transparent"/>
+
+        <Setter Property="BorderThickness" Value="0"/>
+
+        <Setter Property="FontWeight" Value="Bold"/>
+
+        <Setter Property="FontSize" Value="13"/>
+
+        <Setter Property="Cursor" Value="Hand"/>
+
+        <Setter Property="Template">
+
+            <Setter.Value>
+
+                <ControlTemplate TargetType="Button">
+
+                    <Border x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="8">
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#33FF7A00"/>
+                            <Setter Property="Foreground" Value="#FFD9AD"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#55FF7A00"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>

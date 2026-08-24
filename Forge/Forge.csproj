@@ -6,17 +6,29 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\Images\forge-logo.png" />
     <None Remove="Assets\Images\Apps\*.png" />
     <None Remove="Config\apps.json" />
+    <None Remove="Config\tweaks.json" />
+    <None Remove="Config\dns.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\Icons\Designer.ico" />
     <Content Include="Config\apps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\tweaks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\dns.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -29,6 +41,10 @@
   <ItemGroup>
     <Resource Include="Assets\Images\forge-logo.png" />
     <Resource Include="Assets\Images\Apps\*.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="10.0.11" />
   </ItemGroup>
 
 </Project>

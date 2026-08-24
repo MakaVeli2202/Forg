@@ -1,40 +1,365 @@
-<UserControl x:Class="Forge.Views.TweaksView"
+﻿<UserControl x:Class="Forge.Views.TweaksView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Grid Margin="30">
+    <UserControl.Resources>
 
-        <StackPanel>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
-            <TextBlock Text="Tweaks"
-                       FontSize="30"
-                       FontWeight="Bold"
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+
+        <StackPanel Grid.Row="0"
+                    Margin="2,0,0,10">
+
+            <TextBlock Text="Tweaks &amp; Performance"
+                       FontSize="20"
+                       FontWeight="SemiBold"
                        Foreground="White"/>
 
-            <TextBlock Text="Recommended Tweaks"
-                       Margin="0,20,0,10"
-                       FontSize="18"
-                       Foreground="White"/>
-
-            <CheckBox Content="Show File Extensions" Foreground="White"/>
-            <CheckBox Content="Show Hidden Files" Foreground="White"/>
-            <CheckBox Content="Enable Dark Mode" Foreground="White"/>
-            <CheckBox Content="Disable Widgets" Foreground="White"/>
-
-            <TextBlock Text="Advanced Tweaks"
-                       Margin="0,20,0,10"
-                       FontSize="18"
-                       Foreground="White"/>
-
-            <CheckBox Content="Disable Copilot" Foreground="White"/>
-            <CheckBox Content="Disable Recall" Foreground="White"/>
-            <CheckBox Content="Disable Telemetry" Foreground="White"/>
-
-            <Button Content="Apply Tweaks"
-                    Width="200"
-                    Margin="0,20,0,0"/>
+            <TextBlock Text="Apply proven system tweaks. Every tweak can be undone."
+                       Foreground="#B39B85"
+                       Margin="0,2,0,0"
+                       FontSize="11"/>
 
         </StackPanel>
+
+        <!-- Toolbar -->
+
+        <Border Grid.Row="1"
+                Background="#1C130C"
+                BorderBrush="#313841"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="8"
+                Margin="0,0,0,10">
+
+            <DockPanel LastChildFill="False">
+
+                <Grid DockPanel.Dock="Left"
+                      Width="260">
+
+                    <TextBox x:Name="SearchBox"
+                             Height="30"
+                             FontSize="12"
+                             Padding="28,0,8,0"
+                             VerticalContentAlignment="Center"
+                             Background="#171009"
+                             Foreground="White"
+                             BorderBrush="#404040"
+                             BorderThickness="1"/>
+
+                    <TextBlock Text="&#x1F50D;"
+                               Margin="8,0,0,0"
+                               VerticalAlignment="Center"
+                               Foreground="#B39B85"
+                               IsHitTestVisible="False"/>
+
+                    <TextBlock x:Name="SearchPlaceholder"
+                               Text="Search tweaks..."
+                               Margin="28,0,0,0"
+                               VerticalAlignment="Center"
+                               Foreground="#8A7462"
+                               FontSize="11"
+                               IsHitTestVisible="False"/>
+
+                </Grid>
+
+                <WrapPanel DockPanel.Dock="Left"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center">
+
+                    <Button x:Name="BtnSelectNotApplied"
+                            Content="Select Unapplied"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Background="#261B12"
+                            Width="120"
+                            Height="30"
+                            Margin="0,0,8,0"
+                            Click="BtnSelectNotApplied_Click"/>
+
+                    <Button x:Name="BtnSelectAll"
+                            Content="Select All"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Background="#261B12"
+                            Width="90"
+                            Height="30"
+                            Margin="0,0,8,0"
+                            Click="BtnSelectAll_Click"/>
+
+                    <Button x:Name="BtnClearSelection"
+                            Content="Clear"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Background="#261B12"
+                            Width="70"
+                            Height="30"
+                            Margin="0,0,14,0"
+                            Click="BtnClearSelection_Click"/>
+
+                </WrapPanel>
+
+                <StackPanel DockPanel.Dock="Right"
+                            Orientation="Horizontal">
+
+                    <Button x:Name="BtnUndoSelected"
+                            Content="Undo Selected"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Background="#0078D4"
+                            Width="120"
+                            Height="30"
+                            Margin="0,0,8,0"
+                            Click="BtnUndoSelected_Click"/>
+
+                    <Button x:Name="BtnApplySelected"
+                            Content="Apply Selected"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Background="#F28C28"
+                            Width="120"
+                            Height="30"
+                            Click="BtnApplySelected_Click"/>
+
+                </StackPanel>
+
+            </DockPanel>
+
+        </Border>
+
+        <!-- Tweak list -->
+
+        <Border Grid.Row="2"
+                Background="#161009"
+                CornerRadius="12"
+                VerticalAlignment="Stretch">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled"
+                          Padding="6">
+
+                <ItemsControl x:Name="TweaksList">
+
+                    <ItemsControl.GroupStyle>
+
+                        <GroupStyle>
+
+                            <GroupStyle.HeaderTemplate>
+
+                                <DataTemplate>
+
+                                    <Border Margin="2,8,2,6">
+
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <TextBlock Text="{Binding Name}"
+                                                       FontSize="15"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="#F28C28"/>
+
+                                            <TextBlock Text="{Binding ItemCount, StringFormat={}({0})}"
+                                                       FontSize="11"
+                                                       Foreground="#77808C"
+                                                       Margin="8,4,0,0"/>
+
+                                        </StackPanel>
+
+                                    </Border>
+
+                                </DataTemplate>
+
+                            </GroupStyle.HeaderTemplate>
+
+                        </GroupStyle>
+
+                    </ItemsControl.GroupStyle>
+
+                    <ItemsControl.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <Border x:Name="TweakRow"
+                                    Background="#1C130C"
+                                    BorderBrush="#313841"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="10,8"
+                                    Margin="2,2">
+
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <CheckBox Grid.Column="0"
+                                              IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                              Visibility="{Binding IsCheckbox, Converter={StaticResource BoolToVis}}"
+                                              VerticalAlignment="Top"
+                                              Margin="0,2,10,0"/>
+
+                                    <StackPanel Grid.Column="1">
+
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <TextBlock Text="{Binding Name}"
+                                                       Foreground="White"
+                                                       FontWeight="SemiBold"
+                                                       FontSize="12.5"/>
+
+                                            <Border x:Name="CautionBadge"
+                                                    Background="#4A2225"
+                                                    BorderBrush="#B0504A"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4"
+                                                    Padding="5,1"
+                                                    Margin="8,0,0,0"
+                                                    VerticalAlignment="Center">
+                                                <TextBlock Text="CAUTION"
+                                                           FontSize="8"
+                                                           FontWeight="Bold"
+                                                           Foreground="#E08A85"/>
+                                            </Border>
+
+                                            <Border Background="#1F2A24"
+                                                    BorderBrush="#2C8C5F"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4"
+                                                    Padding="5,1"
+                                                    Margin="6,0,0,0"
+                                                    VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding StateDisplay}"
+                                                           FontSize="8"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="#6FCF97"/>
+                                            </Border>
+
+                                        </StackPanel>
+
+                                        <TextBlock Text="{Binding Description}"
+                                                   Foreground="#9AA3AF"
+                                                   FontSize="10.5"
+                                                   Margin="0,3,0,0"
+                                                   TextWrapping="Wrap"
+                                                   MaxWidth="900"
+                                                   HorizontalAlignment="Left"/>
+
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2"
+                                                VerticalAlignment="Center"
+                                                Margin="10,0,0,0">
+
+                                        <ComboBox x:Name="ComboSelector"
+                                                  MinWidth="190"
+                                                  Height="28"
+                                                  FontSize="11"
+                                                  ItemsSource="{Binding ComboItems}"
+                                                  Visibility="{Binding IsCombobox, Converter={StaticResource BoolToVis}}"
+                                                  Tag="{Binding}"
+                                                  Loaded="ComboSelector_Loaded"
+                                                  SelectionChanged="ComboSelector_SelectionChanged"/>
+
+                                        <Button Content="Run"
+                                                Style="{StaticResource ForgeButtonStyle}"
+                                                Background="#F28C28"
+                                                Width="110"
+                                                Height="28"
+                                                FontSize="11"
+                                                Visibility="{Binding IsButton, Converter={StaticResource BoolToVis}}"
+                                                Tag="{Binding}"
+                                                Click="RunTweakButton_Click"/>
+
+                                    </StackPanel>
+
+                                </Grid>
+
+                            </Border>
+
+                            <DataTemplate.Triggers>
+
+                                <DataTrigger Binding="{Binding Category}" Value="Advanced Tweaks">
+                                    <Setter TargetName="CautionBadge" Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+
+                                <Trigger SourceName="TweakRow" Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="TweakRow" Property="Background" Value="#241709"/>
+                                    <Setter TargetName="TweakRow" Property="BorderBrush" Value="#454D58"/>
+                                </Trigger>
+
+                            </DataTemplate.Triggers>
+
+                        </DataTemplate>
+
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+
+            </ScrollViewer>
+
+        </Border>
+
+        <!-- Footer log -->
+
+        <Border Grid.Row="3"
+                Background="#161009"
+                CornerRadius="10"
+                Padding="8"
+                Margin="0,10,0,0">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0">
+
+                    <Button x:Name="BtnCancel"
+                            Content="Cancel"
+                            DockPanel.Dock="Right"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Background="#666666"
+                            Width="80"
+                            Height="24"
+                            FontSize="10"
+                            Click="BtnCancel_Click"/>
+
+                    <TextBlock x:Name="StatusText"
+                               Text="Ready"
+                               Foreground="White"
+                               FontWeight="SemiBold"
+                               FontSize="12"
+                               VerticalAlignment="Center"/>
+
+                </DockPanel>
+
+                <TextBox x:Name="ActivityLog"
+                         Grid.Row="1"
+                         MaxHeight="110"
+                         Margin="0,6,0,0"
+                         Background="Transparent"
+                         Foreground="#D0D4DB"
+                         BorderThickness="0"
+                         IsReadOnly="True"
+                         FontSize="11"
+                         TextWrapping="NoWrap"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto"/>
+
+            </Grid>
+
+        </Border>
 
     </Grid>
 

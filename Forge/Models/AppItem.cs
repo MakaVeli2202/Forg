@@ -23,6 +23,16 @@ public class AppItem : INotifyPropertyChanged
     [JsonPropertyName("source")]
     public string? Source { get; set; }
 
+    [JsonPropertyName("githubRepo")]
+    public string? GitHubRepo { get; set; }
+
+    [JsonPropertyName("assetPattern")]
+    public string? AssetPattern { get; set; }
+
+    [JsonIgnore]
+    public bool IsGitHubSource =>
+        string.Equals(Source, "github", StringComparison.OrdinalIgnoreCase);
+
     [JsonPropertyName("category")]
     public string Category { get; set; } = string.Empty;
 

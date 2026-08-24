@@ -10,12 +10,27 @@
         MinWidth="1400"
         MinHeight="900"
         WindowStartupLocation="CenterScreen"
-        Background="#1E1E1E"
+        Background="Transparent"
         WindowStyle="None"
         ResizeMode="CanResize"
-        AllowsTransparency="False">
+        AllowsTransparency="True">
 
-    <Grid>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0"
+                      ResizeBorderThickness="6"
+                      UseAeroCaptionButtons="False"
+                      CornerRadius="0"
+                      GlassFrameThickness="0"
+                      NonClientFrameEdges="None"/>
+    </WindowChrome.WindowChrome>
+
+    <Border CornerRadius="14"
+            Background="#0F0B08"
+            BorderBrush="#33FF7A00"
+            BorderThickness="1"
+            ClipToBounds="True">
+
+        <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -31,8 +46,9 @@
 
         <Border Grid.Row="0"
                 Grid.ColumnSpan="2"
-                Background="#252526"
-                BorderThickness="0"
+                Background="#161009"
+                BorderThickness="0,0,0,1"
+                BorderBrush="#33FF7A00"
                 SnapsToDevicePixels="True"
                 MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
 
@@ -69,23 +85,23 @@
                     </Image>
 
                     <TextBlock Text="F"
-                               Foreground="#FF7A00"
+                               Foreground="{StaticResource BrandEmberBrush}"
                                FontWeight="Bold"
                                FontSize="16">
 
                         <TextBlock.Effect>
 
                             <DropShadowEffect Color="#FF7A00"
-                                              BlurRadius="8"
+                                              BlurRadius="10"
                                               ShadowDepth="0"
-                                              Opacity="0.8"/>
+                                              Opacity="0.9"/>
 
                         </TextBlock.Effect>
 
                     </TextBlock>
 
-                    <TextBlock Text="orge"
-                               Foreground="White"
+                    <TextBlock Text="ORGE"
+                               Foreground="{StaticResource TextBrush}"
                                FontWeight="SemiBold"
                                FontSize="16"/>
 
@@ -93,7 +109,7 @@
 
                                 <Menu Grid.Column="1"
                                             Background="Transparent"
-                                            Foreground="White"
+                                            Foreground="{StaticResource TextMutedBrush}"
                                             VerticalAlignment="Center"
                                             Margin="0,0,12,0"
                                             FontSize="12">
@@ -149,33 +165,21 @@
                 <!-- Window Buttons -->
 
                                 <Button Grid.Column="2"
-                        Content="—"
-                        Background="Transparent"
-                        Foreground="White"
-                        BorderThickness="0"
-                        FontWeight="Bold"
+                        Content="&#x2014;"
+                        Style="{StaticResource TitleBarButtonStyle}"
                         FontSize="14"
-                        Cursor="Hand"
                         Click="Minimize_Click"/>
 
                 <Button Grid.Column="3"
-                        Content="□"
-                        Background="Transparent"
-                        Foreground="White"
-                        BorderThickness="0"
-                        FontWeight="Bold"
+                        Content="&#x25A1;"
+                        Style="{StaticResource TitleBarButtonStyle}"
                         FontSize="12"
-                        Cursor="Hand"
                         Click="Maximize_Click"/>
 
                 <Button Grid.Column="4"
-                        Content="✕"
-                        Background="#E81123"
-                        Foreground="White"
-                        BorderThickness="0"
-                        FontWeight="Bold"
-                        FontSize="12"
-                        Cursor="Hand"
+                        Content="&#x2715;"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Foreground="#F43F5E"
                         Click="Close_Click"/>
 
             </Grid>
@@ -186,7 +190,7 @@
 
         <Border Grid.Row="1"
                 Grid.Column="0"
-                Background="#252526">
+                Background="#161009">
 
             <Border.Effect>
 
@@ -202,8 +206,10 @@
                 <!-- Logo -->
 
                 <Border Height="145"
-                        Background="#2D2D30"
-                        CornerRadius="0,0,12,12">
+                        Background="#1E140C"
+                        CornerRadius="0,0,14,14"
+                        BorderThickness="0,0,0,1"
+                        BorderBrush="#33FF7A00">
 
                     <StackPanel HorizontalAlignment="Center">
 
@@ -226,13 +232,26 @@
                         <TextBlock Text="FORGE"
                                    FontSize="24"
                                    FontWeight="Bold"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"/>
+                                   Foreground="{StaticResource TextBrush}"
+                                   HorizontalAlignment="Center">
 
-                        <TextBlock Text="Build Windows Your Way"
-                                   FontSize="12"
-                                   Foreground="#AAAAAA"
-                                   HorizontalAlignment="Center"/>
+                            <TextBlock.Effect>
+
+                                <DropShadowEffect Color="#FF7A00"
+                                                  BlurRadius="12"
+                                                  ShadowDepth="0"
+                                                  Opacity="0.35"/>
+
+                            </TextBlock.Effect>
+
+                        </TextBlock>
+
+                        <TextBlock Text="BUILD WINDOWS YOUR WAY"
+                                   FontSize="10"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextDimBrush}"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,3,0,0"/>
 
                     </StackPanel>
 
@@ -244,37 +263,37 @@
 
                     <Button x:Name="BtnHome"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="🏠 Home"
+                            Content="?? Home"
                             Click="BtnHome_Click"/>
 
                     <Button x:Name="BtnApps"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="📦 Apps"
+                            Content="?? Apps"
                             Click="BtnApps_Click"/>
 
                     <Button x:Name="BtnTweaks"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="⚡ Tweaks"
+                            Content="? Tweaks"
                             Click="BtnTweaks_Click"/>
 
                     <Button x:Name="BtnSystem"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="🛠 System"
+                            Content="?? System"
                             Click="BtnSystem_Click"/>
 
                     <Button x:Name="BtnUpdates"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="🔄 Updates"
+                            Content="?? Updates"
                             Click="BtnUpdates_Click"/>
 
                     <Button x:Name="BtnIso"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="💿 ISO Creator"
+                            Content="?? ISO Creator"
                             Click="BtnIso_Click"/>
 
                     <Button x:Name="BtnSettings"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="⚙ Settings"
+                            Content="? Settings"
                             Click="BtnSettings_Click"/>
 
                 </StackPanel>
@@ -298,26 +317,29 @@
             <!-- Header -->
 
             <Border Grid.Row="0"
-                    Background="#2D2D30"
+                    Background="#120D09"
                     CornerRadius="12,12,0,0">
-
-                <Border.Effect>
-
-                    <DropShadowEffect BlurRadius="10"
-                                      ShadowDepth="0"
-                                      Color="#000000"
-                                      Opacity="0.2"/>
-
-                </Border.Effect>
 
                 <Grid Margin="20,0">
 
-                    <TextBlock x:Name="PageTitle"
-                               Text="Home"
-                               FontSize="24"
-                               FontWeight="SemiBold"
-                               Foreground="White"
-                               VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center">
+
+                        <Rectangle Width="4"
+                                   Height="22"
+                                   RadiusX="2"
+                                   RadiusY="2"
+                                   Fill="{StaticResource FireGradientBrush}"
+                                   Margin="0,0,10,0"/>
+
+                        <TextBlock x:Name="PageTitle"
+                                   Text="Home"
+                                   FontSize="22"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextBrush}"
+                                   VerticalAlignment="Center"/>
+
+                    </StackPanel>
 
                 </Grid>
 
@@ -326,16 +348,7 @@
             <!-- Content -->
 
             <Border Grid.Row="1"
-                    Background="#202020">
-
-                <Border.Effect>
-
-                    <DropShadowEffect BlurRadius="12"
-                                      ShadowDepth="0"
-                                      Color="#000000"
-                                      Opacity="0.25"/>
-
-                </Border.Effect>
+                    Background="#120D09">
 
                 <ContentControl x:Name="MainContent"/>
 
@@ -344,13 +357,13 @@
             <!-- Footer -->
 
             <Border Grid.Row="2"
-                    Background="#2D2D30"
+                    Background="#120D09"
                     CornerRadius="0,0,12,12">
 
                 <DockPanel Margin="15,0">
 
                     <TextBlock Text="Ready"
-                               Foreground="#CFCFCF"
+                               Foreground="{StaticResource TextMutedBrush}"
                                FontSize="12"
                                VerticalAlignment="Center"/>
 
@@ -360,6 +373,8 @@
 
         </Grid>
 
-    </Grid>
+        </Grid>
+
+    </Border>
 
 </Window>

@@ -38,7 +38,7 @@ public class InstallService
                         app.Name));
 
                 await _packageManager.InstallAsync(
-                    app.WingetId,
+                    app.IsGitHubSource ? app.GitHubRepo! : app.WingetId,
                     app.Source);
 
                 app.Status = AppStatus.Installed;
@@ -75,7 +75,7 @@ public class InstallService
                         app.Name));
 
                 await _packageManager.UpgradeAsync(
-                    app.WingetId,
+                    app.IsGitHubSource ? app.GitHubRepo! : app.WingetId,
                     app.Source);
 
                 app.Status = AppStatus.Installed;
@@ -111,7 +111,7 @@ public class InstallService
                         app.Name));
 
                 await _packageManager.UninstallAsync(
-                    app.WingetId,
+                    app.IsGitHubSource ? app.Name : app.WingetId,
                     app.Source);
 
                 app.IsInstalled = false;

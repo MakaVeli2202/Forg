@@ -908,5 +908,29 @@
     "publisher": "Ollama",
     "homepage": "https://ollama.com/",
     "tags": ["ai", "llm", "local"]
+  },
+  {
+    "name": "SignalRGB",
+    "wingetId": "WhirlwindFX.SignalRgb",
+    "category": "Utilities",
+    "description": "Control and synchronize RGB lighting across all your devices.",
+    "icon": "/Assets/Images/Apps/WhirlwindFX.SignalRgb.png",
+    "recommended": false,
+    "publisher": "Whirlwind FX",
+    "homepage": "https://signalrgb.com/",
+    "tags": ["rgb", "lighting", "gaming"]
+  },
+  {
+    "name": "SoundFX Studio",
+    "wingetId": "",
+    "source": "github",
+    "githubRepo": "MakaVeli2202/SoundFX-Studio",
+    "category": "Multimedia",
+    "description": "Soundboard and audio effects studio with Voicemeeter integration.",
+    "icon": "/Assets/Images/Apps/MakaVeli2202.SoundFX-Studio.png",
+    "recommended": false,
+    "publisher": "MakaVeli2202",
+    "homepage": "https://github.com/MakaVeli2202/SoundFX-Studio",
+    "tags": ["audio", "soundboard", "voicemeeter"]
   }
 ]

@@ -9,5 +9,7 @@
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/icons/designer.ico")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("config/apps.json")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("config/tweaks.json")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("config/dns.json")]
 
 
