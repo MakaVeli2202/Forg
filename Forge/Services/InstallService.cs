@@ -1,5 +1,6 @@
 ﻿using Forge.Models;
 using Forge.Services.PackageManager;
+using System.Diagnostics;
 
 namespace Forge.Services;
 
@@ -45,6 +46,14 @@ public class InstallService
                         total,
                         app.Name));
 
+                if (!string.IsNullOrWhiteSpace(app.InstallUrl))
+                {
+                    OpenExternalInstaller(app);
+                    app.Status = AppStatus.Installed;
+                    app.IsInstalled = true;
+                    continue;
+                }
+
                 await _packageManager.InstallAsync(
                     app.IsGitHubSource ? app.GitHubRepo! : app.WingetId,
                     app.Source);
@@ -82,6 +91,13 @@ public class InstallService
                         total,
                         app.Name));
 
+                if (!string.IsNullOrWhiteSpace(app.InstallUrl))
+                {
+                    OpenExternalInstaller(app);
+                    app.Status = AppStatus.Installed;
+                    continue;
+                }
+
                 await _packageManager.UpgradeAsync(
                     app.IsGitHubSource ? app.GitHubRepo! : app.WingetId,
                     app.Source);
@@ -118,6 +134,14 @@ public class InstallService
                         total,
                         app.Name));
 
+                if (!string.IsNullOrWhiteSpace(app.InstallUrl))
+                {
+                    OutputLine?.Invoke(this,
+                        $"Uninstall of {app.Name} must be done inside its store client (e.g. Steam).");
+                    app.IsSelected = false;
+                    continue;
+                }
+
                 await _packageManager.UninstallAsync(
                     app.IsGitHubSource ? app.Name : app.WingetId,
                     app.Source);
@@ -140,6 +164,19 @@ public class InstallService
         {
             winget.Cancel();
         }
+    }
+
+    private static void OpenExternalInstaller(AppItem app)
+    {
+        using var process = new Process();
+
+        process.StartInfo = new ProcessStartInfo
+        {
+            FileName = app.InstallUrl!,
+            UseShellExecute = true
+        };
+
+        process.Start();
     }
 }
 

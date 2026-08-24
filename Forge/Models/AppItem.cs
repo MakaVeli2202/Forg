@@ -29,6 +29,9 @@ public class AppItem : INotifyPropertyChanged
     [JsonPropertyName("assetPattern")]
     public string? AssetPattern { get; set; }
 
+    [JsonPropertyName("installUrl")]
+    public string? InstallUrl { get; set; }
+
     [JsonIgnore]
     public bool IsGitHubSource =>
         string.Equals(Source, "github", StringComparison.OrdinalIgnoreCase);

@@ -282,6 +282,7 @@
                 <ListBoxItem Content="Communications"/>
                 <ListBoxItem Content="Document"/>
                 <ListBoxItem Content="Pro Tools"/>
+                <ListBoxItem Content="Benchmarks"/>
 
             </ListBox>
 
