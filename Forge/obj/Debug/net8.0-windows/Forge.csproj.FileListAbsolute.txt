@@ -90,3 +90,5 @@ E:\Projects\Forg\Forge\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.D
 E:\Projects\Forg\Forge\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.ServiceProcess.ServiceController.dll
 E:\Projects\Forg\Forge\obj\Debug\net8.0-windows\Forge.csproj.AssemblyReference.cache
 E:\Projects\Forg\Forge\obj\Debug\net8.0-windows\Forge.csproj.Up2Date
+E:\Projects\Forg\Forge\obj\Debug\net8.0-windows\Views\DriversView.baml
+E:\Projects\Forg\Forge\obj\Debug\net8.0-windows\Views\DriversView.g.cs

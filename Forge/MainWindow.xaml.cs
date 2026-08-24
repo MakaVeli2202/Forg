@@ -39,6 +39,7 @@ namespace Forge
             BtnTweaks.Background = DefaultBrush;
             BtnSystem.Background = DefaultBrush;
             BtnUpdates.Background = DefaultBrush;
+            BtnDrivers.Background = DefaultBrush;
             BtnIso.Background = DefaultBrush;
             BtnSettings.Background = DefaultBrush;
 
@@ -47,6 +48,7 @@ namespace Forge
             BtnTweaks.Foreground = DefaultNavForeground;
             BtnSystem.Foreground = DefaultNavForeground;
             BtnUpdates.Foreground = DefaultNavForeground;
+            BtnDrivers.Foreground = DefaultNavForeground;
             BtnIso.Foreground = DefaultNavForeground;
             BtnSettings.Foreground = DefaultNavForeground;
         }
@@ -124,6 +126,12 @@ namespace Forge
                     MainContent.Content = new UpdatesView();
                     break;
 
+                case "drivers":
+                    ActivateNav(BtnDrivers);
+                    PageTitle.Text = "DRIVERS";
+                    MainContent.Content = new DriversView();
+                    break;
+
                 case "iso":
                     ActivateNav(BtnIso);
                     PageTitle.Text = "ISO CREATOR";
@@ -147,6 +155,8 @@ namespace Forge
         private void BtnSystem_Click(object sender, RoutedEventArgs e) => NavigateTo("system");
 
         private void BtnUpdates_Click(object sender, RoutedEventArgs e) => NavigateTo("updates");
+
+        private void BtnDrivers_Click(object sender, RoutedEventArgs e) => NavigateTo("drivers");
 
         private void BtnIso_Click(object sender, RoutedEventArgs e) => NavigateTo("iso");
 

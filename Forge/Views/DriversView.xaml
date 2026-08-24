@@ -1,0 +1,184 @@
+<UserControl x:Class="Forge.Views.DriversView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Summary chips -->
+
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    Margin="4,0,0,14">
+
+            <Border Background="#1C130C"
+                    BorderBrush="#33FF7A00"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="16,10"
+                    Margin="0,0,10,0">
+                <StackPanel>
+                    <TextBlock Text="DEVICES SCANNED"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Foreground="#8A7462"/>
+                    <TextBlock x:Name="ChipTotal"
+                               Text="-"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="#FFF3E8"/>
+                </StackPanel>
+            </Border>
+
+            <Border Background="#1C130C"
+                    BorderBrush="#66F87171"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="16,10"
+                    Margin="0,0,10,0">
+                <StackPanel>
+                    <TextBlock Text="NEED ATTENTION"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Foreground="#8A7462"/>
+                    <TextBlock x:Name="ChipProblem"
+                               Text="-"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="#F87171"/>
+                </StackPanel>
+            </Border>
+
+            <Border Background="#1C130C"
+                    BorderBrush="#6622C55E"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="16,10">
+                <StackPanel>
+                    <TextBlock Text="HEALTHY"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Foreground="#8A7462"/>
+                    <TextBlock x:Name="ChipOk"
+                               Text="-"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="#22C55E"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+
+        <!-- Actions -->
+
+        <DockPanel Grid.Row="1"
+                   Margin="4,0,0,14"
+                   LastChildFill="False">
+
+            <Button x:Name="BtnScan"
+                    Content="Scan Devices"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    DockPanel.Dock="Left"
+                    Click="Scan_Click"/>
+
+            <ComboBox x:Name="FilterBox"
+                      Width="190"
+                      Height="34"
+                      Margin="10,0,0,0"
+                      VerticalContentAlignment="Center"
+                      Background="#1C130C"
+                      Foreground="#FFF3E8"
+                      SelectedIndex="0"
+                      SelectionChanged="Filter_SelectionChanged">
+                <ComboBoxItem Content="All devices"/>
+                <ComboBoxItem Content="Needs attention only"/>
+                <ComboBoxItem Content="Display"/>
+                <ComboBoxItem Content="Audio"/>
+                <ComboBoxItem Content="Bluetooth"/>
+                <ComboBoxItem Content="Network"/>
+                <ComboBoxItem Content="USB"/>
+                <ComboBoxItem Content="Storage"/>
+                <ComboBoxItem Content="Input"/>
+                <ComboBoxItem Content="Other"/>
+            </ComboBox>
+
+            <Button Content="Fix via Windows Update"
+                    Style="{StaticResource ForgeButtonStyle}"
+                    DockPanel.Dock="Left"
+                    Margin="10,0,0,0"
+                    ToolTip="Opens Settings > Windows Update > Optional updates, where WHQL-signed driver updates are offered."
+                    Click="WindowsUpdate_Click"/>
+
+            <Button Content="Create Restore Point"
+                    Style="{StaticResource ForgeButtonStyle}"
+                    DockPanel.Dock="Left"
+                    Margin="10,0,0,0"
+                    ToolTip="Always create a restore point before changing drivers."
+                    Click="RestorePoint_Click"/>
+
+            <Button Content="Open Device Manager"
+                    Style="{StaticResource ForgeButtonStyle}"
+                    DockPanel.Dock="Left"
+                    Margin="10,0,0,0"
+                    Click="DeviceManager_Click"/>
+
+        </DockPanel>
+
+        <!-- Device list -->
+
+        <Border Grid.Row="2"
+                Background="#171009"
+                BorderBrush="#3D2C1D"
+                BorderThickness="1"
+                CornerRadius="14">
+
+            <Grid Margin="14">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="StatusText"
+                           Grid.Row="0"
+                           Text="Click Scan Devices to check every hardware device and its driver state."
+                           FontSize="12"
+                           Foreground="#B39B85"
+                           Margin="6,2,0,10"/>
+
+                <ListBox x:Name="DeviceList"
+                         Grid.Row="1"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         FontSize="12.5"/>
+
+                <!-- OEM helper tools -->
+
+                <StackPanel x:Name="OemPanel"
+                            Grid.Row="2"
+                            Margin="6,10,0,2"
+                            Visibility="Collapsed">
+
+                    <TextBlock Text="MANUFACTURER UPDATE TOOLS DETECTED"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Foreground="#8A7462"
+                               Margin="0,0,0,6"/>
+
+                    <WrapPanel x:Name="OemTools"/>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+
+</UserControl>

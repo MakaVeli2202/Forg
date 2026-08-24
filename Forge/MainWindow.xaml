@@ -47,6 +47,7 @@
         <Border Grid.Row="0"
                 Grid.ColumnSpan="2"
                 Background="#161009"
+                CornerRadius="14,14,0,0"
                 BorderThickness="0,0,0,1"
                 BorderBrush="#33FF7A00"
                 SnapsToDevicePixels="True"
@@ -60,6 +61,7 @@
                     <ColumnDefinition Width="40"/>
                     <ColumnDefinition Width="40"/>
                     <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Branding -->
@@ -190,7 +192,8 @@
 
         <Border Grid.Row="1"
                 Grid.Column="0"
-                Background="#161009">
+                Background="#161009"
+                CornerRadius="0,0,0,14">
 
             <Border.Effect>
 
@@ -263,37 +266,42 @@
 
                     <Button x:Name="BtnHome"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="?? Home"
+                            Content="&#x1F3E0; Home"
                             Click="BtnHome_Click"/>
 
                     <Button x:Name="BtnApps"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="?? Apps"
+                            Content="&#x1F4E6; Apps"
                             Click="BtnApps_Click"/>
 
                     <Button x:Name="BtnTweaks"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="? Tweaks"
+                            Content="&#x1F527; Tweaks"
                             Click="BtnTweaks_Click"/>
 
                     <Button x:Name="BtnSystem"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="?? System"
+                            Content="&#x1F5A5;&#xFE0F; System"
                             Click="BtnSystem_Click"/>
 
                     <Button x:Name="BtnUpdates"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="?? Updates"
+                            Content="&#x1F504; Updates"
                             Click="BtnUpdates_Click"/>
+
+                    <Button x:Name="BtnDrivers"
+                            Style="{StaticResource NavButtonStyle}"
+                            Content="&#x1F50C; Drivers"
+                            Click="BtnDrivers_Click"/>
 
                     <Button x:Name="BtnIso"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="?? ISO Creator"
+                            Content="&#x1F4BF; ISO Creator"
                             Click="BtnIso_Click"/>
 
                     <Button x:Name="BtnSettings"
                             Style="{StaticResource NavButtonStyle}"
-                            Content="? Settings"
+                            Content="&#x2699;&#xFE0F; Settings"
                             Click="BtnSettings_Click"/>
 
                 </StackPanel>

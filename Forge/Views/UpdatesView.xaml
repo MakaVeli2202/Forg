@@ -99,6 +99,7 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
@@ -107,10 +108,42 @@
                            Text="Ready. Click Check for Updates to scan installed apps."
                            FontSize="12"
                            Foreground="#B39B85"
-                           Margin="6,2,0,10"/>
+                           Margin="6,2,0,8"/>
+
+                <StackPanel Grid.Row="1"
+                            Margin="6,0,6,10">
+
+                    <ProgressBar x:Name="OpProgress"
+                                 Height="4"
+                                 Minimum="0"
+                                 Maximum="100"
+                                 IsIndeterminate="False"
+                                 Foreground="#FF7A00"
+                                 Background="#2A1C10"
+                                 BorderThickness="0"
+                                 Visibility="Collapsed"/>
+
+                    <Border x:Name="ActivityBorder"
+                            CornerRadius="8"
+                            Background="#120D09"
+                            BorderBrush="#3D2C1D"
+                            BorderThickness="1"
+                            Visibility="Collapsed">
+                        <ListBox x:Name="ActivityLog"
+                                 MaxHeight="130"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Padding="8,4"
+                                 FontFamily="Consolas"
+                                 FontSize="11.5"
+                                 Foreground="#B39B85"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+                    </Border>
+
+                </StackPanel>
 
                 <ListBox x:Name="OutdatedList"
-                         Grid.Row="1"
+                         Grid.Row="2"
                          Background="Transparent"
                          BorderThickness="0"
                          Foreground="#FFF3E8"

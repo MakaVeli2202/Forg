@@ -7,6 +7,9 @@ namespace Forge.Views;
 
 public partial class UpdatesView : UserControl
 {
+    private readonly List<(string Id, string Name)> _pending = new();
+    private bool _busy;
+
     public UpdatesView()
     {
         InitializeComponent();
@@ -14,82 +17,85 @@ public partial class UpdatesView : UserControl
 
     private async void CheckUpdates_Click(object sender, RoutedEventArgs e)
     {
+        if (_busy) return;
+        _busy = true;
         BtnCheckUpdates.IsEnabled = false;
         BtnUpdateAll.IsEnabled = false;
 
+        SetStatus("Scanning installed apps with winget...", 0xB39B85);
+        BeginActivity();
 
-        StatusText.Text = "Scanning installed apps with winget...";
-        StatusText.Foreground = new SolidColorBrush(
-            Color.FromRgb(0xB3, 0x9B, 0x85));
+        _pending.Clear();
 
-        OutdatedList.Items.Clear();
-        OutdatedList.Visibility = Visibility.Collapsed;
+        string output = await RunWingetLiveAsync(
+            "upgrade --include-unknown --accept-source-agreements");
 
-        string output = await RunWingetAsync("upgrade --include-unknown");
+        EndActivity();
+        ParseOutdated(output);
 
-        var lines = output
-            .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(line => line.TrimEnd())
-            .Where(line => !string.IsNullOrWhiteSpace(line))
-            .ToList();
-
-        int dataStart = lines.FindIndex(line =>
-            line.Contains("-----", StringComparison.OrdinalIgnoreCase));
-
-        var outdated = dataStart >= 1
-            ? lines.Skip(dataStart + 1)
-                .Where(l => !l.StartsWith("The following packages", StringComparison.OrdinalIgnoreCase) &&
-                            !l.Contains("packages have upgrade", StringComparison.OrdinalIgnoreCase) &&
-                            !l.Contains("upgrade available", StringComparison.OrdinalIgnoreCase))
-                .ToList()
-            : [];
-
-        if (dataStart < 0 || outdated.Count == 0)
+        if (_pending.Count == 0)
         {
-            StatusText.Text = "Everything is up to date. Nothing to forge today.";
-            StatusText.Foreground = new SolidColorBrush(
-                Color.FromRgb(0x22, 0xC5, 0x5E));
+            SetStatus("Everything is up to date. Nothing to forge today.", 0x22C55E);
         }
         else
         {
-            foreach (var line in outdated)
+            OutdatedList.Items.Clear();
+            foreach (var app in _pending)
             {
-                OutdatedList.Items.Add(line);
+                OutdatedList.Items.Add($"{app.Name}  ->  {app.Id}");
             }
-
             OutdatedList.Visibility = Visibility.Visible;
 
-            StatusText.Text = $"{outdated.Count} app(s) have updates available.";
-            StatusText.Foreground = new SolidColorBrush(
-                Color.FromRgb(0xFF, 0xB1, 0x55));
-
-
+            SetStatus($"{_pending.Count} app(s) have updates available.", 0xFFB155);
             BtnUpdateAll.IsEnabled = true;
         }
 
+        OpProgress.Visibility = Visibility.Collapsed;
         BtnCheckUpdates.IsEnabled = true;
+        _busy = false;
     }
 
     private async void UpdateAll_Click(object sender, RoutedEventArgs e)
     {
+        if (_busy || _pending.Count == 0) return;
+        _busy = true;
         BtnCheckUpdates.IsEnabled = false;
         BtnUpdateAll.IsEnabled = false;
 
-        StatusText.Text = "Upgrading all apps - this can take a while...";
-        StatusText.Foreground = new SolidColorBrush(
-            Color.FromRgb(0xB3, 0x9B, 0x85));
-
-        await RunWingetAsync(
-            "upgrade --all --silent --include-unknown --accept-package-agreements --accept-source-agreements");
-
-        StatusText.Text = "Upgrade pass finished. Re-check for the latest state.";
-        StatusText.Foreground = new SolidColorBrush(
-            Color.FromRgb(0x22, 0xC5, 0x5E));
-
+        BeginActivity();
         OutdatedList.Items.Clear();
         OutdatedList.Visibility = Visibility.Collapsed;
 
+        int total = _pending.Count;
+        int ok = 0, failed = 0;
+
+        for (int i = 0; i < total; i++)
+        {
+            var (id, name) = _pending[i];
+            int pct = (int)(i * 100.0 / total);
+
+            SetStatus($"Upgrading {name} ({i + 1} of {total})...", 0xB39B85);
+            ShowProgress(pct);
+
+            bool success = await UpgradeSingleAsync(id, name);
+
+            if (success) ok++; else failed++;
+        }
+
+        ShowProgress(100);
+        EndActivity();
+
+        string summary = failed == 0
+            ? $"Done. {ok} app(s) upgraded successfully."
+            : $"Finished with {failed} failure(s). {ok} upgraded OK.";
+
+        SetStatus(summary + " Re-check for the latest state.",
+            failed == 0 ? 0x22C55Eu : 0xF87171u);
+
+        LogLine(summary);
+        OpProgress.Visibility = Visibility.Collapsed;
         BtnCheckUpdates.IsEnabled = true;
+        _busy = false;
     }
 
     private void WindowsUpdate_Click(object sender, RoutedEventArgs e)
@@ -107,11 +113,98 @@ public partial class UpdatesView : UserControl
         }
     }
 
-    private static async Task<string> RunWingetAsync(string arguments)
+    private void ParseOutdated(string output)
     {
-        using var process = new Process();
+        var lines = output
+            .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(line => line.TrimEnd())
+            .Where(line => !string.IsNullOrWhiteSpace(line))
+            .ToList();
 
-        process.StartInfo = new ProcessStartInfo
+        int dataStart = lines.FindIndex(line =>
+            line.Contains("-----", StringComparison.OrdinalIgnoreCase));
+
+        if (dataStart < 0)
+        {
+            return;
+        }
+
+        foreach (var line in lines.Skip(dataStart + 1))
+        {
+            if (line.StartsWith("The following packages", StringComparison.OrdinalIgnoreCase) ||
+                line.Contains("packages have upgrade", StringComparison.OrdinalIgnoreCase) ||
+                line.Contains("upgrade available", StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            var columns = System.Text.RegularExpressions.Regex
+                .Split(line.Trim(), @"\s{2,}");
+
+            if (columns.Length >= 2 && !string.IsNullOrWhiteSpace(columns[1]))
+            {
+                _pending.Add((columns[1], columns[0]));
+                LogLine($"Found update: {columns[0]} ({columns[1]})");
+            }
+        }
+    }
+
+    private async Task<bool> UpgradeSingleAsync(string id, string name)
+    {
+        try
+        {
+            LogLine($"Starting upgrade: {name}...");
+
+            var psi = new ProcessStartInfo
+            {
+                FileName = "winget",
+                Arguments =
+                    $"upgrade --id \"{id}\" --exact --silent --include-unknown " +
+                    "--accept-package-agreements --accept-source-agreements",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+
+            using var process = Process.Start(psi)!;
+
+            process.OutputDataReceived += (_, args) =>
+            {
+                if (!string.IsNullOrWhiteSpace(args.Data))
+                {
+                    Dispatcher.BeginInvoke(() => LogLine("  " + args.Data.Trim()));
+                }
+            };
+            process.ErrorDataReceived += (_, args) =>
+            {
+                if (!string.IsNullOrWhiteSpace(args.Data))
+                {
+                    Dispatcher.BeginInvoke(() => LogLine("  ! " + args.Data.Trim()));
+                }
+            };
+
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+
+            await process.WaitForExitAsync();
+
+            bool ok = process.ExitCode == 0;
+            LogLine(ok
+                ? $"Finished: {name}"
+                : $"Failed (exit {process.ExitCode}): {name}");
+            return ok;
+        }
+        catch (Exception ex)
+        {
+            LogLine($"Error upgrading {name}: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static async Task<string> RunWingetLiveAsync(string arguments)
+    {
+        var psi = new ProcessStartInfo
         {
             FileName = "winget",
             Arguments = arguments,
@@ -121,13 +214,55 @@ public partial class UpdatesView : UserControl
             CreateNoWindow = true
         };
 
-        process.Start();
+        using var process = Process.Start(psi)!;
 
-        string output =
-            await process.StandardOutput.ReadToEndAsync();
-
+        string output = await process.StandardOutput.ReadToEndAsync();
         await process.WaitForExitAsync();
-
         return output;
+    }
+
+    private void BeginActivity()
+    {
+        ActivityLog.Items.Clear();
+        ActivityBorder.Visibility = Visibility.Visible;
+        OpProgress.IsIndeterminate = true;
+        OpProgress.Value = 0;
+        OpProgress.Visibility = Visibility.Visible;
+        ActivityLog.ScrollIntoView(ActivityLog.Items.Count > 0
+            ? ActivityLog.Items[^1]
+            : null);
+    }
+
+    private void EndActivity()
+    {
+        OpProgress.IsIndeterminate = false;
+    }
+
+    private void ShowProgress(int percent)
+    {
+        OpProgress.IsIndeterminate = false;
+        OpProgress.Value = percent;
+    }
+
+    private void LogLine(string message)
+    {
+        ActivityLog.Items.Add($"[{DateTime.Now:HH:mm:ss}]  {message}");
+
+        if (ActivityLog.Items.Count > 400)
+        {
+            ActivityLog.Items.RemoveAt(0);
+        }
+
+        if (ActivityLog.Items.Count > 0)
+        {
+            ActivityLog.ScrollIntoView(ActivityLog.Items[^1]);
+        }
+    }
+
+    private void SetStatus(string message, uint rgb)
+    {
+        StatusText.Text = message;
+        StatusText.Foreground = new SolidColorBrush(
+            Color.FromRgb((byte)(rgb >> 16), (byte)(rgb >> 8), (byte)rgb));
     }
 }
