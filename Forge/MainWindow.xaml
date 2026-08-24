@@ -38,7 +38,7 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="205"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -208,7 +208,7 @@
 
                 <!-- Logo -->
 
-                <Border Height="145"
+                <Border Height="92"
                         Background="#1E140C"
                         CornerRadius="0,0,14,14"
                         BorderThickness="0,0,0,1"
@@ -217,14 +217,14 @@
                     <StackPanel HorizontalAlignment="Center">
 
                         <Image Source="/Assets/Images/forge-logo.png"
-                               Width="80"
-                               Height="80"
-                               Margin="0,10,0,5">
+                               Width="42"
+                               Height="42"
+                               Margin="0,6,0,2">
 
                             <Image.Effect>
 
                                 <DropShadowEffect Color="#FF7A00"
-                                                  BlurRadius="35"
+                                                  BlurRadius="25"
                                                   ShadowDepth="0"
                                                   Opacity="0.9"/>
 
@@ -233,7 +233,7 @@
                         </Image>
 
                         <TextBlock Text="FORGE"
-                                   FontSize="24"
+                                   FontSize="17"
                                    FontWeight="Bold"
                                    Foreground="{StaticResource TextBrush}"
                                    HorizontalAlignment="Center">
@@ -250,11 +250,11 @@
                         </TextBlock>
 
                         <TextBlock Text="BUILD WINDOWS YOUR WAY"
-                                   FontSize="10"
+                                   FontSize="8.5"
                                    FontWeight="SemiBold"
                                    Foreground="{StaticResource TextDimBrush}"
                                    HorizontalAlignment="Center"
-                                   Margin="0,3,0,0"/>
+                                   Margin="0,1,0,0"/>
 
                     </StackPanel>
 
@@ -262,7 +262,7 @@
 
                 <!-- Navigation -->
 
-                <StackPanel Margin="10">
+                <StackPanel Margin="8">
 
                     <Button x:Name="BtnHome"
                             Style="{StaticResource NavButtonStyle}"
