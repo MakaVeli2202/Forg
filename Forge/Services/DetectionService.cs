@@ -25,17 +25,28 @@ public class DetectionService
         string line,
         AppItem app)
     {
-        if (line.Contains(app.WingetId, StringComparison.OrdinalIgnoreCase))
-        {
-            return true;
-        }
+        var columns = System.Text.RegularExpressions.Regex
+            .Split(line.Trim(), @"\s{2,}");
 
-        if (string.IsNullOrWhiteSpace(app.Name))
+        if (columns.Length < 2)
         {
             return false;
         }
 
-        return line.StartsWith(app.Name, StringComparison.OrdinalIgnoreCase);
+        if (!string.IsNullOrWhiteSpace(app.WingetId) &&
+            columns.Any(column =>
+                column.Equals(app.WingetId, StringComparison.OrdinalIgnoreCase)))
+        {
+            return true;
+        }
+
+        if (!string.IsNullOrWhiteSpace(app.Name) &&
+            columns[0].Equals(app.Name, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private static async Task<string> GetWingetListAsync()

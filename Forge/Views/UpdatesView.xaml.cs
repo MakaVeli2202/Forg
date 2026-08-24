@@ -113,6 +113,12 @@ public partial class UpdatesView : UserControl
         }
     }
 
+    private static readonly HashSet<string> KnownSources = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "winget",
+        "msstore"
+    };
+
     private void ParseOutdated(string output)
     {
         var lines = output
@@ -141,12 +147,53 @@ public partial class UpdatesView : UserControl
             var columns = System.Text.RegularExpressions.Regex
                 .Split(line.Trim(), @"\s{2,}");
 
-            if (columns.Length >= 2 && !string.IsNullOrWhiteSpace(columns[1]))
+            if (!TryParseRow(columns, out string id, out string name))
             {
-                _pending.Add((columns[1], columns[0]));
-                LogLine($"Found update: {columns[0]} ({columns[1]})");
+                continue;
             }
+
+            if (_pending.Any(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase)))
+            {
+                continue;
+            }
+
+            _pending.Add((id, name));
+            LogLine($"Found update: {name} ({id})");
         }
+    }
+
+    private static bool TryParseRow(string[] columns, out string id, out string name)
+    {
+        id = string.Empty;
+        name = string.Empty;
+
+        if (columns.Length < 4)
+        {
+            return false;
+        }
+
+        string source = columns[^1];
+
+        if (!KnownSources.Contains(source))
+        {
+            return false;
+        }
+
+        string candidateId = columns[1];
+
+        if (string.IsNullOrWhiteSpace(candidateId) ||
+            candidateId.IndexOf(' ') >= 0 ||
+            !System.Text.RegularExpressions.Regex.IsMatch(
+                candidateId,
+                @"^[A-Za-z0-9][A-Za-z0-9._\-]*$"))
+        {
+            return false;
+        }
+
+        id = candidateId;
+        name = columns[0];
+
+        return true;
     }
 
     private async Task<bool> UpgradeSingleAsync(string id, string name)

@@ -41,7 +41,9 @@ public class WingetPackageManager : IPackageManager
         }
 
         await RunAsync(
-            $"install --id {packageId} --exact --silent --accept-package-agreements --accept-source-agreements{SourceArg(source)}");
+            $"install --id \"{packageId}\" --exact --silent " +
+            "--accept-package-agreements --accept-source-agreements" +
+            SourceArg(source));
     }
 
     public async Task UninstallAsync(string packageId, string? source = null)
@@ -54,7 +56,7 @@ public class WingetPackageManager : IPackageManager
         }
 
         await RunAsync(
-            $"uninstall --id {packageId} --exact{SourceArg(source)}");
+            $"uninstall --id \"{packageId}\" --exact{SourceArg(source)}");
     }
 
     public async Task UpgradeAsync(string packageId, string? source = null)
@@ -66,7 +68,9 @@ public class WingetPackageManager : IPackageManager
         }
 
         await RunAsync(
-            $"upgrade --id {packageId} --exact{SourceArg(source)}");
+            $"upgrade --id \"{packageId}\" --exact --silent --include-unknown " +
+            "--accept-package-agreements --accept-source-agreements" +
+            SourceArg(source));
     }
 
     private static bool IsGitHubSource(string? source) =>
