@@ -21,6 +21,9 @@ public sealed class TweakItem : INotifyPropertyChanged
     [JsonPropertyName("category")]
     public string Category { get; set; } = string.Empty;
 
+    [JsonPropertyName("group")]
+    public string Group { get; set; } = string.Empty;
+
     [JsonPropertyName("type")]
     public string Type { get; set; } = "checkbox";
 

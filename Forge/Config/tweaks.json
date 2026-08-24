@@ -1,4 +1,4 @@
-[
+﻿[
     {
         "id":  "Activity",
         "name":  "Activity History - Disable",
@@ -27,7 +27,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "Better Privacy"
     },
     {
         "id":  "Hiber",
@@ -52,7 +53,8 @@
                          }
                      ],
         "invokeScript":  "powercfg.exe /hibernate off",
-        "undoScript":  "powercfg.exe /hibernate on"
+        "undoScript":  "powercfg.exe /hibernate on",
+        "group":  "Boost Performance"
     },
     {
         "id":  "Widget",
@@ -60,7 +62,8 @@
         "category":  "Essential Tweaks",
         "type":  "checkbox",
         "description":  "Removes the annoying widgets in the bottom left of the Taskbar.",
-        "invokeScript":  "# Sometimes if you dont stop the Widgets process the removal may fail\n\n      Get-Process *Widget* | Stop-Process\n      Get-AppxPackage Microsoft.WidgetsPlatformRuntime -AllUsers | Remove-AppxPackage -AllUsers\n      Get-AppxPackage MicrosoftWindows.Client.WebExperience -AllUsers | Remove-AppxPackage -AllUsers\n\n      Stop-Process -Name explorer -Force\n      Write-Host \"Removed widgets\""
+        "invokeScript":  "# Sometimes if you dont stop the Widgets process the removal may fail\n\n      Get-Process *Widget* | Stop-Process\n      Get-AppxPackage Microsoft.WidgetsPlatformRuntime -AllUsers | Remove-AppxPackage -AllUsers\n      Get-AppxPackage MicrosoftWindows.Client.WebExperience -AllUsers | Remove-AppxPackage -AllUsers\n\n      Stop-Process -Name explorer -Force\n      Write-Host \"Removed widgets\"",
+        "group":  "Better Privacy"
     },
     {
         "id":  "RevertStartMenu",
@@ -76,7 +79,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "DisableStoreSearch",
@@ -85,7 +89,8 @@
         "type":  "checkbox",
         "description":  "Will not display recommended Microsoft Store apps when searching for apps in the Start menu.",
         "invokeScript":  "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /deny Everyone:F",
-        "undoScript":  "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /grant Everyone:F"
+        "undoScript":  "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /grant Everyone:F",
+        "group":  "Better Privacy"
     },
     {
         "id":  "Location",
@@ -122,7 +127,8 @@
                              "startupType":  "Disabled",
                              "originalType":  "Manual"
                          }
-                     ]
+                     ],
+        "group":  "Better Privacy"
     },
     {
         "id":  "Services",
@@ -157,7 +163,8 @@
                              "originalType":  "Automatic"
                          }
                      ],
-        "invokeScript":  "$Memory = (Get-CimInstance Win32_PhysicalMemory | Measure-Object Capacity -Sum).Sum / 1KB\n      Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\" -Name SvcHostSplitThresholdInKB -Value $Memory"
+        "invokeScript":  "$Memory = (Get-CimInstance Win32_PhysicalMemory | Measure-Object Capacity -Sum).Sum / 1KB\n      Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\" -Name SvcHostSplitThresholdInKB -Value $Memory",
+        "group":  "Boost Performance"
     },
     {
         "id":  "BraveDebloat",
@@ -250,7 +257,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "Debloat \u0026 Cleanup"
     },
     {
         "id":  "DisableWarningForUnsignedRdp",
@@ -273,7 +281,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "System \u0026 Advanced"
     },
     {
         "id":  "EdgeDebloat",
@@ -401,7 +410,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "Debloat \u0026 Cleanup"
     },
     {
         "id":  "ConsumerFeatures",
@@ -417,7 +427,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "Better Privacy"
     },
     {
         "id":  "Telemetry",
@@ -512,7 +523,8 @@
                          }
                      ],
         "invokeScript":  "# Disable Defender Auto Sample Submission\n      Set-MpPreference -SubmitSamplesConsent 2\n\n      # Disable (Connected User Experiences and Telemetry) Service\n      Set-Service -Name diagtrack -StartupType Disabled\n\n      # Disable (Windows Error Reporting Manager) Service\n      Set-Service -Name wermgr -StartupType Disabled\n\n      # Disable PowerShell 7 telemetry\n      [Environment]::SetEnvironmentVariable(\u0027POWERSHELL_TELEMETRY_OPTOUT\u0027, \u00271\u0027, \u0027Machine\u0027)\n\n      Remove-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Siuf\\Rules\" -Name PeriodInNanoSeconds",
-        "undoScript":  "# Enable Defender Auto Sample Submission\n      Set-MpPreference -SubmitSamplesConsent 1\n\n      # Enable (Connected User Experiences and Telemetry) Service\n      Set-Service -Name diagtrack -StartupType Automatic\n\n      # Enable (Windows Error Reporting Manager) Service\n      Set-Service -Name wermgr -StartupType Automatic\n\n      # Enable PowerShell 7 telemetry\n      [Environment]::SetEnvironmentVariable(\u0027POWERSHELL_TELEMETRY_OPTOUT\u0027, \u0027\u0027, \u0027Machine\u0027)"
+        "undoScript":  "# Enable Defender Auto Sample Submission\n      Set-MpPreference -SubmitSamplesConsent 1\n\n      # Enable (Connected User Experiences and Telemetry) Service\n      Set-Service -Name diagtrack -StartupType Automatic\n\n      # Enable (Windows Error Reporting Manager) Service\n      Set-Service -Name wermgr -StartupType Automatic\n\n      # Enable PowerShell 7 telemetry\n      [Environment]::SetEnvironmentVariable(\u0027POWERSHELL_TELEMETRY_OPTOUT\u0027, \u0027\u0027, \u0027Machine\u0027)",
+        "group":  "Better Privacy"
     },
     {
         "id":  "DeliveryOptimization",
@@ -528,7 +540,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "Boost Performance"
     },
     {
         "id":  "RemoveEdge",
@@ -537,7 +550,8 @@
         "type":  "checkbox",
         "description":  "Uninstalls Microsoft Edge by creating dummy MicrosoftEdge.exe file in the legacy Edge folder. This tricks Windows into unlocking the official Edge uninstaller allowing for a system-level removal.",
         "invokeScript":  "$Path = Resolve-Path -Path \"$Env:ProgramFiles (x86)\\Microsoft\\Edge\\Application\\*\\Installer\\setup.exe\" | Select-Object -Last 1\n\n      if (Test-Path $Path) {\n          New-Item -Path \"$Env:SystemRoot\\SystemApps\\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\\MicrosoftEdge.exe\" -Force\n          Start-Process -FilePath $Path -ArgumentList \"--uninstall --system-level --force-uninstall --delete-profile\" -Wait\n          Write-Host \"Microsoft Edge was removed\"\n      } else {\n          Write-Host \"Microsoft Edge is not installed\"\n      }",
-        "undoScript":  "Write-Host \"Installing Microsoft Edge...\"\n      winget install Microsoft.Edge --source winget"
+        "undoScript":  "Write-Host \"Installing Microsoft Edge...\"\n      winget install Microsoft.Edge --source winget",
+        "group":  "Debloat \u0026 Cleanup"
     },
     {
         "id":  "DisableBitLocker",
@@ -546,7 +560,8 @@
         "type":  "checkbox",
         "description":  "Disables BitLocker.",
         "invokeScript":  "Disable-BitLocker -MountPoint $Env:SystemDrive",
-        "undoScript":  "Enable-BitLocker -MountPoint $Env:SystemDrive"
+        "undoScript":  "Enable-BitLocker -MountPoint $Env:SystemDrive",
+        "group":  "System \u0026 Advanced"
     },
     {
         "id":  "UTC",
@@ -562,7 +577,8 @@
                              "type":  "QWord",
                              "originalValue":  "0"
                          }
-                     ]
+                     ],
+        "group":  "System \u0026 Advanced"
     },
     {
         "id":  "RemoveOneDrive",
@@ -571,7 +587,8 @@
         "type":  "checkbox",
         "description":  "Denies permission to remove OneDrive user files, then uses its own uninstaller to remove it and restores the original permission afterward.",
         "invokeScript":  "# Deny permission to remove OneDrive folder\n      icacls $Env:OneDrive /deny \"Administrators:(D,DC)\"\n\n      Write-Host \"Uninstalling OneDrive...\"\n      Start-Process -FilePath (Join-Path $Env:SystemRoot \"System32\\OneDriveSetup.exe\") -ArgumentList \u0027/uninstall\u0027 -Wait\n\n      # Some of OneDrive files use explorer, and OneDrive uses FileCoAuth\n      Write-Host \"Removing leftover OneDrive Files...\"\n\n      Stop-Process -Name FileCoAuth,Explorer\n\n      Remove-Item \"$Env:LocalAppData\\Microsoft\\OneDrive\" -Recurse -Force\n      Remove-Item \"$Env:ProgramData\\Microsoft OneDrive\" -Recurse -Force\n\n      # Grant back permission to access OneDrive folder\n      icacls $Env:OneDrive /grant \"Administrators:(D,DC)\"\n\n      if (-not (Get-ChildItem -Path $Env:OneDrive)) {\n          Remove-Item -Path $Env:OneDrive -Recurse\n          [Environment]::SetEnvironmentVariable(\u0027OneDrive\u0027, $null, \u0027User\u0027)\n      }\n\n      # Disable OneSyncSvc\n      Set-Service -Name OneSyncSvc -StartupType Disabled",
-        "undoScript":  "Write-Host \"Installing OneDrive\"\n      winget install Microsoft.Onedrive --source winget\n\n      # Enabled OneSyncSvc\n      Set-Service -Name OneSyncSvc -StartupType Automatic"
+        "undoScript":  "Write-Host \"Installing OneDrive\"\n      winget install Microsoft.Onedrive --source winget\n\n      # Enabled OneSyncSvc\n      Set-Service -Name OneSyncSvc -StartupType Automatic",
+        "group":  "Debloat \u0026 Cleanup"
     },
     {
         "id":  "RemoveHomeAndGallery",
@@ -601,7 +618,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "System \u0026 Advanced"
     },
     {
         "id":  "Display",
@@ -696,7 +714,8 @@
                          }
                      ],
         "invokeScript":  "Set-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name \"UserPreferencesMask\" -Type Binary -Value ([byte[]](144,18,3,128,16,0,0,0))",
-        "undoScript":  "Remove-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name \"UserPreferencesMask\""
+        "undoScript":  "Remove-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name \"UserPreferencesMask\"",
+        "group":  "Boost Performance"
     },
     {
         "id":  "ReservedStorage",
@@ -705,7 +724,8 @@
         "type":  "checkbox",
         "description":  "Disables Windows Reserved Storage (7-10 GB held for updates/temp files). Recommended only on small drives. Re-enable before major Windows feature updates to avoid installation failures.",
         "invokeScript":  "DISM /Online /Set-ReservedStorageState /State:Disabled",
-        "undoScript":  "DISM /Online /Set-ReservedStorageState /State:Enabled"
+        "undoScript":  "DISM /Online /Set-ReservedStorageState /State:Enabled",
+        "group":  "Debloat \u0026 Cleanup"
     },
     {
         "id":  "RestorePoint",
@@ -722,7 +742,8 @@
                              "originalValue":  "1440"
                          }
                      ],
-        "invokeScript":  "if (-not (Get-ComputerRestorePoint)) {\n          Enable-ComputerRestore -Drive $Env:SystemDrive\n      }\n\n      Checkpoint-Computer -Description \"System Restore Point created by Forge\" -RestorePointType MODIFY_SETTINGS\n      Write-Host \"System Restore Point Created Successfully\" -ForegroundColor Green"
+        "invokeScript":  "if (-not (Get-ComputerRestorePoint)) {\n          Enable-ComputerRestore -Drive $Env:SystemDrive\n      }\n\n      Checkpoint-Computer -Description \"System Restore Point created by Forge\" -RestorePointType MODIFY_SETTINGS\n      Write-Host \"System Restore Point Created Successfully\" -ForegroundColor Green",
+        "group":  "System \u0026 Advanced"
     },
     {
         "id":  "EndTaskOnTaskbar",
@@ -738,7 +759,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "Storage",
@@ -754,7 +776,8 @@
                              "type":  "DWord",
                              "originalValue":  "1"
                          }
-                     ]
+                     ],
+        "group":  "System \u0026 Advanced"
     },
     {
         "id":  "WindowsAI",
@@ -778,7 +801,8 @@
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
                      ],
-        "invokeScript":  "$Appx = (Get-AppxPackage MicrosoftWindows.Client.CoreAI).PackageFullName\n      $Sid = (Get-LocalUser $Env:UserName).Sid.Value\n\n      New-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\EndOfLife\\$Sid\\$Appx\" -Force\n\n      Get-AppxPackage -AllUsers \"*Copilot*\" | Remove-AppxPackage -AllUsers\n      winget uninstall -e --name \"Copilot\" --silent --force --accept-source-agreements 2\u003e$null\n      Get-AppxPackage -AllUsers Microsoft.MicrosoftOfficeHub | Remove-AppxPackage -AllUsers\n\n      if ($Appx) {\n          Remove-AppxPackage $Appx\n      }\n\n      Set-Service -Name WSAIFabricSvc -StartupType Disabled\n      Disable-WindowsOptionalFeature -FeatureName Recall -Online -NoRestart\n\n      Write-Host \"Windows AI Disabled\""
+        "invokeScript":  "$Appx = (Get-AppxPackage MicrosoftWindows.Client.CoreAI).PackageFullName\n      $Sid = (Get-LocalUser $Env:UserName).Sid.Value\n\n      New-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\EndOfLife\\$Sid\\$Appx\" -Force\n\n      Get-AppxPackage -AllUsers \"*Copilot*\" | Remove-AppxPackage -AllUsers\n      winget uninstall -e --name \"Copilot\" --silent --force --accept-source-agreements 2\u003e$null\n      Get-AppxPackage -AllUsers Microsoft.MicrosoftOfficeHub | Remove-AppxPackage -AllUsers\n\n      if ($Appx) {\n          Remove-AppxPackage $Appx\n      }\n\n      Set-Service -Name WSAIFabricSvc -StartupType Disabled\n      Disable-WindowsOptionalFeature -FeatureName Recall -Online -NoRestart\n\n      Write-Host \"Windows AI Disabled\"",
+        "group":  "Better Privacy"
     },
     {
         "id":  "WPBT",
@@ -794,7 +818,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "Better Privacy"
     },
     {
         "id":  "PreventDeviceMetadataFromNetwork",
@@ -810,7 +835,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "Better Privacy"
     },
     {
         "id":  "RazerBlock",
@@ -835,7 +861,8 @@
                          }
                      ],
         "invokeScript":  "$RazerPath = \"$Env:SystemRoot\\Installer\\Razer\"\n\n      if (Test-Path $RazerPath) {\n        Remove-Item $RazerPath\\* -Recurse -Force\n      } else {\n        New-Item -Path $RazerPath -ItemType Directory\n      }\n\n      icacls $RazerPath /deny \"Everyone:(W)\"",
-        "undoScript":  "icacls \"$Env:SystemRoot\\Installer\\Razer\" /remove:d Everyone"
+        "undoScript":  "icacls \"$Env:SystemRoot\\Installer\\Razer\" /remove:d Everyone",
+        "group":  "Better Privacy"
     },
     {
         "id":  "DisableNotifications",
@@ -858,7 +885,8 @@
                              "type":  "DWord",
                              "originalValue":  "1"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "BlockAdobeNet",
@@ -867,7 +895,8 @@
         "type":  "checkbox",
         "description":  "Reduces user interruptions by selectively blocking connections to Adobe\u0027s activation and telemetry servers. Credit: Ruddernation-Designs",
         "invokeScript":  "$hostsUrl = Invoke-RestMethod -Uri https://github.com/Ruddernation-Designs/Adobe-URL-Block-List/raw/refs/heads/master/hosts\n      Add-Content -Path \"$Env:SystemRoot\\System32\\drivers\\etc\\hosts\" -Value $hostsUrl\n\n      ipconfig /flushdns\n      Write-Host \u0027Added Adobe url block list from host file\u0027",
-        "undoScript":  "Set-Content \"$Env:SystemRoot\\System32\\drivers\\etc\\hosts\" (\n          (Get-Content \"$Env:SystemRoot\\System32\\drivers\\etc\\hosts\") -join \"`n\" -replace \u0027(?s)#New Ver.*\u0027, \u0027\u0027\n      )\n\n      ipconfig /flushdns\n      Write-Host \u0027Removed Adobe url block list from host file\u0027"
+        "undoScript":  "Set-Content \"$Env:SystemRoot\\System32\\drivers\\etc\\hosts\" (\n          (Get-Content \"$Env:SystemRoot\\System32\\drivers\\etc\\hosts\") -join \"`n\" -replace \u0027(?s)#New Ver.*\u0027, \u0027\u0027\n      )\n\n      ipconfig /flushdns\n      Write-Host \u0027Removed Adobe url block list from host file\u0027",
+        "group":  "Better Privacy"
     },
     {
         "id":  "RightClickMenu",
@@ -876,7 +905,8 @@
         "type":  "checkbox",
         "description":  "Restores the classic context menu when right-clicking in File Explorer, replacing the simplified Windows 11 version.",
         "invokeScript":  "New-Item -Path \"HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\" -Name InprocServer32 -Value \"\" -Force\n      Stop-Process -Name explorer",
-        "undoScript":  "Remove-Item -Path \"HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\" -Recurse"
+        "undoScript":  "Remove-Item -Path \"HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\" -Recurse",
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "DiskCleanup",
@@ -884,7 +914,8 @@
         "category":  "Essential Tweaks",
         "type":  "checkbox",
         "description":  "Runs Disk Cleanup on Drive C: and removes old Windows Updates.",
-        "invokeScript":  "cleanmgr.exe /d C: /VERYLOWDISK\n      Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase"
+        "invokeScript":  "cleanmgr.exe /d C: /VERYLOWDISK\n      Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase",
+        "group":  "Debloat \u0026 Cleanup"
     },
     {
         "id":  "DeleteTempFiles",
@@ -892,7 +923,8 @@
         "category":  "Essential Tweaks",
         "type":  "checkbox",
         "description":  "Erases TEMP Folders.",
-        "invokeScript":  "Remove-Item -Path \"$Env:Temp\\*\" -Recurse -Force\n      Remove-Item -Path \"$Env:SystemRoot\\Temp\\*\" -Recurse -Force"
+        "invokeScript":  "Remove-Item -Path \"$Env:Temp\\*\" -Recurse -Force\n      Remove-Item -Path \"$Env:SystemRoot\\Temp\\*\" -Recurse -Force",
+        "group":  "Debloat \u0026 Cleanup"
     },
     {
         "id":  "IPv46",
@@ -908,7 +940,8 @@
                              "type":  "DWord",
                              "originalValue":  "0"
                          }
-                     ]
+                     ],
+        "group":  "Network \u0026 Connectivity"
     },
     {
         "id":  "Teredo",
@@ -926,7 +959,8 @@
                          }
                      ],
         "invokeScript":  "netsh interface teredo set state disabled",
-        "undoScript":  "netsh interface teredo set state default"
+        "undoScript":  "netsh interface teredo set state default",
+        "group":  "Network \u0026 Connectivity"
     },
     {
         "id":  "DisableIPv6",
@@ -944,7 +978,8 @@
                          }
                      ],
         "invokeScript":  "Disable-NetAdapterBinding -Name * -ComponentID ms_tcpip6",
-        "undoScript":  "Enable-NetAdapterBinding -Name * -ComponentID ms_tcpip6"
+        "undoScript":  "Enable-NetAdapterBinding -Name * -ComponentID ms_tcpip6",
+        "group":  "Network \u0026 Connectivity"
     },
     {
         "id":  "DisableBGapps",
@@ -960,7 +995,8 @@
                              "type":  "DWord",
                              "originalValue":  "0"
                          }
-                     ]
+                     ],
+        "group":  "Boost Performance"
     },
     {
         "id":  "DisableExplorerAutoDiscovery",
@@ -969,7 +1005,8 @@
         "type":  "checkbox",
         "description":  "Windows Explorer automatically tries to guess the type of the folder based on its contents, slowing down the browsing experience. WARNING! Will disable File Explorer grouping.",
         "invokeScript":  "# Previously detected folders\n      $bags = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\"\n\n      # Folder types lookup table\n      $bagMRU = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\BagMRU\"\n\n      # Flush Explorer view database\n      Remove-Item -Path $bags -Recurse -Force\n      Write-Host \"Removed $bags\"\n\n      Remove-Item -Path $bagMRU -Recurse -Force\n      Write-Host \"Removed $bagMRU\"\n\n      # Every folder\n      $allFolders = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell\"\n\n      if (!(Test-Path $allFolders)) {\n        New-Item -Path $allFolders -Force\n        Write-Host \"Created $allFolders\"\n      }\n\n      # Generic view\n      New-ItemProperty -Path $allFolders -Name \"FolderType\" -Value \"NotSpecified\" -PropertyType String -Force\n      Write-Host \"Set FolderType to NotSpecified\"\n\n      Write-Host Please sign out and back in, or restart your computer to apply the changes!",
-        "undoScript":  "# Previously detected folders\n      $bags = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\"\n\n      # Folder types lookup table\n      $bagMRU = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\BagMRU\"\n\n      # Flush Explorer view database\n      Remove-Item -Path $bags -Recurse -Force\n      Write-Host \"Removed $bags\"\n\n      Remove-Item -Path $bagMRU -Recurse -Force\n      Write-Host \"Removed $bagMRU\"\n\n      Write-Host Please sign out and back in, or restart your computer to apply the changes!"
+        "undoScript":  "# Previously detected folders\n      $bags = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\"\n\n      # Folder types lookup table\n      $bagMRU = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\BagMRU\"\n\n      # Flush Explorer view database\n      Remove-Item -Path $bags -Recurse -Force\n      Write-Host \"Removed $bags\"\n\n      Remove-Item -Path $bagMRU -Recurse -Force\n      Write-Host \"Removed $bagMRU\"\n\n      Write-Host Please sign out and back in, or restart your computer to apply the changes!",
+        "group":  "Boost Performance"
     },
     {
         "id":  "DetailedBSoD",
@@ -994,7 +1031,8 @@
                              "originalValue":  "0",
                              "defaultState":  "false"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "BatteryPercentage",
@@ -1011,7 +1049,8 @@
                              "originalValue":  "\u003cRemoveEntry\u003e",
                              "defaultState":  "false"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "DarkMode",
@@ -1038,7 +1077,8 @@
                          }
                      ],
         "invokeScript":  "Stop-Process -Name explorer -Force",
-        "undoScript":  "Stop-Process -Name explorer -Force"
+        "undoScript":  "Stop-Process -Name explorer -Force",
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "ShowExt",
@@ -1057,7 +1097,8 @@
                          }
                      ],
         "invokeScript":  "Stop-Process -Name explorer -Force",
-        "undoScript":  "Stop-Process -Name explorer -Force"
+        "undoScript":  "Stop-Process -Name explorer -Force",
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "HiddenFiles",
@@ -1076,7 +1117,8 @@
                          }
                      ],
         "invokeScript":  "Stop-Process -Name explorer -Force",
-        "undoScript":  "Stop-Process -Name explorer -Force"
+        "undoScript":  "Stop-Process -Name explorer -Force",
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "VerboseLogon",
@@ -1093,7 +1135,8 @@
                              "originalValue":  "0",
                              "defaultState":  "false"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "NewOutlook",
@@ -1134,7 +1177,8 @@
                              "originalValue":  "\u003cRemoveEntry\u003e",
                              "defaultState":  "true"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "Scrollbars",
@@ -1151,7 +1195,8 @@
                              "originalValue":  "1",
                              "defaultState":  "false"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "MultiplaneOverlay",
@@ -1187,7 +1232,8 @@
                                         },
                              "defaultValue":  "0"
                          }
-                     ]
+                     ],
+        "group":  "Boost Performance"
     },
     {
         "id":  "MouseAcceleration",
@@ -1220,7 +1266,8 @@
                              "originalValue":  "0",
                              "defaultState":  "true"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "NumLock",
@@ -1245,7 +1292,8 @@
                              "originalValue":  "0",
                              "defaultState":  "false"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "WindowSnapping",
@@ -1262,7 +1310,8 @@
                              "originalValue":  "0",
                              "defaultState":  "true"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "StandbyFix",
@@ -1279,7 +1328,8 @@
                              "originalValue":  "0",
                              "defaultState":  "true"
                          }
-                     ]
+                     ],
+        "group":  "System \u0026 Advanced"
     },
     {
         "id":  "S3Sleep",
@@ -1296,7 +1346,8 @@
                              "originalValue":  "\u003cRemoveEntry\u003e",
                              "defaultState":  "false"
                          }
-                     ]
+                     ],
+        "group":  "System \u0026 Advanced"
     },
     {
         "id":  "HideSettingsHome",
@@ -1313,7 +1364,8 @@
                              "originalValue":  "hide:home",
                              "defaultState":  "true"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "BingSearch",
@@ -1330,7 +1382,8 @@
                              "originalValue":  "0",
                              "defaultState":  "true"
                          }
-                     ]
+                     ],
+        "group":  "Better Privacy"
     },
     {
         "id":  "LoginBlur",
@@ -1347,7 +1400,8 @@
                              "originalValue":  "1",
                              "defaultState":  "true"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "DisableLockscreen",
@@ -1363,7 +1417,8 @@
                              "type":  "DWord",
                              "originalValue":  "\u003cRemoveEntry\u003e"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "StartMenuRecommendations",
@@ -1398,7 +1453,8 @@
                          }
                      ],
         "invokeScript":  "Stop-Process -Name explorer -Force",
-        "undoScript":  "Stop-Process -Name explorer -Force"
+        "undoScript":  "Stop-Process -Name explorer -Force",
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "StickyKeys",
@@ -1415,7 +1471,8 @@
                              "originalValue":  "58",
                              "defaultState":  "true"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "TaskbarAlignment",
@@ -1434,7 +1491,8 @@
                          }
                      ],
         "invokeScript":  "Stop-Process -Name explorer -Force",
-        "undoScript":  "Stop-Process -Name explorer -Force"
+        "undoScript":  "Stop-Process -Name explorer -Force",
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "TaskbarSearch",
@@ -1451,7 +1509,8 @@
                              "originalValue":  "0",
                              "defaultState":  "true"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "TaskView",
@@ -1468,7 +1527,8 @@
                              "originalValue":  "0",
                              "defaultState":  "true"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "GameMode",
@@ -1493,7 +1553,8 @@
                              "originalValue":  "0",
                              "defaultState":  "true"
                          }
-                     ]
+                     ],
+        "group":  "Boost Performance"
     },
     {
         "id":  "LongPaths",
@@ -1510,13 +1571,15 @@
                              "originalValue":  "0",
                              "defaultState":  "false"
                          }
-                     ]
+                     ],
+        "group":  "Customize \u0026 Gaming"
     },
     {
         "id":  "OOSUbutton",
         "name":  "O\u0026O ShutUp10++ - Run",
         "category":  "Advanced Tweaks",
-        "type":  "button"
+        "type":  "button",
+        "group":  "Better Privacy"
     },
     {
         "id":  "changedns",
@@ -1540,18 +1603,14 @@
                            "Mullvad_Ads_Trackers_Malware_Social",
                            "Mullvad_Ads_Trackers_Malware_Adult_Gambling",
                            "Mullvad_Ads_Trackers_Malware_Adult_Gambling_Social"
-                       ]
+                       ],
+        "group":  "Network \u0026 Connectivity"
     },
     {
         "id":  "AddUltPerf",
-        "name":  "Ultimate Performance Profile - Enable",
+        "name":  "Ultimate Performance Profile",
         "category":  "Performance Plans",
-        "type":  "button"
-    },
-    {
-        "id":  "RemoveUltPerf",
-        "name":  "Ultimate Performance Profile - Disable",
-        "category":  "Performance Plans",
-        "type":  "button"
+        "type":  "checkbox",
+        "group":  "Boost Performance"
     }
 ]

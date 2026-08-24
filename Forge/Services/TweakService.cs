@@ -65,15 +65,17 @@ public class TweakService
 
         var order = new Dictionary<string, int>
         {
-            ["Essential Tweaks"] = 0,
-            ["Advanced Tweaks"] = 1,
-            ["Customize Preferences"] = 2,
-            ["Performance Plans"] = 3
+            ["Boost Performance"] = 0,
+            ["Better Privacy"] = 1,
+            ["Debloat & Cleanup"] = 2,
+            ["Customize & Gaming"] = 3,
+            ["Network & Connectivity"] = 4,
+            ["System & Advanced"] = 5
         };
 
         _tweaks = JsonSerializer
             .Deserialize<List<TweakItem>>(json: File.ReadAllText(path), options)
-            ?.OrderBy(t => order.GetValueOrDefault(t.Category, 9))
+            ?.OrderBy(t => order.GetValueOrDefault(t.Group, 9))
             .ThenBy(t => t.Name)
             .ToList()
             ?? [];
@@ -289,8 +291,22 @@ public class TweakService
         });
     }
 
-    public async Task SetUltimatePerformanceAsync(bool enable, CancellationToken ct = default)
+    public bool GetUltimatePerformanceActive()
     {
+        try
+        {
+            string output = RunCaptureAsync("powercfg /getactivescheme", CancellationToken.None)
+                .GetAwaiter().GetResult();
+
+            return output.Contains("Ultimate Performance", StringComparison.OrdinalIgnoreCase);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task SetUltimatePerformanceAsync(bool enable, CancellationToken ct = default)    {
         if (enable)
         {
             string output = await RunCaptureAsync("powercfg /duplicatescheme " + UltimatePerfGuid, ct);

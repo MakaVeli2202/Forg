@@ -27,7 +27,7 @@
                        FontWeight="SemiBold"
                        Foreground="White"/>
 
-            <TextBlock Text="Apply proven system tweaks. Every tweak can be undone."
+            <TextBlock Text="One click to apply, one click to undo. Hover any tweak for details."
                        Foreground="#B39B85"
                        Margin="0,2,0,0"
                        FontSize="11"/>
@@ -47,7 +47,7 @@
             <DockPanel LastChildFill="False">
 
                 <Grid DockPanel.Dock="Left"
-                      Width="260">
+                      Width="240">
 
                     <TextBox x:Name="SearchBox"
                              Height="30"
@@ -75,60 +75,62 @@
 
                 </Grid>
 
-                <WrapPanel DockPanel.Dock="Left"
-                           Margin="10,0,0,0"
-                           VerticalAlignment="Center">
+                <ListBox x:Name="GroupFilterList"
+                         DockPanel.Dock="Left"
+                         Margin="10,0,0,0"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         SelectedIndex="0"
+                         SelectionChanged="GroupFilterList_SelectionChanged">
 
-                    <Button x:Name="BtnSelectNotApplied"
-                            Content="Select Unapplied"
-                            Style="{StaticResource ForgeButtonStyle}"
-                            Background="#261B12"
-                            Width="120"
-                            Height="30"
-                            Margin="0,0,8,0"
-                            Click="BtnSelectNotApplied_Click"/>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
 
-                    <Button x:Name="BtnSelectAll"
-                            Content="Select All"
-                            Style="{StaticResource ForgeButtonStyle}"
-                            Background="#261B12"
-                            Width="90"
-                            Height="30"
-                            Margin="0,0,8,0"
-                            Click="BtnSelectAll_Click"/>
+                    <ListBox.Resources>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border x:Name="PillBorder"
+                                                Background="#261B12"
+                                                BorderBrush="#3D2C1D"
+                                                BorderThickness="1"
+                                                CornerRadius="12"
+                                                Padding="12,5"
+                                                Margin="0,0,6,0"
+                                                Cursor="Hand">
+                                            <ContentPresenter x:Name="PillText"
+                                                              TextElement.Foreground="#FFF3E8"
+                                                              TextElement.FontSize="11.5"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="PillBorder" Property="Background" Value="#362514"/>
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="PillBorder" Property="Background" Value="#FF7A00"/>
+                                                <Setter TargetName="PillBorder" Property="BorderBrush" Value="#FF9A2F"/>
+                                                <Setter TargetName="PillText" Property="TextElement.Foreground" Value="#1A0F05"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.Resources>
 
-                    <Button x:Name="BtnClearSelection"
-                            Content="Clear"
-                            Style="{StaticResource ForgeButtonStyle}"
-                            Background="#261B12"
-                            Width="70"
-                            Height="30"
-                            Margin="0,0,14,0"
-                            Click="BtnClearSelection_Click"/>
+                    <ListBoxItem Content="All" Tag=""/>
+                    <ListBoxItem Content="&#x1F680; Boost Performance" Tag="Boost Performance"/>
+                    <ListBoxItem Content="&#x1F512; Better Privacy" Tag="Better Privacy"/>
+                    <ListBoxItem Content="&#x1F9F9; Debloat &amp; Cleanup" Tag="Debloat &amp; Cleanup"/>
+                    <ListBoxItem Content="&#x1F3A8; Customize &amp; Gaming" Tag="Customize &amp; Gaming"/>
+                    <ListBoxItem Content="&#x1F310; Network" Tag="Network &amp; Connectivity"/>
+                    <ListBoxItem Content="&#x2699;&#xFE0F; System &amp; Advanced" Tag="System &amp; Advanced"/>
 
-                </WrapPanel>
-
-                <StackPanel DockPanel.Dock="Right"
-                            Orientation="Horizontal">
-
-                    <Button x:Name="BtnUndoSelected"
-                            Content="Undo Selected"
-                            Style="{StaticResource ForgeButtonStyle}"
-                            Background="#0078D4"
-                            Width="120"
-                            Height="30"
-                            Margin="0,0,8,0"
-                            Click="BtnUndoSelected_Click"/>
-
-                    <Button x:Name="BtnApplySelected"
-                            Content="Apply Selected"
-                            Style="{StaticResource ForgeButtonStyle}"
-                            Background="#F28C28"
-                            Width="120"
-                            Height="30"
-                            Click="BtnApplySelected_Click"/>
-
-                </StackPanel>
+                </ListBox>
 
             </DockPanel>
 
@@ -155,7 +157,7 @@
 
                                 <DataTemplate>
 
-                                    <Border Margin="2,8,2,6">
+                                    <Border Margin="2,10,2,6">
 
                                         <StackPanel Orientation="Horizontal">
 
@@ -191,23 +193,33 @@
                                     BorderThickness="1"
                                     CornerRadius="8"
                                     Padding="10,8"
-                                    Margin="2,2">
+                                    Margin="2,2"
+                                    ToolTipService.InitialShowDelay="200"
+                                    ToolTipService.ShowDuration="20000">
+
+                                <Border.ToolTip>
+                                    <StackPanel MaxWidth="300">
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontWeight="Bold"
+                                                   FontSize="12.5"/>
+                                        <TextBlock Text="{Binding Description}"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,3,0,0"/>
+                                        <TextBlock Foreground="#B39B85"
+                                                   FontSize="10.5"
+                                                   Margin="0,5,0,0"
+                                                   Text="{Binding Group}"/>
+                                    </StackPanel>
+                                </Border.ToolTip>
 
                                 <Grid>
 
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <CheckBox Grid.Column="0"
-                                              IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                              Visibility="{Binding IsCheckbox, Converter={StaticResource BoolToVis}}"
-                                              VerticalAlignment="Top"
-                                              Margin="0,2,10,0"/>
-
-                                    <StackPanel Grid.Column="1">
+                                    <StackPanel Grid.Column="0">
 
                                         <StackPanel Orientation="Horizontal">
 
@@ -223,14 +235,16 @@
                                                     CornerRadius="4"
                                                     Padding="5,1"
                                                     Margin="8,0,0,0"
-                                                    VerticalAlignment="Center">
+                                                    VerticalAlignment="Center"
+                                                    Visibility="Collapsed">
                                                 <TextBlock Text="CAUTION"
                                                            FontSize="8"
                                                            FontWeight="Bold"
                                                            Foreground="#E08A85"/>
                                             </Border>
 
-                                            <Border Background="#1F2A24"
+                                            <Border x:Name="AppliedBadge"
+                                                    Background="#18251D"
                                                     BorderBrush="#2C8C5F"
                                                     BorderThickness="1"
                                                     CornerRadius="4"
@@ -255,9 +269,10 @@
 
                                     </StackPanel>
 
-                                    <StackPanel Grid.Column="2"
+                                    <StackPanel Grid.Column="1"
                                                 VerticalAlignment="Center"
-                                                Margin="10,0,0,0">
+                                                Margin="10,0,0,0"
+                                                Orientation="Horizontal">
 
                                         <ComboBox x:Name="ComboSelector"
                                                   MinWidth="190"
@@ -279,6 +294,17 @@
                                                 Tag="{Binding}"
                                                 Click="RunTweakButton_Click"/>
 
+                                        <Button x:Name="ApplyToggle"
+                                                Content="Apply"
+                                                Style="{StaticResource ForgeButtonStyle}"
+                                                Background="#F28C28"
+                                                Width="110"
+                                                Height="28"
+                                                FontSize="11"
+                                                Tag="{Binding}"
+                                                Loaded="ApplyToggle_Loaded"
+                                                Click="ApplyToggle_Click"/>
+
                                     </StackPanel>
 
                                 </Grid>
@@ -295,6 +321,11 @@
                                     <Setter TargetName="TweakRow" Property="Background" Value="#241709"/>
                                     <Setter TargetName="TweakRow" Property="BorderBrush" Value="#454D58"/>
                                 </Trigger>
+
+                                <DataTrigger Binding="{Binding IsApplied}" Value="True">
+                                    <Setter TargetName="ApplyToggle" Property="Content" Value="Undo"/>
+                                    <Setter TargetName="ApplyToggle" Property="Background" Value="#0078D4"/>
+                                </DataTrigger>
 
                             </DataTemplate.Triggers>
 

@@ -1,4 +1,5 @@
-﻿using Forge.Views;
+﻿using System.Collections.Generic;
+using Forge.Views;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -105,7 +106,9 @@ namespace Forge
                 case "apps":
                     ActivateNav(BtnApps);
                     PageTitle.Text = "APPS";
-                    MainContent.Content = new AppsView();
+                    var appsView = new AppsView();
+                    MainContent.Content = appsView;
+                    ApplySectionStates(appsView);
                     break;
 
                 case "tweaks":
@@ -162,26 +165,56 @@ namespace Forge
 
         private void BtnSettings_Click(object sender, RoutedEventArgs e) => NavigateTo("settings");
 
+        private static readonly Dictionary<string, bool> SectionStates = new()
+        {
+            ["StatsSection"] = true,
+            ["SearchSection"] = true,
+            ["FiltersSection"] = true,
+            ["SelectionSection"] = true,
+            ["ActivitySection"] = true,
+            ["StatusSection"] = true,
+            ["ActionsSection"] = true
+        };
+
+        private void SetSectionState(
+            string sectionName,
+            object sender,
+            RoutedEventArgs e)
+        {
+            bool visible = (sender as System.Windows.Controls.MenuItem)?.IsChecked == true;
+
+            SectionStates[sectionName] = visible;
+            CurrentAppsView?.SetSectionVisibility(sectionName, visible);
+        }
+
+        private void ApplySectionStates(AppsView appsView)
+        {
+            foreach (var pair in SectionStates)
+            {
+                appsView.SetSectionVisibility(pair.Key, pair.Value);
+            }
+        }
+
         private void ViewCounters_Checked(object sender, RoutedEventArgs e) =>
-            CurrentAppsView?.SetSectionVisibility("StatsSection", (sender as System.Windows.Controls.MenuItem)?.IsChecked == true);
+            SetSectionState("StatsSection", sender, e);
 
         private void ViewSearch_Checked(object sender, RoutedEventArgs e) =>
-            CurrentAppsView?.SetSectionVisibility("SearchSection", (sender as System.Windows.Controls.MenuItem)?.IsChecked == true);
+            SetSectionState("SearchSection", sender, e);
 
         private void ViewFilters_Checked(object sender, RoutedEventArgs e) =>
-            CurrentAppsView?.SetSectionVisibility("FiltersSection", (sender as System.Windows.Controls.MenuItem)?.IsChecked == true);
+            SetSectionState("FiltersSection", sender, e);
 
         private void ViewSelection_Checked(object sender, RoutedEventArgs e) =>
-            CurrentAppsView?.SetSectionVisibility("SelectionSection", (sender as System.Windows.Controls.MenuItem)?.IsChecked == true);
+            SetSectionState("SelectionSection", sender, e);
 
         private void ViewActivity_Checked(object sender, RoutedEventArgs e) =>
-            CurrentAppsView?.SetSectionVisibility("ActivitySection", (sender as System.Windows.Controls.MenuItem)?.IsChecked == true);
+            SetSectionState("ActivitySection", sender, e);
 
         private void ViewStatus_Checked(object sender, RoutedEventArgs e) =>
-            CurrentAppsView?.SetSectionVisibility("StatusSection", (sender as System.Windows.Controls.MenuItem)?.IsChecked == true);
+            SetSectionState("StatusSection", sender, e);
 
         private void ViewActions_Checked(object sender, RoutedEventArgs e) =>
-            CurrentAppsView?.SetSectionVisibility("ActionsSection", (sender as System.Windows.Controls.MenuItem)?.IsChecked == true);
+            SetSectionState("ActionsSection", sender, e);
 
 
 

@@ -9,6 +9,8 @@ namespace Forge.Views;
 
 public partial class TweaksView : UserControl
 {
+    private const string UltimatePerfId = "UltPerf";
+
     private readonly TweakService _tweakService = new();
     private ICollectionView? _view;
     private bool _isBusy;
@@ -43,7 +45,7 @@ public partial class TweaksView : UserControl
         _view = CollectionViewSource.GetDefaultView(tweaks);
 
         _view.GroupDescriptions.Add(
-            new PropertyGroupDescription(nameof(TweakItem.Category)));
+            new PropertyGroupDescription(nameof(TweakItem.Group)));
 
         _view.Filter = FilterTweak;
 
@@ -54,6 +56,11 @@ public partial class TweaksView : UserControl
     {
         try
         {
+            if (tweak.Id == UltimatePerfId)
+            {
+                return _tweakService.GetUltimatePerformanceActive();
+            }
+
             return _tweakService.GetAppliedState(tweak);
         }
         catch
@@ -64,6 +71,19 @@ public partial class TweaksView : UserControl
 
     private bool FilterTweak(object item)
     {
+        if (item is not TweakItem tweak)
+        {
+            return false;
+        }
+
+        string group = SelectedGroupName();
+
+        if (group.Length > 0 &&
+            !string.Equals(tweak.Group, group, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
         string query = SearchBox.Text.Trim();
 
         if (query.Length == 0)
@@ -71,14 +91,22 @@ public partial class TweaksView : UserControl
             return true;
         }
 
-        if (item is not TweakItem tweak)
-        {
-            return false;
-        }
-
         return tweak.Name.Contains(query, StringComparison.OrdinalIgnoreCase) ||
                (tweak.Description?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false) ||
-               tweak.Category.Contains(query, StringComparison.OrdinalIgnoreCase);
+               tweak.Group.Contains(query, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private string SelectedGroupName() =>
+        GroupFilterList.SelectedItem is ListBoxItem item &&
+        item.Tag is string tag
+            ? tag
+            : string.Empty;
+
+    private void GroupFilterList_SelectionChanged(
+        object sender,
+        SelectionChangedEventArgs e)
+    {
+        _view?.Refresh();
     }
 
     private void SearchBox_TextChanged(
@@ -153,7 +181,8 @@ public partial class TweaksView : UserControl
         object sender,
         RoutedEventArgs e)
     {
-        if (sender is not Button button ||
+        if (_isBusy ||
+            sender is not Button button ||
             button.Tag is not TweakItem tweak)
         {
             return;
@@ -167,18 +196,6 @@ public partial class TweaksView : UserControl
                     ct => _tweakService.RunOosuAsync(ct));
                 break;
 
-            case "AddUltPerf":
-                await RunExclusiveAsync(
-                    "Enabling Ultimate Performance plan...",
-                    ct => _tweakService.SetUltimatePerformanceAsync(true, ct));
-                break;
-
-            case "RemoveUltPerf":
-                await RunExclusiveAsync(
-                    "Restoring default power plans...",
-                    ct => _tweakService.SetUltimatePerformanceAsync(false, ct));
-                break;
-
             default:
                 await RunExclusiveAsync(
                     $"Running {tweak.Name}...",
@@ -188,66 +205,80 @@ public partial class TweaksView : UserControl
         }
     }
 
-    private async void BtnApplySelected_Click(
+    private void ApplyToggle_Loaded(
         object sender,
         RoutedEventArgs e)
     {
-        var selected = GetSelectedTweaks().ToList();
-
-        if (selected.Count == 0)
+        if (sender is not Button button ||
+            button.Tag is not TweakItem tweak)
         {
-            SetStatus("Nothing selected.");
             return;
         }
 
-        foreach (var tweak in selected)
-        {
-            await RunExclusiveAsync(
-                $"Applying: {tweak.Name}",
-                ct => _tweakService.ApplyAsync(tweak, ct),
-                () => tweak.IsApplied = SafeState(tweak),
-                keepBusyBetweenItems: true);
-        }
-
-        EndBusy();
-        SetStatus($"Applied {selected.Count} tweak(s).");
+        RefreshToggleLabel(button, tweak);
     }
 
-    private async void BtnUndoSelected_Click(
+    private async void ApplyToggle_Click(
         object sender,
         RoutedEventArgs e)
     {
-        var selected = GetSelectedTweaks().ToList();
-
-        if (selected.Count == 0)
+        if (_isBusy ||
+            sender is not Button button ||
+            button.Tag is not TweakItem tweak)
         {
-            SetStatus("Nothing selected.");
             return;
         }
 
-        foreach (var tweak in selected)
+        if (tweak.Id == UltimatePerfId)
         {
+            bool enable = tweak.IsApplied != true;
+
             await RunExclusiveAsync(
-                $"Undoing: {tweak.Name}",
-                ct => _tweakService.UndoAsync(tweak, ct),
-                () => tweak.IsApplied = SafeState(tweak),
-                keepBusyBetweenItems: true);
+                enable
+                    ? "Enabling Ultimate Performance plan..."
+                    : "Restoring default power plans...",
+                ct => _tweakService.SetUltimatePerformanceAsync(enable, ct),
+                () => RefreshToggleLabel(button, tweak));
+
+            return;
         }
 
-        EndBusy();
-        SetStatus($"Undid {selected.Count} tweak(s).");
+        bool undo = tweak.IsApplied == true;
+
+        await RunExclusiveAsync(
+            undo
+                ? $"Undoing: {tweak.Name}"
+                : $"Applying: {tweak.Name}",
+            ct => undo
+                ? _tweakService.UndoAsync(tweak, ct)
+                : _tweakService.ApplyAsync(tweak, ct),
+            () =>
+            {
+                tweak.IsApplied = SafeState(tweak);
+                RefreshToggleLabel(button, tweak);
+            });
     }
 
-    private IEnumerable<TweakItem> GetSelectedTweaks() =>
-        (_tweakService.Tweaks).Where(t => t.IsCheckbox && t.IsSelected);
+    private void RefreshToggleLabel(
+        Button button,
+        TweakItem tweak)
+    {
+        bool applied = tweak.Id == UltimatePerfId
+            ? SafeState(tweak) == true
+            : tweak.IsApplied == true;
+
+        button.Content = applied ? "Undo" : "Apply";
+        button.Background = applied
+            ? (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter().ConvertFromString("#0078D4")
+            : (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter().ConvertFromString("#F28C28");
+    }
 
     private async Task RunExclusiveAsync(
         string statusMessage,
         Func<CancellationToken, Task> action,
-        Action? onComplete = null,
-        bool keepBusyBetweenItems = false)
+        Action? onComplete = null)
     {
-        BeginBusy(statusMessage, keepBusyBetweenItems);
+        BeginBusy(statusMessage);
 
         try
         {
@@ -264,23 +295,13 @@ public partial class TweaksView : UserControl
         finally
         {
             onComplete?.Invoke();
-
-            if (!keepBusyBetweenItems)
-            {
-                EndBusy();
-            }
+            EndBusy();
         }
     }
 
-    private void BeginBusy(
-        string message,
-        bool alreadyBusy = false)
+    private void BeginBusy(string message)
     {
-        if (!alreadyBusy || !_isBusy)
-        {
-            _isBusy = true;
-        }
-
+        _isBusy = true;
         SetStatus(message);
         SetButtonsEnabled(false);
     }
@@ -294,11 +315,6 @@ public partial class TweaksView : UserControl
 
     private void SetButtonsEnabled(bool enabled)
     {
-        BtnApplySelected.IsEnabled = enabled;
-        BtnUndoSelected.IsEnabled = enabled;
-        BtnSelectAll.IsEnabled = enabled;
-        BtnSelectNotApplied.IsEnabled = enabled;
-        BtnClearSelection.IsEnabled = enabled;
         BtnCancel.IsEnabled = !enabled;
     }
 
@@ -316,36 +332,6 @@ public partial class TweaksView : UserControl
         string message)
     {
         Dispatcher.BeginInvoke(() => LogLine(message));
-    }
-
-    private void BtnSelectNotApplied_Click(
-        object sender,
-        RoutedEventArgs e)
-    {
-        foreach (var tweak in _tweakService.Tweaks.Where(t => t.IsCheckbox))
-        {
-            tweak.IsSelected = tweak.IsApplied != true;
-        }
-    }
-
-    private void BtnSelectAll_Click(
-        object sender,
-        RoutedEventArgs e)
-    {
-        foreach (var tweak in _tweakService.Tweaks.Where(t => t.IsCheckbox))
-        {
-            tweak.IsSelected = true;
-        }
-    }
-
-    private void BtnClearSelection_Click(
-        object sender,
-        RoutedEventArgs e)
-    {
-        foreach (var tweak in _tweakService.Tweaks.Where(t => t.IsCheckbox))
-        {
-            tweak.IsSelected = false;
-        }
     }
 
     private void BtnCancel_Click(
