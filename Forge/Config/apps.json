@@ -354,7 +354,7 @@
         "category":  "Utilities",
         "description":  "Lightweight text editor with syntax highlighting and plugins.",
         "icon":  "/Assets/Images/Apps/Notepad++.Notepad++.png",
-        "recommended":  false,
+        "recommended":  true,
         "publisher":  "Notepad++ Team",
         "homepage":  "https://notepad-plus-plus.org/",
         "tags":  [
@@ -549,7 +549,7 @@
         "category":  "Multimedia",
         "description":  "Versatile open-source media player for nearly any format.",
         "icon":  "/Assets/Images/Apps/VideoLAN.VLC.png",
-        "recommended":  false,
+        "recommended":  true,
         "publisher":  "VideoLAN",
         "homepage":  "https://www.videolan.org/vlc/",
         "tags":  [
@@ -684,7 +684,7 @@
         "category":  "Gaming",
         "description":  "Game library and storefront for PC gaming.",
         "icon":  "/Assets/Images/Apps/Valve.Steam.png",
-        "recommended":  true,
+        "recommended":  false,
         "publisher":  "Valve",
         "homepage":  "https://store.steampowered.com/",
         "tags":  [
@@ -789,7 +789,7 @@
         "category":  "Browsers",
         "description":  "Fast, widely used web browser with Google services.",
         "icon":  "/Assets/Images/Apps/Google.Chrome.png",
-        "recommended":  false,
+        "recommended":  true,
         "featured":  true,
         "publisher":  "Google",
         "homepage":  "https://www.google.com/chrome/",
@@ -1147,21 +1147,6 @@
                  ]
     },
     {
-        "name":  "OpenVPN Connect",
-        "wingetId":  "OpenVPNTechnologies.OpenVPNConnect",
-        "category":  "Pro Tools",
-        "description":  "Official VPN client for secure encrypted connections.",
-        "icon":  "/Assets/Images/Apps/OpenVPNTechnologies.OpenVPNConnect.png",
-        "recommended":  false,
-        "publisher":  "OpenVPN",
-        "homepage":  "https://openvpn.net/",
-        "tags":  [
-                     "vpn",
-                     "security",
-                     "network"
-                 ]
-    },
-    {
         "name":  "Advanced IP Scanner",
         "wingetId":  "Famatech.AdvancedIPScanner",
         "category":  "Pro Tools",
@@ -1243,7 +1228,7 @@
         "category":  "Utilities",
         "description":  "Control and synchronize RGB lighting across all your devices.",
         "icon":  "/Assets/Images/Apps/WhirlwindFX.SignalRgb.png",
-        "recommended":  false,
+        "recommended":  true,
         "publisher":  "Whirlwind FX",
         "homepage":  "https://signalrgb.com/",
         "tags":  [
@@ -1308,7 +1293,7 @@
         "category":  "Benchmarks",
         "description":  "All-in-one CPU, GPU and PSU stress testing with built-in stability detection.",
         "icon":  "/Assets/Images/Apps/OCBase.OCCT.Personal.png",
-        "recommended":  true,
+        "recommended":  false,
         "installUrl":  null,
         "publisher":  "OCBase",
         "homepage":  "https://www.ocbase.com/",
@@ -1325,7 +1310,7 @@
         "category":  "Benchmarks",
         "description":  "The classic GPU stress test and burn-in benchmark for graphics cards.",
         "icon":  "/Assets/Images/Apps/Geeks3D.FurMark.2.png",
-        "recommended":  true,
+        "recommended":  false,
         "installUrl":  null,
         "publisher":  "Geeks3D",
         "homepage":  "https://geeks3d.com/furmark/",
@@ -1342,7 +1327,7 @@
         "category":  "Benchmarks",
         "description":  "Industry-standard CPU rendering benchmark for single and multi-core performance.",
         "icon":  "/Assets/Images/Apps/Maxon.CinebenchR23.png",
-        "recommended":  true,
+        "recommended":  false,
         "installUrl":  null,
         "publisher":  "Maxon",
         "homepage":  "https://www.maxon.net/en/cinebench",
@@ -1359,7 +1344,7 @@
         "category":  "Benchmarks",
         "description":  "GPU benchmark and stress test with a demanding real-time 4K scene.",
         "icon":  "/Assets/Images/Apps/Unigine.SuperpositionBenchmark.png",
-        "recommended":  true,
+        "recommended":  false,
         "installUrl":  null,
         "publisher":  "Unigine",
         "homepage":  "https://benchmark.unigine.com/superposition",
@@ -1376,7 +1361,7 @@
         "category":  "Benchmarks",
         "description":  "Legendary torture-test for maximum CPU heat, power and stability checking.",
         "icon":  "/Assets/Images/Apps/mersenne.prime95.png",
-        "recommended":  true,
+        "recommended":  false,
         "installUrl":  null,
         "publisher":  "Mersenne Research",
         "homepage":  "https://www.mersenne.org/download/",
@@ -1393,7 +1378,7 @@
         "category":  "Benchmarks",
         "description":  "Deep system information and live sensor monitoring while you stress test.",
         "icon":  "/Assets/Images/Apps/REALiX.HWiNFO.png",
-        "recommended":  true,
+        "recommended":  false,
         "installUrl":  null,
         "publisher":  "REALiX",
         "homepage":  "https://www.hwinfo.com/",
@@ -1402,6 +1387,55 @@
                      "sensors",
                      "monitoring",
                      "info"
+                 ]
+    },
+    {
+        "name":  "NVIDIA App",
+        "wingetId":  "Nvidia.NVIDIAApp",
+        "category":  "Utilities",
+        "description":  "One hub for GeForce drivers, optimization and game settings.",
+        "icon":  "/Assets/Images/Apps/Nvidia.NVIDIAApp.png",
+        "recommended":  true,
+        "installUrl":  "https://www.nvidia.com/en-us/software/nvidia-app/",
+        "publisher":  "NVIDIA",
+        "homepage":  "https://www.nvidia.com/en-us/software/nvidia-app/",
+        "featured":  false,
+        "tags":  [
+                     "gpu",
+                     "drivers"
+                 ]
+    },
+    {
+        "name":  "WinRAR",
+        "wingetId":  "RARLab.WinRAR",
+        "category":  "Utilities",
+        "description":  "The classic archiver for RAR and ZIP compression with strong encryption.",
+        "icon":  "/Assets/Images/Apps/RARLab.WinRAR.png",
+        "recommended":  true,
+        "installUrl":  null,
+        "publisher":  "RARLAB",
+        "homepage":  "https://www.win-rar.com/",
+        "featured":  false,
+        "tags":  [
+                     "archive",
+                     "compression",
+                     "rar"
+                 ]
+    },
+    {
+        "name":  "Spotify",
+        "wingetId":  "Spotify.Spotify",
+        "category":  "Multimedia",
+        "description":  "Music streaming with playlists, podcasts and personalized mixes.",
+        "icon":  "/Assets/Images/Apps/Spotify.Spotify.png",
+        "recommended":  true,
+        "installUrl":  null,
+        "publisher":  "Spotify",
+        "homepage":  "https://open.spotify.com/",
+        "featured":  false,
+        "tags":  [
+                     "music",
+                     "streaming"
                  ]
     }
 ]

@@ -31,6 +31,14 @@ public partial class DriversView : UserControl
         _scanning = true;
         BtnScan.IsEnabled = false;
 
+        await ScanCoreAsync();
+
+        BtnScan.IsEnabled = true;
+        _scanning = false;
+    }
+
+    private async Task ScanCoreAsync()
+    {
         StatusText.Text = "Scanning hardware devices via WMI...";
         StatusText.Foreground = new SolidColorBrush(Color.FromRgb(0xB3, 0x9B, 0x85));
         DeviceList.Items.Clear();
@@ -97,9 +105,233 @@ public partial class DriversView : UserControl
             StatusText.Text = $"Scan failed: {ex.Message}";
             StatusText.Foreground = new SolidColorBrush(Color.FromRgb(0xF8, 0x71, 0x71));
         }
+    }
 
-        BtnScan.IsEnabled = true;
-        _scanning = false;
+    private async void FixAll_Click(object sender, RoutedEventArgs e)
+    {
+        if (_scanning) return;
+        _scanning = true;
+        BtnFixAll.IsEnabled = false;
+        BtnScan.IsEnabled = false;
+
+        try
+        {
+            LogRow("Starting one-click driver fix...");
+
+            SetMsg("Step 1 of 4 - Creating a restore point...", 0xB39B85);
+            await CreateRestorePointCoreAsync();
+            LogRow("Restore point ready.");
+
+            SetMsg("Step 2 of 4 - Scanning all devices...", 0xB39B85);
+            await ScanCoreAsync();
+
+            int problems = _devices.Count(d => d.ErrorCode != 0);
+
+            if (problems == 0)
+            {
+                SetMsg("All drivers are healthy - nothing to fix.", 0x22C55E);
+                LogRow("No problem devices found.");
+                return;
+            }
+
+            foreach (var d in _devices.Where(d => d.ErrorCode != 0))
+            {
+                LogRow($"Problem: {d.Name} - {DescribeCode(d.ErrorCode)}");
+            }
+
+            SetMsg($"Step 3 of 4 - Asking Windows Update for driver fixes ({problems} device(s))...", 0xB39B85);
+            LogRow("Searching Windows Update for WHQL driver updates - this can take a few minutes.");
+
+            var outcome = await RunWindowsUpdateDriverFixAsync();
+
+            SetMsg("Step 4 of 4 - Re-scanning devices to verify...", 0xB39B85);
+            await ScanCoreAsync();
+
+            int remaining = _devices.Count(d => d.ErrorCode != 0);
+
+            if (outcome.Installed > 0 && remaining == 0)
+            {
+                SetMsg($"Fixed! Installed {outcome.Installed} driver update(s). All devices now healthy.", 0x22C55E);
+            }
+            else if (outcome.Installed > 0)
+            {
+                SetMsg($"Installed {outcome.Installed} driver update(s). {remaining} device(s) still need manual attention (no WU driver available).", 0xFFB155);
+            }
+            else if (outcome.Searched)
+            {
+                SetMsg($"{remaining} device(s) need attention, but Windows Update has no driver for them. Try the manufacturer tools below.", 0xFFB155);
+            }
+            else
+            {
+                SetMsg("Could not reach Windows Update. Check your internet connection and try again.", 0xF87171);
+            }
+        }
+        finally
+        {
+            BtnFixAll.IsEnabled = true;
+            BtnScan.IsEnabled = true;
+            _scanning = false;
+        }
+    }
+
+    private void SetMsg(string message, uint rgb)
+    {
+        StatusText.Text = message;
+        StatusText.Foreground = new SolidColorBrush(
+            Color.FromRgb((byte)(rgb >> 16), (byte)(rgb >> 8), (byte)rgb));
+    }
+
+    private void LogRow(string message)
+    {
+        DeviceList.Items.Add(new TextBlock
+        {
+            Text = $"[{DateTime.Now:HH:mm:ss}]  {message}",
+            FontFamily = new FontFamily("Consolas"),
+            FontSize = 11.5,
+            Foreground = new SolidColorBrush(Color.FromRgb(0xB3, 0x9B, 0x85)),
+            Margin = new Thickness(2, 1, 0, 1),
+            TextWrapping = TextWrapping.Wrap
+        });
+
+        if (DeviceList.Items.Count > 0)
+        {
+            DeviceList.ScrollIntoView(DeviceList.Items[^1]);
+        }
+    }
+
+    private async Task<(bool Searched, int Installed)> RunWindowsUpdateDriverFixAsync()
+    {
+        string scriptDir = Path.Combine(Path.GetTempPath(), "Forge");
+        Directory.CreateDirectory(scriptDir);
+
+        string scriptPath = Path.Combine(scriptDir, "FixDrivers.ps1");
+
+        const string script = """
+$ErrorActionPreference = 'Stop'
+try {
+    $session = New-Object -ComObject Microsoft.Update.Session
+    $searcher = $session.CreateUpdateSearcher()
+    Write-Output "PHASE:SEARCHING"
+    $result = $searcher.Search("IsInstalled=0 and Type='Driver'")
+    if ($result.Updates.Count -eq 0) { Write-Output "COUNT:0"; exit 0 }
+    Write-Output "COUNT:$($result.Updates.Count)"
+
+    $coll = New-Object -ComObject Microsoft.Update.UpdateColl
+    foreach ($u in $result.Updates) {
+        if (-not $u.EulaAccepted) { [void]$u.AcceptEula() }
+        [void]$coll.Add($u)
+        Write-Output "FOUND:$($u.Title)"
+    }
+
+    Write-Output "PHASE:DOWNLOADING"
+    $downloader = $session.CreateUpdateDownloader()
+    $downloader.Updates = $coll
+    [void]$downloader.Download()
+
+    Write-Output "PHASE:INSTALLING"
+    $installer = $session.CreateUpdateInstaller()
+    $installer.Updates = $coll
+    $ires = $installer.Install()
+    Write-Output "RESULT:$($ires.ResultCode)"
+    exit 0
+} catch {
+    Write-Output "ERROR:$($_.Exception.Message)"
+    exit 1
+}
+""";
+
+        await File.WriteAllTextAsync(scriptPath, script);
+
+        var psi = new ProcessStartInfo
+        {
+            FileName = "powershell.exe",
+            Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{scriptPath}\"",
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            CreateNoWindow = true
+        };
+
+        int found = 0;
+        bool searched = false;
+
+        var tcs = new TaskCompletionSource<int>();
+
+        using var process = Process.Start(psi)!;
+
+        process.OutputDataReceived += (_, args) =>
+        {
+            if (string.IsNullOrWhiteSpace(args.Data)) return;
+            string line = args.Data.Trim();
+
+            Dispatcher.BeginInvoke(() =>
+            {
+                if (line.StartsWith("FOUND:", StringComparison.Ordinal))
+                {
+                    found++;
+                    LogRow($"Driver fix available: {line[6..]}");
+                }
+                else if (line.StartsWith("PHASE:", StringComparison.Ordinal))
+                {
+                    string phase = line[6..];
+                    SetMsg($"Windows Update - {phase.ToLowerInvariant()} drivers...", phase == "SEARCHING" ? 0xB39B85u : 0xFFB155u);
+                    if (phase == "SEARCHING") searched = true;
+                }
+                else if (line.StartsWith("COUNT:", StringComparison.Ordinal))
+                {
+                    searched = true;
+                    LogRow($"Windows Update offers {line[6..]} driver update(s).");
+                }
+                else if (line.StartsWith("RESULT:", StringComparison.Ordinal))
+                {
+                    LogRow(line == "RESULT:2" || line == "RESULT:3"
+                        ? "Installation finished successfully."
+                        : $"Installation ended with result code {line[7..]}.");
+                }
+                else
+                {
+                    LogRow(line);
+                }
+            });
+        };
+
+        process.ErrorDataReceived += (_, args) =>
+        {
+            if (!string.IsNullOrWhiteSpace(args.Data))
+            {
+                Dispatcher.BeginInvoke(() => LogRow("! " + args.Data.Trim()));
+            }
+        };
+
+        process.Exited += (_, _) => tcs.TrySetResult(process.ExitCode);
+        process.EnableRaisingEvents = true;
+
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+
+        await tcs.Task;
+
+        try { File.Delete(scriptPath); } catch { }
+
+        return (searched, found);
+    }
+
+    private async Task CreateRestorePointCoreAsync()
+    {
+        await Task.Run(() =>
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = "powershell.exe",
+                Arguments =
+                    "-NoProfile -ExecutionPolicy Bypass -Command " +
+                    "\"Checkpoint-Computer -Description 'Forge Driver Work' -RestorePointType MODIFY_SETTINGS\"",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            using var p = Process.Start(psi)!;
+            p.WaitForExit(120000);
+        });
     }
 
     private static string QueryDevices()
@@ -330,20 +562,7 @@ public partial class DriversView : UserControl
         try
         {
             StatusText.Text = "Creating restore point...";
-            await Task.Run(() =>
-            {
-                var psi = new ProcessStartInfo
-                {
-                    FileName = "powershell.exe",
-                    Arguments =
-                        "-NoProfile -ExecutionPolicy Bypass -Command " +
-                        "\"Checkpoint-Computer -Description 'Forge Driver Work' -RestorePointType MODIFY_SETTINGS\"",
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-                using var p = Process.Start(psi)!;
-                p.WaitForExit(120000);
-            });
+            await CreateRestorePointCoreAsync();
             StatusText.Text = "Restore point created (or already created within the last 24h).";
             StatusText.Foreground = new SolidColorBrush(Color.FromRgb(0x22, 0xC5, 0x5E));
         }

@@ -80,9 +80,17 @@
                    Margin="4,0,0,14"
                    LastChildFill="False">
 
+            <Button x:Name="BtnFixAll"
+                    Content="Fix All Drivers"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    DockPanel.Dock="Left"
+                    Margin="0,0,10,0"
+                    ToolTip="Creates a restore point, scans every device, then downloads and installs any missing/corrupt/outdated drivers that Windows Update offers - fully automatic."
+                    Click="FixAll_Click"/>
+
             <Button x:Name="BtnScan"
                     Content="Scan Devices"
-                    Style="{StaticResource PrimaryButtonStyle}"
+                    Style="{StaticResource ForgeButtonStyle}"
                     DockPanel.Dock="Left"
                     Click="Scan_Click"/>
 

@@ -9,7 +9,7 @@ namespace Forge.Views;
 
 public partial class HomeView : UserControl
 {
-    private const int MaxListItems = 8;
+    private const int MaxListItems = 16;
 
     public HomeView()
     {
