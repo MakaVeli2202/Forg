@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="Forge.Views.AppsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <Grid Margin="14">
 
@@ -304,6 +305,39 @@
                            DockPanel.Dock="Left"
                            Margin="0,0,12,0"/>
 
+                <StackPanel Orientation="Horizontal"
+                            DockPanel.Dock="Left"
+                            VerticalAlignment="Center"
+                            Margin="0,0,12,0">
+
+                    <TextBlock Text="Sort:"
+                               Foreground="#8A7462"
+                               FontSize="11"
+                               VerticalAlignment="Center"
+                               Margin="0,0,6,0"/>
+
+                    <ComboBox x:Name="SortComboBox"
+                              Width="140"
+                              Height="24"
+                              FontSize="11"
+                              Background="#1C130C"
+                              Foreground="#FFF3E8"
+                              BorderBrush="#313841"
+                              BorderThickness="1"
+                              SelectedIndex="0"
+                              SelectionChanged="SortComboBox_SelectionChanged">
+
+                        <ComboBoxItem Content="Name (A-Z)"/>
+                        <ComboBoxItem Content="Name (Z-A)"/>
+                        <ComboBoxItem Content="Category"/>
+                        <ComboBoxItem Content="Publisher"/>
+                        <ComboBoxItem Content="Installed First"/>
+                        <ComboBoxItem Content="Recommended First"/>
+
+                    </ComboBox>
+
+                </StackPanel>
+
                 <Border x:Name="SelectionSection"
                         Background="#1C130C"
                         BorderBrush="#313841"
@@ -323,6 +357,7 @@
                                 MinWidth="80"
                                 FontSize="11"
                                 Margin="0,0,6,0"
+                                ToolTip="Select all applications in the current view"
                                 Click="BtnSelectAll_Click"/>
 
                         <Button x:Name="BtnSelectRecommended"
@@ -333,6 +368,7 @@
                                 MinWidth="95"
                                 FontSize="11"
                                 Margin="0,0,6,0"
+                                ToolTip="Select only recommended applications"
                                 Click="BtnSelectRecommended_Click"/>
 
                         <Button x:Name="BtnClearSelection"
@@ -342,6 +378,7 @@
                                 Height="26"
                                 MinWidth="60"
                                 FontSize="11"
+                                ToolTip="Clear all selections"
                                 Click="BtnClearSelection_Click"/>
 
                     </StackPanel>
@@ -356,10 +393,145 @@
 
         <Grid Grid.Row="4">
 
-            <Border Background="#161009"
+            <!-- Skeleton Loader -->
+            <Border x:Name="SkeletonGrid"
+                    Background="#161009"
                     CornerRadius="12"
                     Padding="2"
                     VerticalAlignment="Stretch">
+
+                <Grid Margin="6">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Scanning installed apps..."
+                               Foreground="#8A7462"
+                               FontSize="12"
+                               Margin="4,0,0,10"/>
+
+                    <ItemsControl Grid.Row="1"
+                                  Margin="2,0,0,0">
+
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="3"
+                                        Padding="8,7"
+                                        Width="168"
+                                        MinHeight="82"
+                                        Background="#1C130C"
+                                        BorderBrush="#323841"
+                                        BorderThickness="1"
+                                        CornerRadius="9">
+
+                                    <Grid>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Icon placeholder -->
+                                        <Border Width="32"
+                                                Height="32"
+                                                CornerRadius="8"
+                                                Background="#2A2118"/>
+
+                                        <StackPanel Grid.Column="1"
+                                                    Margin="8,0,16,0"
+                                                    VerticalAlignment="Top">
+
+                                            <!-- Name bar -->
+                                            <Border x:Name="NameBar"
+                                                    Height="10"
+                                                    CornerRadius="3"
+                                                    Background="#2A2118"
+                                                    HorizontalAlignment="Left"
+                                                    Width="90"/>
+
+                                            <!-- Category bar -->
+                                            <Border x:Name="CategoryBar"
+                                                    Height="8"
+                                                    CornerRadius="3"
+                                                    Background="#2A2118"
+                                                    HorizontalAlignment="Left"
+                                                    Width="60"
+                                                    Margin="0,6,0,0"/>
+
+                                            <!-- Status bar -->
+                                            <Border x:Name="StatusBar"
+                                                    Height="14"
+                                                    CornerRadius="4"
+                                                    Background="#2A2118"
+                                                    HorizontalAlignment="Left"
+                                                    Width="50"
+                                                    Margin="0,8,0,0"/>
+
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Border.Triggers>
+                                        <EventTrigger RoutedEvent="Border.Loaded">
+                                            <BeginStoryboard x:Name="PulseStoryboard">
+                                                <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                                    <DoubleAnimation Storyboard.TargetName="NameBar"
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     From="0.4" To="1.0"
+                                                                     Duration="0:0:1.2"/>
+                                                    <DoubleAnimation Storyboard.TargetName="CategoryBar"
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     From="0.4" To="1.0"
+                                                                     Duration="0:0:1.2"
+                                                                     BeginTime="0:0:0.15"/>
+                                                    <DoubleAnimation Storyboard.TargetName="StatusBar"
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     From="0.4" To="1.0"
+                                                                     Duration="0:0:1.2"
+                                                                     BeginTime="0:0:0.3"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Border.Triggers>
+
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+
+                        <ItemsControl.ItemsSource>
+                            <x:Array Type="{x:Type sys:Int32}">
+                                <sys:Int32>1</sys:Int32><sys:Int32>2</sys:Int32><sys:Int32>3</sys:Int32><sys:Int32>4</sys:Int32>
+                                <sys:Int32>5</sys:Int32><sys:Int32>6</sys:Int32><sys:Int32>7</sys:Int32><sys:Int32>8</sys:Int32>
+                                <sys:Int32>9</sys:Int32><sys:Int32>10</sys:Int32><sys:Int32>11</sys:Int32><sys:Int32>12</sys:Int32>
+                                <sys:Int32>13</sys:Int32><sys:Int32>14</sys:Int32><sys:Int32>15</sys:Int32><sys:Int32>16</sys:Int32>
+                                <sys:Int32>17</sys:Int32><sys:Int32>18</sys:Int32><sys:Int32>19</sys:Int32><sys:Int32>20</sys:Int32>
+                                <sys:Int32>21</sys:Int32><sys:Int32>22</sys:Int32><sys:Int32>23</sys:Int32><sys:Int32>24</sys:Int32>
+                                <sys:Int32>25</sys:Int32><sys:Int32>26</sys:Int32><sys:Int32>27</sys:Int32><sys:Int32>28</sys:Int32>
+                                <sys:Int32>29</sys:Int32><sys:Int32>30</sys:Int32><sys:Int32>31</sys:Int32><sys:Int32>32</sys:Int32>
+                                <sys:Int32>33</sys:Int32><sys:Int32>34</sys:Int32><sys:Int32>35</sys:Int32><sys:Int32>36</sys:Int32>
+                                <sys:Int32>37</sys:Int32><sys:Int32>38</sys:Int32><sys:Int32>39</sys:Int32><sys:Int32>40</sys:Int32>
+                            </x:Array>
+                        </ItemsControl.ItemsSource>
+
+                    </ItemsControl>
+
+                </Grid>
+
+            </Border>
+
+            <Border x:Name="AppsContent"
+                    Background="#161009"
+                    CornerRadius="12"
+                    Padding="2"
+                    VerticalAlignment="Stretch"
+                    Visibility="Collapsed">
 
                 <ScrollViewer Margin="6"
                               Background="Transparent"
@@ -764,6 +936,7 @@
                         MinWidth="130"
                         FontSize="11.5"
                         Margin="0,0,6,0"
+                        ToolTip="Install all selected applications"
                         Click="BtnInstall_Click"/>
 
                 <Button x:Name="BtnUpgrade"
@@ -774,6 +947,7 @@
                         MinWidth="90"
                         FontSize="11.5"
                         Margin="0,0,6,0"
+                        ToolTip="Upgrade selected installed applications"
                         Click="BtnUpgrade_Click"/>
 
                 <Button x:Name="BtnDetectInstalled"
@@ -784,6 +958,7 @@
                         MinWidth="115"
                         FontSize="11.5"
                         Margin="0,0,6,0"
+                        ToolTip="Scan system for installed applications"
                         Click="BtnDetectInstalled_Click"/>
 
                 <Button x:Name="BtnUninstall"
@@ -794,6 +969,7 @@
                         MinWidth="90"
                         FontSize="11.5"
                         Margin="0,0,6,0"
+                        ToolTip="Remove selected installed applications"
                         Click="BtnUninstall_Click"/>
 
                 <Button x:Name="BtnCancel"
@@ -804,6 +980,7 @@
                         MinWidth="80"
                         FontSize="11.5"
                         IsEnabled="False"
+                        ToolTip="Cancel the current operation"
                         Click="BtnCancel_Click"/>
 
             </WrapPanel>

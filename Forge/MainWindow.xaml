@@ -170,18 +170,21 @@
                         Content="&#x2014;"
                         Style="{StaticResource TitleBarButtonStyle}"
                         FontSize="14"
+                        ToolTip="Minimize"
                         Click="Minimize_Click"/>
 
                 <Button Grid.Column="3"
                         Content="&#x25A1;"
                         Style="{StaticResource TitleBarButtonStyle}"
                         FontSize="12"
+                        ToolTip="Maximize / Restore"
                         Click="Maximize_Click"/>
 
                 <Button Grid.Column="4"
                         Content="&#x2715;"
                         Style="{StaticResource TitleBarButtonStyle}"
                         Foreground="#F43F5E"
+                        ToolTip="Close"
                         Click="Close_Click"/>
 
             </Grid>
@@ -267,41 +270,49 @@
                     <Button x:Name="BtnHome"
                             Style="{StaticResource NavButtonStyle}"
                             Content="&#x1F3E0; Home"
+                            ToolTip="Home - Dashboard"
                             Click="BtnHome_Click"/>
 
                     <Button x:Name="BtnApps"
                             Style="{StaticResource NavButtonStyle}"
                             Content="&#x1F4E6; Apps"
+                            ToolTip="Apps - Install &amp; manage software"
                             Click="BtnApps_Click"/>
 
                     <Button x:Name="BtnTweaks"
                             Style="{StaticResource NavButtonStyle}"
                             Content="&#x1F527; Tweaks"
+                            ToolTip="Tweaks - Windows configuration"
                             Click="BtnTweaks_Click"/>
 
                     <Button x:Name="BtnSystem"
                             Style="{StaticResource NavButtonStyle}"
                             Content="&#x1F5A5;&#xFE0F; System"
+                            ToolTip="System - System information"
                             Click="BtnSystem_Click"/>
 
                     <Button x:Name="BtnUpdates"
                             Style="{StaticResource NavButtonStyle}"
                             Content="&#x1F504; Updates"
+                            ToolTip="Updates - Windows Update"
                             Click="BtnUpdates_Click"/>
 
                     <Button x:Name="BtnDrivers"
                             Style="{StaticResource NavButtonStyle}"
                             Content="&#x1F50C; Drivers"
+                            ToolTip="Drivers - Driver management"
                             Click="BtnDrivers_Click"/>
 
                     <Button x:Name="BtnIso"
                             Style="{StaticResource NavButtonStyle}"
                             Content="&#x1F4BF; ISO Creator"
+                            ToolTip="ISO Creator - Create bootable media"
                             Click="BtnIso_Click"/>
 
                     <Button x:Name="BtnSettings"
                             Style="{StaticResource NavButtonStyle}"
                             Content="&#x2699;&#xFE0F; Settings"
+                            ToolTip="Settings - Application settings"
                             Click="BtnSettings_Click"/>
 
                 </StackPanel>

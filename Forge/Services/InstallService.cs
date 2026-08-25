@@ -12,6 +12,8 @@ public class InstallService
 
     public event EventHandler<string>? OutputLine;
 
+    public event EventHandler<string>? DefaultApplied;
+
     public InstallService()
     {
         _packageManager = new WingetPackageManager();
@@ -51,6 +53,14 @@ public class InstallService
                     OpenExternalInstaller(app);
                     app.Status = AppStatus.Installed;
                     app.IsInstalled = true;
+
+                    string defaultResult = DefaultAppService.ApplyDefaults(app.PostInstallAction);
+
+                    if (!string.IsNullOrEmpty(defaultResult))
+                    {
+                        DefaultApplied?.Invoke(this, $"{app.Name}: {defaultResult}");
+                    }
+
                     continue;
                 }
 
@@ -60,6 +70,13 @@ public class InstallService
 
                 app.Status = AppStatus.Installed;
                 app.IsInstalled = true;
+
+                string installDefaultResult = DefaultAppService.ApplyDefaults(app.PostInstallAction);
+
+                if (!string.IsNullOrEmpty(installDefaultResult))
+                {
+                    DefaultApplied?.Invoke(this, $"{app.Name}: {installDefaultResult}");
+                }
             }
             catch
             {

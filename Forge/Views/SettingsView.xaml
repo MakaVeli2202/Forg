@@ -96,6 +96,12 @@
                             Margin="10,0,0,0"
                             Click="ReloadCatalogs_Click"/>
 
+                    <Button Content="Clear App Cache"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Margin="10,0,0,0"
+                            ToolTip="Clear cached installed apps data and force a fresh scan"
+                            Click="ClearCache_Click"/>
+
                 </WrapPanel>
 
             </StackPanel>

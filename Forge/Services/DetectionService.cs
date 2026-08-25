@@ -6,19 +6,46 @@ namespace Forge.Services;
 public class DetectionService
 {
     public async Task DetectInstalledAppsAsync(
-        List<AppItem> apps)
+        List<AppItem> apps,
+        bool forceRefresh = false)
     {
+        if (!forceRefresh)
+        {
+            var cachedIds = AppCacheService.GetInstalledIds();
+
+            if (cachedIds is not null)
+            {
+                foreach (var app in apps)
+                {
+                    app.IsInstalled = cachedIds.Contains(
+                        app.WingetId,
+                        StringComparer.OrdinalIgnoreCase);
+                }
+
+                return;
+            }
+        }
+
         var output = await GetWingetListAsync();
         var lines = output
             .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)
             .Select(line => line.TrimStart())
             .ToList();
 
+        var installedIds = new List<string>();
+
         foreach (var app in apps)
         {
-            app.IsInstalled = lines.Any(line =>
-                LineMatchesApp(line, app));
+            bool found = lines.Any(line => LineMatchesApp(line, app));
+            app.IsInstalled = found;
+
+            if (found && !string.IsNullOrWhiteSpace(app.WingetId))
+            {
+                installedIds.Add(app.WingetId);
+            }
         }
+
+        AppCacheService.SetInstalledIds(installedIds);
     }
 
     private static bool LineMatchesApp(

@@ -60,6 +60,9 @@ public class AppItem : INotifyPropertyChanged
     [JsonPropertyName("tags")]
     public List<string> Tags { get; set; } = [];
 
+    [JsonPropertyName("postInstallAction")]
+    public string? PostInstallAction { get; set; }
+
     [JsonIgnore]
     public string IconDisplay
     {

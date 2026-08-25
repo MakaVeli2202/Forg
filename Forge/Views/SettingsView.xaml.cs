@@ -72,6 +72,17 @@ public partial class SettingsView : UserControl
             MessageBoxImage.Information);
     }
 
+    private void ClearCache_Click(object sender, RoutedEventArgs e)
+    {
+        Services.AppCacheService.Clear();
+
+        MessageBox.Show(
+            "App cache cleared. The next page load will perform a fresh scan.",
+            "Forge",
+            MessageBoxButton.OK,
+            MessageBoxImage.Information);
+    }
+
     private void Startup_Changed(object sender, RoutedEventArgs e)
     {
         if (_loading)

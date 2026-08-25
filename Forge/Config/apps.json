@@ -357,6 +357,7 @@
         "recommended":  true,
         "publisher":  "Notepad++ Team",
         "homepage":  "https://notepad-plus-plus.org/",
+        "postInstallAction":  "setAsDefaultTextEditor",
         "tags":  [
                      "editor",
                      "text",
@@ -552,6 +553,7 @@
         "recommended":  true,
         "publisher":  "VideoLAN",
         "homepage":  "https://www.videolan.org/vlc/",
+        "postInstallAction":  "setAsDefaultMediaPlayer",
         "tags":  [
                      "media",
                      "video",
@@ -793,6 +795,7 @@
         "featured":  true,
         "publisher":  "Google",
         "homepage":  "https://www.google.com/chrome/",
+        "postInstallAction":  "setAsDefaultBrowser",
         "tags":  [
                      "browser",
                      "web",
@@ -1415,7 +1418,7 @@
         "installUrl":  null,
         "publisher":  "RARLAB",
         "homepage":  "https://www.win-rar.com/",
-        "featured":  false,
+        "postInstallAction":  "setAsDefaultArchiver",
         "tags":  [
                      "archive",
                      "compression",

@@ -24,16 +24,13 @@ public partial class AppsView : UserControl
         Loaded += AppsView_Loaded;
         _installService.ProgressChanged += InstallService_ProgressChanged;
         _installService.OutputLine += InstallService_OutputLine;
+        _installService.DefaultApplied += InstallService_DefaultApplied;
     }
 
     private async void AppsView_Loaded(
         object sender,
         RoutedEventArgs e)
     {
-        var loadingWindow = new LoadingWindow();
-
-        loadingWindow.Show();
-
         try
         {
             LogInfo("Loading apps catalog.");
@@ -78,7 +75,8 @@ public partial class AppsView : UserControl
         }
         finally
         {
-            loadingWindow.Close();
+            SkeletonGrid.Visibility = Visibility.Collapsed;
+            AppsContent.Visibility = Visibility.Visible;
         }
     }
 
@@ -140,7 +138,7 @@ public partial class AppsView : UserControl
                     StringComparison.OrdinalIgnoreCase));
         }
 
-        return filtered.ToList();
+        return GetSortedApps(filtered.ToList());
     }
 
     private void SearchBox_TextChanged(
@@ -173,11 +171,41 @@ public partial class AppsView : UserControl
         UpdateStatistics();
     }
 
-    private async Task DetectInstalledAppsAsync()
+    private void SortComboBox_SelectionChanged(
+        object sender,
+        SelectionChangedEventArgs e)
     {
-        LogInfo("Starting installed apps scan.");
+        FilterApps();
+    }
+
+    private List<AppItem> GetSortedApps(List<AppItem> apps)
+    {
+        if (SortComboBox is null)
+        {
+            return apps;
+        }
+
+        return SortComboBox.SelectedIndex switch
+        {
+            0 => [.. apps.OrderBy(a => a.Name, StringComparer.OrdinalIgnoreCase)],
+            1 => [.. apps.OrderByDescending(a => a.Name, StringComparer.OrdinalIgnoreCase)],
+            2 => [.. apps.OrderBy(a => a.Category, StringComparer.OrdinalIgnoreCase)
+                          .ThenBy(a => a.Name, StringComparer.OrdinalIgnoreCase)],
+            3 => [.. apps.OrderBy(a => a.Publisher, StringComparer.OrdinalIgnoreCase)
+                          .ThenBy(a => a.Name, StringComparer.OrdinalIgnoreCase)],
+            4 => [.. apps.OrderByDescending(a => a.IsInstalled)
+                          .ThenBy(a => a.Name, StringComparer.OrdinalIgnoreCase)],
+            5 => [.. apps.OrderByDescending(a => a.Recommended)
+                          .ThenBy(a => a.Name, StringComparer.OrdinalIgnoreCase)],
+            _ => apps
+        };
+    }
+
+    private async Task DetectInstalledAppsAsync(bool forceRefresh = false)
+    {
+        LogInfo(forceRefresh ? "Starting forced installed apps scan." : "Starting installed apps scan (using cache if available).");
         await _detectionService
-            .DetectInstalledAppsAsync(_apps);
+            .DetectInstalledAppsAsync(_apps, forceRefresh);
         LogInfo("Installed apps scan completed.");
 
         foreach (var app in _apps)
@@ -200,18 +228,18 @@ public partial class AppsView : UserControl
         object sender,
         RoutedEventArgs e)
     {
-        var loadingWindow = new LoadingWindow();
-
-        loadingWindow.Show();
+        AppsContent.Visibility = Visibility.Collapsed;
+        SkeletonGrid.Visibility = Visibility.Visible;
 
         try
         {
-            await DetectInstalledAppsAsync();
+            await DetectInstalledAppsAsync(forceRefresh: true);
             UpdateStatistics();
         }
         finally
         {
-            loadingWindow.Close();
+            SkeletonGrid.Visibility = Visibility.Collapsed;
+            AppsContent.Visibility = Visibility.Visible;
         }
     }
 
@@ -241,6 +269,11 @@ public partial class AppsView : UserControl
 
             BtnInstall.IsEnabled = false;
             BtnCancel.IsEnabled = true;
+
+            foreach (var app in selectedApps)
+            {
+                app.Status = AppStatus.Installing;
+            }
 
             UpdateStatus(
                 "Installing applications...",
@@ -372,6 +405,12 @@ public partial class AppsView : UserControl
             LogInfo($"Upgrade requested for {selectedApps.Count} app(s): {FormatAppList(selectedApps)}");
 
             BtnUpgrade.IsEnabled = false;
+
+            foreach (var app in selectedApps)
+            {
+                app.Status = AppStatus.Upgrading;
+            }
+
             UpdateStatus(
                 "Upgrading applications...",
                 0);
@@ -465,6 +504,11 @@ public partial class AppsView : UserControl
             LogInfo($"Uninstall confirmed for {FormatAppList(selectedApps)}");
 
             BtnUninstall.IsEnabled = false;
+
+            foreach (var app in selectedApps)
+            {
+                app.Status = AppStatus.Uninstalling;
+            }
 
             UpdateStatus(
                 "Uninstalling applications...",
@@ -572,6 +616,16 @@ public partial class AppsView : UserControl
             InstallProgressBar.IsIndeterminate = true;
 
             Log($"      {line}");
+        });
+    }
+
+    private void InstallService_DefaultApplied(
+        object? sender,
+        string message)
+    {
+        Dispatcher.Invoke(() =>
+        {
+            LogInfo($"DEFAULTS  {message}");
         });
     }
 
