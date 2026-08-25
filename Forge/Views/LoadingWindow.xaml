@@ -19,10 +19,10 @@
                       NonClientFrameEdges="None"/>
     </WindowChrome.WindowChrome>
 
-    <Border BorderBrush="#33FF7A00"
+    <Border BorderBrush="#8CFF7A00"
             BorderThickness="1"
             CornerRadius="18"
-            Background="#171009">
+            Background="#1E1E1E">
 
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Center">
@@ -55,7 +55,7 @@
             <TextBlock Text="FORGE"
                        FontSize="24"
                        FontWeight="Bold"
-                       Foreground="#FFF3E8"
+                       Foreground="#E8E0D8"
                        Margin="0,10,0,0"
                        HorizontalAlignment="Center">
                 <TextBlock.Effect>
@@ -68,7 +68,7 @@
 
             <TextBlock Text="Stoking the forge - scanning installed apps..."
                        Margin="0,12,0,18"
-                       Foreground="#B39B85"
+                       Foreground="#9A9088"
                        FontSize="13"
                        HorizontalAlignment="Center"/>
 
@@ -76,7 +76,7 @@
                          Width="280"
                          Height="4"
                          BorderThickness="0"
-                         Background="#241709"
+                         Background="#2D2D30"
                          Foreground="#FF7A00"/>
 
         </StackPanel>

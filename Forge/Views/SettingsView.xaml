@@ -14,8 +14,8 @@
         <!-- About -->
 
         <Border Grid.Row="0"
-                Background="#1C130C"
-                BorderBrush="#33FF7A00"
+                Background="#252526"
+                BorderBrush="#8CFF7A00"
                 BorderThickness="1"
                 CornerRadius="14"
                 Padding="22,18"
@@ -40,7 +40,7 @@
                     <TextBlock Text="FORGE"
                                FontSize="22"
                                FontWeight="Bold"
-                               Foreground="#FFF3E8"/>
+                               Foreground="#E8E0D8"/>
 
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,6,0,0">
@@ -48,7 +48,7 @@
                         <TextBlock x:Name="VersionText"
                                    Text="Version 1.0.0"
                                    FontSize="12"
-                                   Foreground="#B39B85"/>
+                                   Foreground="#9A9088"/>
 
                         <TextBlock x:Name="ElevationText"
                                    FontSize="12"
@@ -66,8 +66,8 @@
         <!-- Catalogs -->
 
         <Border Grid.Row="1"
-                Background="#1C130C"
-                BorderBrush="#33FF7A00"
+                Background="#252526"
+                BorderBrush="#8CFF7A00"
                 BorderThickness="1"
                 CornerRadius="14"
                 Padding="22,18"
@@ -78,11 +78,11 @@
                 <TextBlock Text="CATALOGS"
                            FontSize="11"
                            FontWeight="Bold"
-                           Foreground="#8A7462"/>
+                           Foreground="#6E6460"/>
 
                 <TextBlock Text="Forge reads its app and tweak catalogs from JSON files - edit them to add your own entries."
                            FontSize="12.5"
-                           Foreground="#B39B85"
+                           Foreground="#9A9088"
                            Margin="0,6,0,14"/>
 
                 <WrapPanel>
@@ -111,8 +111,8 @@
         <!-- Behaviour -->
 
         <Border Grid.Row="2"
-                Background="#1C130C"
-                BorderBrush="#33FF7A00"
+                Background="#252526"
+                BorderBrush="#8CFF7A00"
                 BorderThickness="1"
                 CornerRadius="14"
                 Padding="22,18"
@@ -123,11 +123,11 @@
                 <TextBlock Text="BEHAVIOUR"
                            FontSize="11"
                            FontWeight="Bold"
-                           Foreground="#8A7462"/>
+                           Foreground="#6E6460"/>
 
                 <CheckBox x:Name="StartupCheck"
                           Content="Start Forge with Windows (current user)"
-                          Foreground="#FFF3E8"
+                          Foreground="#E8E0D8"
                           FontSize="13"
                           Margin="0,12,0,0"
                           Checked="Startup_Changed"
@@ -135,7 +135,7 @@
 
                 <TextBlock Text="Forge always runs elevated; the dark forge theme is baked in."
                            FontSize="11.5"
-                           Foreground="#8A7462"
+                           Foreground="#6E6460"
                            Margin="0,10,0,0"/>
 
             </StackPanel>

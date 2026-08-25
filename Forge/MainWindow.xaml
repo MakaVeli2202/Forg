@@ -25,7 +25,7 @@
     </WindowChrome.WindowChrome>
 
     <Border CornerRadius="14"
-            Background="#0F0B08"
+            Background="#1E1E1E"
             BorderBrush="#33FF7A00"
             BorderThickness="1"
             ClipToBounds="True">
@@ -33,12 +33,12 @@
         <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="38"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="205"/>
+            <ColumnDefinition Width="210"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -46,10 +46,10 @@
 
         <Border Grid.Row="0"
                 Grid.ColumnSpan="2"
-                Background="#161009"
+                Background="#171717"
                 CornerRadius="14,14,0,0"
                 BorderThickness="0,0,0,1"
-                BorderBrush="#33FF7A00"
+                BorderBrush="#2A2A2A"
                 SnapsToDevicePixels="True"
                 MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
 
@@ -67,7 +67,7 @@
                 <!-- Branding -->
 
                 <StackPanel Orientation="Horizontal"
-                            Margin="12,0"
+                            Margin="14,0"
                             VerticalAlignment="Center">
 
                     <Image Source="/Assets/Images/forge-logo.png"
@@ -76,97 +76,84 @@
                            Margin="0,0,8,0">
 
                         <Image.Effect>
-
                             <DropShadowEffect Color="#FF7A00"
-                                              BlurRadius="15"
+                                              BlurRadius="12"
                                               ShadowDepth="0"
-                                              Opacity="0.7"/>
-
+                                              Opacity="0.6"/>
                         </Image.Effect>
 
                     </Image>
 
                     <TextBlock Text="F"
-                               Foreground="{StaticResource BrandEmberBrush}"
+                               Foreground="#FF7A00"
                                FontWeight="Bold"
-                               FontSize="16">
-
-                        <TextBlock.Effect>
-
-                            <DropShadowEffect Color="#FF7A00"
-                                              BlurRadius="10"
-                                              ShadowDepth="0"
-                                              Opacity="0.9"/>
-
-                        </TextBlock.Effect>
-
-                    </TextBlock>
+                               FontSize="15"/>
 
                     <TextBlock Text="ORGE"
-                               Foreground="{StaticResource TextBrush}"
+                               Foreground="#E8E0D8"
                                FontWeight="SemiBold"
-                               FontSize="16"/>
+                               FontSize="15"/>
 
                 </StackPanel>
 
-                                <Menu Grid.Column="1"
-                                            Background="Transparent"
-                                            Foreground="{StaticResource TextMutedBrush}"
-                                            VerticalAlignment="Center"
-                                            Margin="0,0,12,0"
-                                            FontSize="12">
+                <Menu Grid.Column="1"
+                      Background="Transparent"
+                      Foreground="#9A9088"
+                      VerticalAlignment="Center"
+                      Margin="0,0,12,0"
+                      FontSize="12">
 
-                                        <MenuItem Header="View">
-                                                <MenuItem Header="Counters"
-                                                                    IsCheckable="True"
-                                                                    IsChecked="True"
-                                                                    Checked="ViewCounters_Checked"
-                                                                    Unchecked="ViewCounters_Checked"/>
+                    <MenuItem Header="View">
+                        <MenuItem Header="Counters"
+                                  IsCheckable="True"
+                                  IsChecked="True"
+                                  Checked="ViewCounters_Checked"
+                                  Unchecked="ViewCounters_Checked"/>
 
-                                                <MenuItem Header="Search"
-                                                                    IsCheckable="True"
-                                                                    IsChecked="True"
-                                                                    Checked="ViewSearch_Checked"
-                                                                    Unchecked="ViewSearch_Checked"/>
+                        <MenuItem Header="Search"
+                                  IsCheckable="True"
+                                  IsChecked="True"
+                                  Checked="ViewSearch_Checked"
+                                  Unchecked="ViewSearch_Checked"/>
 
-                                                <MenuItem Header="Filters"
-                                                                    IsCheckable="True"
-                                                                    IsChecked="True"
-                                                                    Checked="ViewFilters_Checked"
-                                                                    Unchecked="ViewFilters_Checked"/>
+                        <MenuItem Header="Filters"
+                                  IsCheckable="True"
+                                  IsChecked="True"
+                                  Checked="ViewFilters_Checked"
+                                  Unchecked="ViewFilters_Checked"/>
 
-                                                <Separator/>
+                        <Separator/>
 
-                                                <MenuItem Header="Selection Toolbar"
-                                                                    IsCheckable="True"
-                                                                    IsChecked="True"
-                                                                    Checked="ViewSelection_Checked"
-                                                                    Unchecked="ViewSelection_Checked"/>
+                        <MenuItem Header="Selection Toolbar"
+                                  IsCheckable="True"
+                                  IsChecked="True"
+                                  Checked="ViewSelection_Checked"
+                                  Unchecked="ViewSelection_Checked"/>
 
-                                                <MenuItem Header="Activity Log"
-                                                                    IsCheckable="True"
-                                                                    IsChecked="True"
-                                                                    Checked="ViewActivity_Checked"
-                                                                    Unchecked="ViewActivity_Checked"/>
+                        <MenuItem Header="Activity Log"
+                                  IsCheckable="True"
+                                  IsChecked="True"
+                                  Checked="ViewActivity_Checked"
+                                  Unchecked="ViewActivity_Checked"/>
 
-                                                <MenuItem Header="Status"
-                                                                    IsCheckable="True"
-                                                                    IsChecked="True"
-                                                                    Checked="ViewStatus_Checked"
-                                                                    Unchecked="ViewStatus_Checked"/>
+                        <MenuItem Header="Status"
+                                  IsCheckable="True"
+                                  IsChecked="True"
+                                  Checked="ViewStatus_Checked"
+                                  Unchecked="ViewStatus_Checked"/>
 
-                                                <MenuItem Header="Actions"
-                                                                    IsCheckable="True"
-                                                                    IsChecked="True"
-                                                                    Checked="ViewActions_Checked"
-                                                                    Unchecked="ViewActions_Checked"/>
-                                        </MenuItem>
+                        <MenuItem Header="Actions"
+                                  IsCheckable="True"
+                                  IsChecked="True"
+                                  Checked="ViewActions_Checked"
+                                  Unchecked="ViewActions_Checked"/>
+                    </MenuItem>
 
-                                </Menu>
+                </Menu>
 
                 <!-- Window Buttons -->
 
-                                <Button Grid.Column="2"
+                <Button Grid.Column="2"
                         Content="&#x2014;"
                         Style="{StaticResource TitleBarButtonStyle}"
                         FontSize="14"
@@ -195,69 +182,70 @@
 
         <Border Grid.Row="1"
                 Grid.Column="0"
-                Background="#161009"
+                Background="#171717"
                 CornerRadius="0,0,0,14">
 
             <Border.Effect>
-
-                <DropShadowEffect BlurRadius="18"
+                <DropShadowEffect BlurRadius="16"
                                   ShadowDepth="0"
                                   Color="#000000"
-                                  Opacity="0.45"/>
-
+                                  Opacity="0.4"/>
             </Border.Effect>
 
-            <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                <!-- Logo -->
+                <!-- Brand Area -->
 
-                <Border Height="92"
-                        Background="#1E140C"
+                <Border Grid.Row="0"
+                        Height="96"
+                        Background="#1A1A1E"
                         CornerRadius="0,0,14,14"
                         BorderThickness="0,0,0,1"
-                        BorderBrush="#33FF7A00">
+                        BorderBrush="#2A2A2A">
 
-                    <StackPanel HorizontalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
 
                         <Image Source="/Assets/Images/forge-logo.png"
-                               Width="42"
-                               Height="42"
-                               Margin="0,6,0,2">
+                               Width="40"
+                               Height="40"
+                               Margin="0,0,0,4">
 
                             <Image.Effect>
-
                                 <DropShadowEffect Color="#FF7A00"
-                                                  BlurRadius="25"
+                                                  BlurRadius="22"
                                                   ShadowDepth="0"
-                                                  Opacity="0.9"/>
-
+                                                  Opacity="0.8"/>
                             </Image.Effect>
 
                         </Image>
 
-                        <TextBlock Text="FORGE"
-                                   FontSize="17"
+                        <TextBlock Text="F O R G E"
+                                   FontSize="16"
                                    FontWeight="Bold"
-                                   Foreground="{StaticResource TextBrush}"
+                                   Foreground="#E8E0D8"
                                    HorizontalAlignment="Center">
 
                             <TextBlock.Effect>
-
                                 <DropShadowEffect Color="#FF7A00"
-                                                  BlurRadius="12"
+                                                  BlurRadius="10"
                                                   ShadowDepth="0"
-                                                  Opacity="0.35"/>
-
+                                                  Opacity="0.3"/>
                             </TextBlock.Effect>
 
                         </TextBlock>
 
-                        <TextBlock Text="BUILD WINDOWS YOUR WAY"
-                                   FontSize="8.5"
+                        <TextBlock Text="B U I L D   W I N D O W S   Y O U R   W A Y"
+                                   FontSize="7.5"
                                    FontWeight="SemiBold"
-                                   Foreground="{StaticResource TextDimBrush}"
+                                   Foreground="#6E6460"
                                    HorizontalAlignment="Center"
-                                   Margin="0,1,0,0"/>
+                                   Margin="0,2,0,0"/>
 
                     </StackPanel>
 
@@ -265,59 +253,235 @@
 
                 <!-- Navigation -->
 
-                <StackPanel Margin="8">
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
+                              Margin="8,8,8,0">
 
-                    <Button x:Name="BtnHome"
-                            Style="{StaticResource NavButtonStyle}"
-                            Content="&#x1F3E0; Home"
-                            ToolTip="Home - Dashboard"
-                            Click="BtnHome_Click"/>
+                    <StackPanel>
 
-                    <Button x:Name="BtnApps"
-                            Style="{StaticResource NavButtonStyle}"
-                            Content="&#x1F4E6; Apps"
-                            ToolTip="Apps - Install &amp; manage software"
-                            Click="BtnApps_Click"/>
+                        <Button x:Name="BtnHome"
+                                Style="{StaticResource NavButtonStyle}"
+                                Tag="active"
+                                ToolTip="Home - Dashboard"
+                                Click="BtnHome_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path x:Name="IconHomePath"
+                                      Data="{StaticResource IconHome}"
+                                      Stroke="#FF7A00"
+                                      StrokeThickness="1.5"
+                                      Width="18" Height="18"
+                                      Stretch="Uniform"
+                                      Margin="0,0,10,0"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TextHome" Text="Home" Foreground="#FF7A00" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
 
-                    <Button x:Name="BtnTweaks"
-                            Style="{StaticResource NavButtonStyle}"
-                            Content="&#x1F527; Tweaks"
-                            ToolTip="Tweaks - Windows configuration"
-                            Click="BtnTweaks_Click"/>
+                        <Button x:Name="BtnApps"
+                                Style="{StaticResource NavButtonStyle}"
+                                ToolTip="Apps - Install &amp; manage software"
+                                Click="BtnApps_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path x:Name="IconAppsPath"
+                                      Data="{StaticResource IconApps}"
+                                      Stroke="#9A9088"
+                                      StrokeThickness="1.5"
+                                      Width="18" Height="18"
+                                      Stretch="Uniform"
+                                      Margin="0,0,10,0"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TextApps" Text="Apps" Foreground="#9A9088" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
 
-                    <Button x:Name="BtnSystem"
-                            Style="{StaticResource NavButtonStyle}"
-                            Content="&#x1F5A5;&#xFE0F; System"
-                            ToolTip="System - System information"
-                            Click="BtnSystem_Click"/>
+                        <Button x:Name="BtnTweaks"
+                                Style="{StaticResource NavButtonStyle}"
+                                ToolTip="Tweaks - Windows configuration"
+                                Click="BtnTweaks_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path x:Name="IconTweaksPath"
+                                      Data="{StaticResource IconTweaks}"
+                                      Stroke="#9A9088"
+                                      StrokeThickness="1.5"
+                                      Width="18" Height="18"
+                                      Stretch="Uniform"
+                                      Margin="0,0,10,0"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TextTweaks" Text="Tweaks" Foreground="#9A9088" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
 
-                    <Button x:Name="BtnUpdates"
-                            Style="{StaticResource NavButtonStyle}"
-                            Content="&#x1F504; Updates"
-                            ToolTip="Updates - Windows Update"
-                            Click="BtnUpdates_Click"/>
+                        <Button x:Name="BtnSystem"
+                                Style="{StaticResource NavButtonStyle}"
+                                ToolTip="System - System information"
+                                Click="BtnSystem_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path x:Name="IconSystemPath"
+                                      Data="{StaticResource IconSystem}"
+                                      Stroke="#9A9088"
+                                      StrokeThickness="1.5"
+                                      Width="18" Height="18"
+                                      Stretch="Uniform"
+                                      Margin="0,0,10,0"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TextSystem" Text="System" Foreground="#9A9088" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
 
-                    <Button x:Name="BtnDrivers"
-                            Style="{StaticResource NavButtonStyle}"
-                            Content="&#x1F50C; Drivers"
-                            ToolTip="Drivers - Driver management"
-                            Click="BtnDrivers_Click"/>
+                        <Button x:Name="BtnUpdates"
+                                Style="{StaticResource NavButtonStyle}"
+                                ToolTip="Updates - Windows Update"
+                                Click="BtnUpdates_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path x:Name="IconUpdatesPath"
+                                      Data="{StaticResource IconUpdates}"
+                                      Stroke="#9A9088"
+                                      StrokeThickness="1.5"
+                                      Width="18" Height="18"
+                                      Stretch="Uniform"
+                                      Margin="0,0,10,0"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TextUpdates" Text="Updates" Foreground="#9A9088" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
 
-                    <Button x:Name="BtnIso"
-                            Style="{StaticResource NavButtonStyle}"
-                            Content="&#x1F4BF; ISO Creator"
-                            ToolTip="ISO Creator - Create bootable media"
-                            Click="BtnIso_Click"/>
+                        <Button x:Name="BtnDrivers"
+                                Style="{StaticResource NavButtonStyle}"
+                                ToolTip="Drivers - Driver management"
+                                Click="BtnDrivers_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path x:Name="IconDriversPath"
+                                      Data="{StaticResource IconDrivers}"
+                                      Stroke="#9A9088"
+                                      StrokeThickness="1.5"
+                                      Width="18" Height="18"
+                                      Stretch="Uniform"
+                                      Margin="0,0,10,0"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TextDrivers" Text="Drivers" Foreground="#9A9088" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
 
-                    <Button x:Name="BtnSettings"
-                            Style="{StaticResource NavButtonStyle}"
-                            Content="&#x2699;&#xFE0F; Settings"
-                            ToolTip="Settings - Application settings"
-                            Click="BtnSettings_Click"/>
+                        <Button x:Name="BtnIso"
+                                Style="{StaticResource NavButtonStyle}"
+                                ToolTip="ISO Creator - Create bootable media"
+                                Click="BtnIso_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path x:Name="IconIsoPath"
+                                      Data="{StaticResource IconDisc}"
+                                      Stroke="#9A9088"
+                                      StrokeThickness="1.5"
+                                      Width="18" Height="18"
+                                      Stretch="Uniform"
+                                      Margin="0,0,10,0"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TextIso" Text="ISO Creator" Foreground="#9A9088" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
 
-                </StackPanel>
+                        <Button x:Name="BtnSettings"
+                                Style="{StaticResource NavButtonStyle}"
+                                ToolTip="Settings - Application settings"
+                                Click="BtnSettings_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path x:Name="IconSettingsPath"
+                                      Data="{StaticResource IconSettings}"
+                                      Stroke="#9A9088"
+                                      StrokeThickness="1.5"
+                                      Width="18" Height="18"
+                                      Stretch="Uniform"
+                                      Margin="0,0,10,0"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TextSettings" Text="Settings" Foreground="#9A9088" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
 
-            </StackPanel>
+                    </StackPanel>
+
+                </ScrollViewer>
+
+                <!-- Bottom Promo Card: Create Custom Windows ISO -->
+
+                <Border Grid.Row="2"
+                        Margin="8,6,8,10"
+                        Padding="14,12"
+                        Background="#1A1A1E"
+                        BorderBrush="#8CFF7A00"
+                        BorderThickness="1"
+                        CornerRadius="12"
+                        Cursor="Hand"
+                        MouseLeftButtonDown="BtnIsoPromo_Click">
+
+                    <Border.Effect>
+                        <DropShadowEffect Color="#FF7A00"
+                                          BlurRadius="14"
+                                          ShadowDepth="0"
+                                          Opacity="0.1"/>
+                    </Border.Effect>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Path Data="{StaticResource IconWindows}"
+                              Stroke="#FF7A00"
+                              StrokeThickness="1.5"
+                              Width="28"
+                              Height="28"
+                              Stretch="Uniform"
+                              VerticalAlignment="Center"
+                              StrokeLineJoin="Round"
+                              StrokeStartLineCap="Round"
+                              StrokeEndLineCap="Round"/>
+
+                        <StackPanel Margin="12,0,0,0"
+                                    VerticalAlignment="Center">
+
+                            <TextBlock Text="Create"
+                                       FontWeight="SemiBold"
+                                       Foreground="#E8E0D8"
+                                       FontSize="12"/>
+
+                            <TextBlock Text="Custom"
+                                       FontWeight="SemiBold"
+                                       Foreground="#E8E0D8"
+                                       FontSize="12"/>
+
+                            <TextBlock Text="Windows ISO"
+                                       FontWeight="SemiBold"
+                                       Foreground="#FF7A00"
+                                       FontSize="12"/>
+
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </Border>
+
+            </Grid>
 
         </Border>
 
@@ -325,67 +489,61 @@
 
         <Grid Grid.Row="1"
               Grid.Column="1"
-              Margin="12">
+              Margin="0">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="70"/>
+                <RowDefinition Height="56"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="35"/>
+                <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
 
             <!-- Header -->
 
             <Border Grid.Row="0"
-                    Background="#120D09"
-                    CornerRadius="12,12,0,0">
+                    Background="#1E1E1E"
+                    Padding="24,0">
 
-                <Grid Margin="20,0">
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center">
 
-                    <StackPanel Orientation="Horizontal"
-                                VerticalAlignment="Center">
+                    <Rectangle Width="3"
+                               Height="20"
+                               RadiusX="1.5"
+                               RadiusY="1.5"
+                               Fill="#FF7A00"
+                               Margin="0,0,12,0"/>
 
-                        <Rectangle Width="4"
-                                   Height="22"
-                                   RadiusX="2"
-                                   RadiusY="2"
-                                   Fill="{StaticResource FireGradientBrush}"
-                                   Margin="0,0,10,0"/>
+                    <TextBlock x:Name="PageTitle"
+                               Text="Home"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#E8E0D8"
+                               VerticalAlignment="Center"/>
 
-                        <TextBlock x:Name="PageTitle"
-                                   Text="Home"
-                                   FontSize="22"
-                                   FontWeight="Bold"
-                                   Foreground="{StaticResource TextBrush}"
-                                   VerticalAlignment="Center"/>
-
-                    </StackPanel>
-
-                </Grid>
+                </StackPanel>
 
             </Border>
 
             <!-- Content -->
 
             <Border Grid.Row="1"
-                    Background="#120D09">
+                    Background="#1E1E1E">
 
                 <ContentControl x:Name="MainContent"/>
 
             </Border>
 
-            <!-- Footer -->
+            <!-- Footer (hidden but kept for structure) -->
 
             <Border Grid.Row="2"
-                    Background="#120D09"
-                    CornerRadius="0,0,12,12">
+                    Background="#1E1E1E"
+                    Visibility="Collapsed">
 
                 <DockPanel Margin="15,0">
-
                     <TextBlock Text="Ready"
-                               Foreground="{StaticResource TextMutedBrush}"
+                               Foreground="#6E6460"
                                FontSize="12"
                                VerticalAlignment="Center"/>
-
                 </DockPanel>
 
             </Border>

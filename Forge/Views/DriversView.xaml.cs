@@ -40,7 +40,7 @@ public partial class DriversView : UserControl
     private async Task ScanCoreAsync()
     {
         StatusText.Text = "Scanning hardware devices via WMI...";
-        StatusText.Foreground = new SolidColorBrush(Color.FromRgb(0xB3, 0x9B, 0x85));
+        StatusText.Foreground = new SolidColorBrush(Color.FromRgb(0x9A, 0x90, 0x88));
         DeviceList.Items.Clear();
 
         _devices.Clear();
@@ -118,11 +118,11 @@ public partial class DriversView : UserControl
         {
             LogRow("Starting one-click driver fix...");
 
-            SetMsg("Step 1 of 4 - Creating a restore point...", 0xB39B85);
+            SetMsg("Step 1 of 4 - Creating a restore point...", 0x9A9088);
             await CreateRestorePointCoreAsync();
             LogRow("Restore point ready.");
 
-            SetMsg("Step 2 of 4 - Scanning all devices...", 0xB39B85);
+            SetMsg("Step 2 of 4 - Scanning all devices...", 0x9A9088);
             await ScanCoreAsync();
 
             int problems = _devices.Count(d => d.ErrorCode != 0);
@@ -139,12 +139,12 @@ public partial class DriversView : UserControl
                 LogRow($"Problem: {d.Name} - {DescribeCode(d.ErrorCode)}");
             }
 
-            SetMsg($"Step 3 of 4 - Asking Windows Update for driver fixes ({problems} device(s))...", 0xB39B85);
+            SetMsg($"Step 3 of 4 - Asking Windows Update for driver fixes ({problems} device(s))...", 0x9A9088);
             LogRow("Searching Windows Update for WHQL driver updates - this can take a few minutes.");
 
             var outcome = await RunWindowsUpdateDriverFixAsync();
 
-            SetMsg("Step 4 of 4 - Re-scanning devices to verify...", 0xB39B85);
+            SetMsg("Step 4 of 4 - Re-scanning devices to verify...", 0x9A9088);
             await ScanCoreAsync();
 
             int remaining = _devices.Count(d => d.ErrorCode != 0);
@@ -188,7 +188,7 @@ public partial class DriversView : UserControl
             Text = $"[{DateTime.Now:HH:mm:ss}]  {message}",
             FontFamily = new FontFamily("Consolas"),
             FontSize = 11.5,
-            Foreground = new SolidColorBrush(Color.FromRgb(0xB3, 0x9B, 0x85)),
+            Foreground = new SolidColorBrush(Color.FromRgb(0x9A, 0x90, 0x88)),
             Margin = new Thickness(2, 1, 0, 1),
             TextWrapping = TextWrapping.Wrap
         });
@@ -274,7 +274,7 @@ try {
                 else if (line.StartsWith("PHASE:", StringComparison.Ordinal))
                 {
                     string phase = line[6..];
-                    SetMsg($"Windows Update - {phase.ToLowerInvariant()} drivers...", phase == "SEARCHING" ? 0xB39B85u : 0xFFB155u);
+                    SetMsg($"Windows Update - {phase.ToLowerInvariant()} drivers...", phase == "SEARCHING" ? 0x9A9088u : 0xFFB155u);
                     if (phase == "SEARCHING") searched = true;
                 }
                 else if (line.StartsWith("COUNT:", StringComparison.Ordinal))
@@ -382,7 +382,7 @@ try {
             var row = new Border
             {
                 Background = new SolidColorBrush(bad
-                    ? Color.FromRgb(0x2A, 0x14, 0x10)
+                    ? Color.FromRgb(0x2A, 0x14, 0x15)
                     : Color.FromArgb(0, 0, 0, 0)),
                 CornerRadius = new CornerRadius(8),
                 Padding = new Thickness(10, 7, 10, 7),
@@ -414,7 +414,7 @@ try {
                 Text = d.Name,
                 Foreground = new SolidColorBrush(bad
                     ? Color.FromRgb(0xFF, 0xF3, 0xE8)
-                    : Color.FromRgb(0xC9, 0xB4, 0xA0)),
+                    : Color.FromRgb(0xE8, 0xE0, 0xD8)),
                 VerticalAlignment = VerticalAlignment.Center,
                 TextTrimming = TextTrimming.CharacterEllipsis,
                 ToolTip = $"{d.Name}\n{d.PnpId}"
@@ -423,8 +423,8 @@ try {
 
             var badge = new Border
             {
-                Background = new SolidColorBrush(Color.FromRgb(0x24, 0x18, 0x0E)),
-                BorderBrush = new SolidColorBrush(Color.FromRgb(0x3D, 0x2C, 0x1D)),
+                Background = new SolidColorBrush(Color.FromRgb(0x2D, 0x2D, 0x30)),
+                BorderBrush = new SolidColorBrush(Color.FromRgb(0x2A, 0x2A, 0x2A)),
                 BorderThickness = new Thickness(1),
                 CornerRadius = new CornerRadius(6),
                 Padding = new Thickness(8, 2, 8, 2),
@@ -433,7 +433,7 @@ try {
                     Text = Classify(d.Class).ToUpperInvariant(),
                     FontSize = 9.5,
                     FontWeight = FontWeights.Bold,
-                    Foreground = new SolidColorBrush(Color.FromRgb(0xB3, 0x9B, 0x85)),
+                    Foreground = new SolidColorBrush(Color.FromRgb(0x9A, 0x90, 0x88)),
                     VerticalAlignment = VerticalAlignment.Center
                 },
                 VerticalAlignment = VerticalAlignment.Center
@@ -449,7 +449,7 @@ try {
                 FontSize = 11,
                 Foreground = new SolidColorBrush(bad
                     ? Color.FromRgb(0xF8, 0x71, 0x71)
-                    : Color.FromRgb(0x6E, 0x5B, 0x49)),
+                    : Color.FromRgb(0x6E, 0x64, 0x60)),
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 TextTrimming = TextTrimming.CharacterEllipsis

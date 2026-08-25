@@ -1,4 +1,4 @@
-﻿using Forge.Models;
+using Forge.Models;
 using Forge.Services;
 using System.Windows;
 using System.Windows.Controls;
@@ -753,24 +753,24 @@ public partial class AppsView : UserControl
             recommendedApps.Any(a => !a.IsSelected);
 
         BtnSelectAll.Background = CreateButtonBrush(
-            allSelected ? "#F28C28" : "#261B12");
+            allSelected ? "#FF7A00" : "#252526");
         BtnSelectAll.BorderBrush = CreateButtonBrush(
-            allSelected ? "#FF9A2F" : "#3B4048");
+            allSelected ? "#FF9A2F" : "#3A3A3A");
         BtnSelectAll.Foreground = allSelected
             ? Brushes.White
-            : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF3E8"));
+            : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E8E0D8"));
 
         BtnSelectRecommended.Background = CreateButtonBrush(
-            recommendedSelected ? "#F28C28" : "#261B12");
+            recommendedSelected ? "#FF7A00" : "#252526");
         BtnSelectRecommended.BorderBrush = CreateButtonBrush(
-            recommendedSelected ? "#FF9A2F" : "#3B4048");
+            recommendedSelected ? "#FF9A2F" : "#3A3A3A");
         BtnSelectRecommended.Foreground = recommendedSelected
             ? Brushes.White
-            : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF3E8"));
+            : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E8E0D8"));
 
-        BtnClearSelection.Background = CreateButtonBrush("#261B12");
-        BtnClearSelection.BorderBrush = CreateButtonBrush("#3B4048");
-        BtnClearSelection.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF3E8"));
+        BtnClearSelection.Background = CreateButtonBrush("#252526");
+        BtnClearSelection.BorderBrush = CreateButtonBrush("#3A3A3A");
+        BtnClearSelection.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E8E0D8"));
     }
 
     private static SolidColorBrush CreateButtonBrush(string color)

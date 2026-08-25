@@ -77,6 +77,69 @@ public partial class HomeView : UserControl
             : $"{tweaks.Count} safe, reversible tweaks - apply or undo in one click.";
 
         StatTweaksText.Text = $"{CountArray(Path.Combine(configDir, "tweaks.json"))} tweaks ready";
+
+        _ = LoadSystemInfoAsync();
+    }
+
+    private async Task LoadSystemInfoAsync()
+    {
+        await Task.Run(() =>
+        {
+            try
+            {
+                string version = SystemInfoHelper.GetWindowsVersion();
+                Dispatcher.Invoke(() => StatusWindows.Text = version);
+            }
+            catch
+            {
+                Dispatcher.Invoke(() => StatusWindows.Text = "Windows 11");
+            }
+
+            try
+            {
+                var (cpuName, cores) = SystemInfoHelper.GetCpuInfo();
+                Dispatcher.Invoke(() => StatusCpu.Text = cores > 0 ? $"{cpuName} ({cores} cores)" : cpuName);
+            }
+            catch
+            {
+                Dispatcher.Invoke(() => StatusCpu.Text = "Detecting...");
+            }
+
+            try
+            {
+                string gpu = SystemInfoHelper.GetGpuInfo();
+                Dispatcher.Invoke(() => StatusGpu.Text = gpu);
+            }
+            catch
+            {
+                Dispatcher.Invoke(() => StatusGpu.Text = "Unknown GPU");
+            }
+
+            try
+            {
+                var (totalGB, speedMHz) = SystemInfoHelper.GetMemoryInfo();
+                Dispatcher.Invoke(() => StatusMemory.Text = speedMHz > 0 ? $"{totalGB} GB @ {speedMHz} MHz" : $"{totalGB} GB");
+            }
+            catch
+            {
+                Dispatcher.Invoke(() => StatusMemory.Text = "Detecting...");
+            }
+
+            try
+            {
+                var (totalGB, freeGB) = SystemInfoHelper.GetStorageInfo();
+                Dispatcher.Invoke(() =>
+                {
+                    string free = freeGB >= 1024 ? $"{freeGB / 1024.0:F1} TB" : $"{freeGB:F1} GB";
+                    string total = totalGB >= 1024 ? $"{totalGB / 1024.0:F1} TB" : $"{totalGB:F1} GB";
+                    StatusStorage.Text = $"{free} free / {total} total";
+                });
+            }
+            catch
+            {
+                Dispatcher.Invoke(() => StatusStorage.Text = "Detecting...");
+            }
+        });
     }
 
     private static int CountArray(string path)
@@ -92,6 +155,14 @@ public partial class HomeView : UserControl
         catch
         {
             return 0;
+        }
+    }
+
+    private void Navigate_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is FrameworkElement fe && fe.Tag is string page)
+        {
+            (Window.GetWindow(this) as MainWindow)?.NavigateTo(page);
         }
     }
 

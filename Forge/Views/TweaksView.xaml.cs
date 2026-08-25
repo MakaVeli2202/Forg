@@ -270,7 +270,7 @@ public partial class TweaksView : UserControl
         button.Content = applied ? "Undo" : "Apply";
         button.Background = applied
             ? (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter().ConvertFromString("#0078D4")
-            : (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter().ConvertFromString("#F28C28");
+            : (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter().ConvertFromString("#FF7A00");
     }
 
     private async Task RunExclusiveAsync(

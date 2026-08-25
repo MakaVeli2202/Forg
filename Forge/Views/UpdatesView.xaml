@@ -14,8 +14,8 @@
         <WrapPanel Grid.Row="0"
                    Margin="4,0,0,14">
 
-            <Border Background="#1C130C"
-                    BorderBrush="#33FF7A00"
+            <Border Background="#252526"
+                    BorderBrush="#8CFF7A00"
                     BorderThickness="1"
                     CornerRadius="14"
                     Padding="20,16"
@@ -27,11 +27,11 @@
                     <TextBlock Text="WINDOWS UPDATE"
                                FontSize="11"
                                FontWeight="Bold"
-                               Foreground="#8A7462"/>
+                               Foreground="#6E6460"/>
 
                     <TextBlock Text="Security patches, drivers and quality updates from Microsoft."
                                FontSize="12"
-                               Foreground="#B39B85"
+                               Foreground="#9A9088"
                                Margin="0,6,0,14"
                                TextWrapping="Wrap"/>
 
@@ -44,8 +44,8 @@
 
             </Border>
 
-            <Border Background="#1C130C"
-                    BorderBrush="#33FF7A00"
+            <Border Background="#252526"
+                    BorderBrush="#8CFF7A00"
                     BorderThickness="1"
                     CornerRadius="14"
                     Padding="20,16"
@@ -56,11 +56,11 @@
                     <TextBlock Text="APP UPDATES - WINGET"
                                FontSize="11"
                                FontWeight="Bold"
-                               Foreground="#8A7462"/>
+                               Foreground="#6E6460"/>
 
                     <TextBlock Text="Scan every installed program for a newer version."
                                FontSize="12"
-                               Foreground="#B39B85"
+                               Foreground="#9A9088"
                                Margin="0,6,0,14"
                                TextWrapping="Wrap"/>
 
@@ -89,8 +89,8 @@
         <!-- Results -->
 
         <Border Grid.Row="1"
-                Background="#171009"
-                BorderBrush="#3D2C1D"
+                Background="#1E1E1E"
+                BorderBrush="#2A2A2A"
                 BorderThickness="1"
                 CornerRadius="14"
                 Margin="4,0,0,0">
@@ -107,7 +107,7 @@
                            Grid.Row="0"
                            Text="Ready. Click Check for Updates to scan installed apps."
                            FontSize="12"
-                           Foreground="#B39B85"
+                           Foreground="#9A9088"
                            Margin="6,2,0,8"/>
 
                 <StackPanel Grid.Row="1"
@@ -119,14 +119,14 @@
                                  Maximum="100"
                                  IsIndeterminate="False"
                                  Foreground="#FF7A00"
-                                 Background="#2A1C10"
+                                 Background="#2D2D30"
                                  BorderThickness="0"
                                  Visibility="Collapsed"/>
 
                     <Border x:Name="ActivityBorder"
                             CornerRadius="8"
-                            Background="#120D09"
-                            BorderBrush="#3D2C1D"
+                            Background="#1A1A1E"
+                            BorderBrush="#2A2A2A"
                             BorderThickness="1"
                             Visibility="Collapsed">
                         <ListBox x:Name="ActivityLog"
@@ -136,7 +136,7 @@
                                  Padding="8,4"
                                  FontFamily="Consolas"
                                  FontSize="11.5"
-                                 Foreground="#B39B85"
+                                 Foreground="#9A9088"
                                  ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
                     </Border>
 
@@ -146,7 +146,7 @@
                          Grid.Row="2"
                          Background="Transparent"
                          BorderThickness="0"
-                         Foreground="#FFF3E8"
+                         Foreground="#E8E0D8"
                          FontFamily="Consolas"
                          FontSize="12.5"
                          Visibility="Collapsed"/>

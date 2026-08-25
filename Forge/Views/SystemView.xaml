@@ -15,11 +15,11 @@
             <TextBlock Text="ADMIN TOOLS, ONE CLICK AWAY"
                        FontSize="11"
                        FontWeight="Bold"
-                       Foreground="#8A7462"/>
+                       Foreground="#6E6460"/>
 
             <TextBlock Text="Every tool opens elevated, because Forge already runs as administrator."
                        FontSize="13"
-                       Foreground="#B39B85"
+                       Foreground="#9A9088"
                        Margin="0,6,0,0"/>
 
         </StackPanel>
@@ -37,8 +37,8 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="24" Margin="0,0,14,0" Text="&#x1F5A5;"/>
                         <StackPanel>
-                            <TextBlock Text="Device Manager" FontWeight="SemiBold" Foreground="#FFF3E8"/>
-                            <TextBlock Text="Hardware and drivers" FontSize="11" Foreground="#B39B85"/>
+                            <TextBlock Text="Device Manager" FontWeight="SemiBold" Foreground="#E8E0D8"/>
+                            <TextBlock Text="Hardware and drivers" FontSize="11" Foreground="#9A9088"/>
                         </StackPanel>
                     </StackPanel>
                 </Button>
@@ -50,8 +50,8 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="24" Margin="0,0,14,0" Text="&#x2699;"/>
                         <StackPanel>
-                            <TextBlock Text="Services" FontWeight="SemiBold" Foreground="#FFF3E8"/>
-                            <TextBlock Text="Windows service control" FontSize="11" Foreground="#B39B85"/>
+                            <TextBlock Text="Services" FontWeight="SemiBold" Foreground="#E8E0D8"/>
+                            <TextBlock Text="Windows service control" FontSize="11" Foreground="#9A9088"/>
                         </StackPanel>
                     </StackPanel>
                 </Button>
@@ -63,8 +63,8 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="24" Margin="0,0,14,0" Text="&#x1F9BE;"/>
                         <StackPanel>
-                            <TextBlock Text="Registry Editor" FontWeight="SemiBold" Foreground="#FFF3E8"/>
-                            <TextBlock Text="Edit the Windows registry" FontSize="11" Foreground="#B39B85"/>
+                            <TextBlock Text="Registry Editor" FontWeight="SemiBold" Foreground="#E8E0D8"/>
+                            <TextBlock Text="Edit the Windows registry" FontSize="11" Foreground="#9A9088"/>
                         </StackPanel>
                     </StackPanel>
                 </Button>
@@ -76,8 +76,8 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="24" Margin="0,0,14,0" Text="&#x23F0;"/>
                         <StackPanel>
-                            <TextBlock Text="Task Scheduler" FontWeight="SemiBold" Foreground="#FFF3E8"/>
-                            <TextBlock Text="Scheduled tasks and jobs" FontSize="11" Foreground="#B39B85"/>
+                            <TextBlock Text="Task Scheduler" FontWeight="SemiBold" Foreground="#E8E0D8"/>
+                            <TextBlock Text="Scheduled tasks and jobs" FontSize="11" Foreground="#9A9088"/>
                         </StackPanel>
                     </StackPanel>
                 </Button>
@@ -89,8 +89,8 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="24" Margin="0,0,14,0" Text="&#x1F4DC;"/>
                         <StackPanel>
-                            <TextBlock Text="Event Viewer" FontWeight="SemiBold" Foreground="#FFF3E8"/>
-                            <TextBlock Text="System and app logs" FontSize="11" Foreground="#B39B85"/>
+                            <TextBlock Text="Event Viewer" FontWeight="SemiBold" Foreground="#E8E0D8"/>
+                            <TextBlock Text="System and app logs" FontSize="11" Foreground="#9A9088"/>
                         </StackPanel>
                     </StackPanel>
                 </Button>
@@ -102,8 +102,8 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="24" Margin="0,0,14,0" Text="&#x1F39B;"/>
                         <StackPanel>
-                            <TextBlock Text="Control Panel" FontWeight="SemiBold" Foreground="#FFF3E8"/>
-                            <TextBlock Text="Classic settings home" FontSize="11" Foreground="#B39B85"/>
+                            <TextBlock Text="Control Panel" FontWeight="SemiBold" Foreground="#E8E0D8"/>
+                            <TextBlock Text="Classic settings home" FontSize="11" Foreground="#9A9088"/>
                         </StackPanel>
                     </StackPanel>
                 </Button>

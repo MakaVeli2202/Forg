@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -22,7 +22,7 @@ public partial class UpdatesView : UserControl
         BtnCheckUpdates.IsEnabled = false;
         BtnUpdateAll.IsEnabled = false;
 
-        SetStatus("Scanning installed apps with winget...", 0xB39B85);
+        SetStatus("Scanning installed apps with winget...", 0x9A9088);
         BeginActivity();
 
         _pending.Clear();
@@ -74,7 +74,7 @@ public partial class UpdatesView : UserControl
             var (id, name) = _pending[i];
             int pct = (int)(i * 100.0 / total);
 
-            SetStatus($"Upgrading {name} ({i + 1} of {total})...", 0xB39B85);
+            SetStatus($"Upgrading {name} ({i + 1} of {total})...", 0x9A9088);
             ShowProgress(pct);
 
             bool success = await UpgradeSingleAsync(id, name);

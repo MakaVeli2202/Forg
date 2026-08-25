@@ -7,128 +7,275 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Source card -->
-
+        <!-- Step 1 — Source ISO -->
         <Border Grid.Row="0"
-                Background="#1C130C"
-                BorderBrush="#33FF7A00"
+                Background="#252526"
+                BorderBrush="#8CFF7A00"
                 BorderThickness="1"
                 CornerRadius="14"
                 Padding="22,18"
                 Margin="4,0,0,14">
 
             <StackPanel>
-
-                <TextBlock Text="STEP 1 - PICK A WINDOWS ISO"
+                <TextBlock Text="STEP 1 — PICK A WINDOWS ISO"
                            FontSize="11"
                            FontWeight="Bold"
-                           Foreground="#8A7462"/>
+                           Foreground="#6E6460"/>
 
                 <TextBlock Text="Download a fresh ISO from Microsoft, or point Forge at one you already have."
                            FontSize="12.5"
-                           Foreground="#B39B85"
+                           Foreground="#9A9088"
                            Margin="0,6,0,16"/>
 
                 <StackPanel Orientation="Horizontal">
-
                     <Button Content="Download Windows 11 ISO"
                             Style="{StaticResource PrimaryButtonStyle}"
                             Click="DownloadIso_Click"/>
-
                     <Button Content="Browse for local ISO..."
                             Style="{StaticResource ForgeButtonStyle}"
                             Margin="12,0,0,0"
                             Click="BrowseIso_Click"/>
-
                 </StackPanel>
 
                 <TextBox x:Name="IsoPathBox"
                          Height="34"
                          Margin="0,16,0,0"
-                         Background="#171009"
-                         Foreground="#FFF3E8"
-                         BorderBrush="#3D2C1D"
+                         Background="#1E1E1E"
+                         Foreground="#E8E0D8"
+                         BorderBrush="#2A2A2A"
                          BorderThickness="1"
                          Padding="10,0"
                          VerticalContentAlignment="Center"
                          FontSize="12.5"
                          IsReadOnly="True"/>
 
-            </StackPanel>
+                <!-- Tool status -->
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,18,0">
+                        <Ellipse x:Name="DismIndicator"
+                                 Width="8" Height="8"
+                                 Fill="#444" Margin="0,0,6,0"
+                                 VerticalAlignment="Center"/>
+                        <TextBlock Text="DISM"
+                                   FontSize="11"
+                                   Foreground="#6E6460"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse x:Name="OscdimgIndicator"
+                                 Width="8" Height="8"
+                                 Fill="#444" Margin="0,0,6,0"
+                                 VerticalAlignment="Center"/>
+                        <TextBlock Text="oscdimg"
+                                   FontSize="11"
+                                   Foreground="#6E6460"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
 
+            </StackPanel>
         </Border>
 
-        <!-- Build card -->
-
+        <!-- Step 2 — Edition & Output -->
         <Border Grid.Row="1"
-                Background="#1C130C"
-                BorderBrush="#33FF7A00"
+                Background="#252526"
+                BorderBrush="#2A2A2A"
                 BorderThickness="1"
                 CornerRadius="14"
                 Padding="22,18"
-                Margin="4,0,0,0">
+                Margin="4,0,0,14">
 
             <StackPanel>
-
-                <TextBlock Text="STEP 2 - FORGE THE IMAGE"
+                <TextBlock Text="STEP 2 — CONFIGURE"
                            FontSize="11"
                            FontWeight="Bold"
-                           Foreground="#8A7462"/>
+                           Foreground="#6E6460"/>
+
+                <TextBlock Text="Select the Windows edition and choose where to save the custom ISO."
+                           FontSize="12.5"
+                           Foreground="#9A9088"
+                           Margin="0,6,0,14"/>
+
+                <!-- Edition selector -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBlock Text="Edition"
+                               FontSize="12"
+                               Foreground="#9A9088"
+                               VerticalAlignment="Center"
+                               Width="72"/>
+                    <ComboBox x:Name="EditionCombo"
+                              Width="320"
+                              Height="32"
+                              VerticalAlignment="Center"
+                              IsEnabled="False"
+                              DisplayMemberPath="Name"/>
+                </StackPanel>
+
+                <!-- Output name -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBlock Text="File name"
+                               FontSize="12"
+                               Foreground="#9A9088"
+                               VerticalAlignment="Center"
+                               Width="72"/>
+                    <TextBox x:Name="OutputNameBox"
+                             Width="320"
+                             Height="32"
+                             Background="#1E1E1E"
+                             Foreground="#E8E0D8"
+                             BorderBrush="#2A2A2A"
+                             BorderThickness="1"
+                             Padding="10,0"
+                             VerticalContentAlignment="Center"
+                             FontSize="12.5"
+                             Text="Forge-Win11"/>
+                </StackPanel>
+
+                <!-- Output folder -->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Save to"
+                               FontSize="12"
+                               Foreground="#9A9088"
+                               VerticalAlignment="Center"
+                               Width="72"/>
+                    <TextBox x:Name="OutputFolderBox"
+                             Width="264"
+                             Height="32"
+                             Background="#1E1E1E"
+                             Foreground="#E8E0D8"
+                             BorderBrush="#2A2A2A"
+                             BorderThickness="1"
+                             Padding="10,0"
+                             VerticalContentAlignment="Center"
+                             FontSize="12.5"
+                             IsReadOnly="True"/>
+                    <Button Content="Browse..."
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Margin="8,0,0,0"
+                            Click="BrowseOutputFolder_Click"/>
+                </StackPanel>
+
+            </StackPanel>
+        </Border>
+
+        <!-- Step 3 — Build -->
+        <Border Grid.Row="2"
+                Background="#252526"
+                BorderBrush="#8CFF7A00"
+                BorderThickness="1"
+                CornerRadius="14"
+                Padding="22,18"
+                Margin="4,0,0,14">
+
+            <StackPanel>
+                <TextBlock Text="STEP 3 — BUILD"
+                           FontSize="11"
+                           FontWeight="Bold"
+                           Foreground="#6E6460"/>
 
                 <TextBlock Text="Strip bloat, inject your tweak set and bake a clean install image."
                            FontSize="12.5"
-                           Foreground="#B39B85"
+                           Foreground="#9A9088"
                            Margin="0,6,0,14"/>
 
                 <StackPanel Orientation="Horizontal">
-
                     <Button x:Name="BtnCreateIso"
                             Content="Create Custom ISO"
                             Style="{StaticResource PrimaryButtonStyle}"
                             Click="CreateIso_Click"/>
 
-                    <TextBlock x:Name="IsoStatusText"
-                               Text=""
-                               FontSize="12"
-                               Foreground="#FFB155"
-                               VerticalAlignment="Center"
-                               Margin="14,0,0,0"/>
-
+                    <Button x:Name="BtnCancel"
+                            Content="Cancel"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Margin="12,0,0,0"
+                            Click="Cancel_Click"
+                            Visibility="Collapsed"/>
                 </StackPanel>
 
-            </StackPanel>
+                <!-- Progress -->
+                <ProgressBar x:Name="BuildProgress"
+                             Height="6"
+                             Margin="0,16,0,0"
+                             Minimum="0"
+                             Maximum="100"
+                             Value="0"
+                             Foreground="#FF7A00"
+                             Background="#2A2A2A"
+                             BorderThickness="0"
+                             Visibility="Collapsed"/>
 
+                <TextBlock x:Name="StatusText"
+                           Text=""
+                           FontSize="12.5"
+                           Foreground="#FF7A00"
+                           Margin="0,10,0,0"
+                           TextWrapping="Wrap"
+                           Visibility="Collapsed"/>
+
+            </StackPanel>
         </Border>
 
-        <!-- Pipeline info -->
-
-        <Border Grid.Row="2"
-                Background="#171009"
-                BorderBrush="#3D2C1D"
+        <!-- Log output -->
+        <Border Grid.Row="3"
+                Background="#1E1E1E"
+                BorderBrush="#2A2A2A"
                 BorderThickness="1"
                 CornerRadius="14"
-                Margin="4,14,0,0"
+                Margin="4,0,0,14"
+                Padding="22,16">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="BUILD LOG"
+                           FontSize="11"
+                           FontWeight="Bold"
+                           Foreground="#6E6460"/>
+
+                <ScrollViewer Grid.Row="1"
+                              Margin="0,8,0,0"
+                              VerticalScrollBarVisibility="Auto"
+                              x:Name="LogScroller">
+                    <TextBlock x:Name="LogText"
+                               FontSize="11.5"
+                               FontFamily="Cascadia Mono, Consolas, Courier New"
+                               Foreground="#8A8078"
+                               TextWrapping="Wrap"
+                               Text=""/>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <!-- How it works -->
+        <Border Grid.Row="4"
+                Background="#1E1E1E"
+                BorderBrush="#2A2A2A"
+                BorderThickness="1"
+                CornerRadius="14"
+                Margin="4,0,0,0"
                 Padding="22,16">
 
             <StackPanel>
-
                 <TextBlock Text="HOW IT WORKS"
                            FontSize="11"
                            FontWeight="Bold"
-                           Foreground="#8A7462"/>
+                           Foreground="#6E6460"/>
 
                 <TextBlock FontSize="12.5"
-                           Foreground="#B39B85"
+                           Foreground="#9A9088"
                            LineHeight="22"
                            Margin="0,8,0,0"
                            TextWrapping="Wrap"
-                           Text="1. Mount the ISO and copy its contents to a working folder.&#x0a;2. Apply your Forge tweak set offline against the mounted image.&#x0a;3. Repack the image with oscdimg and burn or flash it with Rufus."/>
-
+                           Text="1. Mount the ISO and copy its contents to a working folder.&#x0a;2. Convert ESD to WIM if needed, then mount the install image.&#x0a;3. Commit changes, generate autounattend.xml, and repack with oscdimg (dual-boot BIOS + UEFI)."/>
             </StackPanel>
-
         </Border>
 
     </Grid>

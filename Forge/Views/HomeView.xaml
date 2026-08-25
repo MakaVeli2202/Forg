@@ -7,7 +7,7 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </UserControl.Resources>
 
-    <Grid Margin="20">
+    <Grid Margin="24,20,24,20">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,14 +15,22 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- HERO -->
+        <!-- HERO SECTION -->
 
         <Border Grid.Row="0"
-                Background="#1C130C"
-                BorderBrush="#33FF7A00"
+                Background="#252526"
+                BorderBrush="#2A2A2A"
                 BorderThickness="1"
                 CornerRadius="18"
-                Padding="28,24">
+                Padding="32,28"
+                Margin="0,0,0,16">
+
+            <Border.Effect>
+                <DropShadowEffect Color="#FF7A00"
+                                  BlurRadius="20"
+                                  ShadowDepth="0"
+                                  Opacity="0.06"/>
+            </Border.Effect>
 
             <Grid>
 
@@ -33,242 +41,932 @@
 
                 <StackPanel VerticalAlignment="Center">
 
-                    <TextBlock Text="THE WORKSHOP FOR YOUR PC"
-                               FontSize="11"
+                    <TextBlock Text="T H E   W I N D O W S   W O R K S H O P"
+                               FontSize="10"
                                FontWeight="Bold"
-                               Foreground="#8A7462"
-                               Margin="0,0,0,8"/>
+                               Foreground="#FF7A00"
+                               Margin="0,0,0,10"/>
 
-                    <TextBlock Text="Forge your Windows."
-                               FontSize="32"
+                    <TextBlock FontSize="34"
                                FontWeight="Bold"
-                               Foreground="#FFF3E8">
-                        <TextBlock.Effect>
-                            <DropShadowEffect Color="#FF7A00"
-                                              BlurRadius="16"
-                                              ShadowDepth="0"
-                                              Opacity="0.3"/>
-                        </TextBlock.Effect>
+                               Foreground="#E8E0D8"
+                               TextWrapping="NoWrap">
+                        <Run Text="Forge" Foreground="#FF7A00"/>
+                        <Run Text=" Your Windows."/>
                     </TextBlock>
 
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,14,0,0">
-
-                        <TextBlock x:Name="StatAppsText"
-                                   FontSize="12"
-                                   FontWeight="SemiBold"
-                                   Foreground="#FFB155"/>
-
-                        <TextBlock x:Name="StatTweaksText"
-                                   FontSize="12"
-                                   FontWeight="SemiBold"
-                                   Foreground="#7FAE96"
-                                   Margin="18,0,0,0"/>
-
-                    </StackPanel>
+                    <TextBlock Text="Powerful tools. Smart tweaks. A cleaner, faster Windows."
+                               FontSize="13.5"
+                               Foreground="#9A9088"
+                               Margin="0,10,0,0"/>
 
                 </StackPanel>
 
-                <TextBlock Grid.Column="1"
-                           Text="&#x1F525;"
-                           FontSize="72"
-                           Margin="30,0,10,0"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Right">
-                    <TextBlock.Effect>
+                <!-- Forge visual - logo with glow -->
+
+                <Grid Grid.Column="1"
+                      Width="140"
+                      Height="140"
+                      VerticalAlignment="Center"
+                      Margin="30,0,10,0">
+
+                    <Grid.Effect>
                         <DropShadowEffect Color="#FF7A00"
-                                          BlurRadius="40"
+                                          BlurRadius="45"
                                           ShadowDepth="0"
-                                          Opacity="0.55"/>
-                    </TextBlock.Effect>
-                </TextBlock>
+                                          Opacity="0.35"/>
+                    </Grid.Effect>
+
+                    <Ellipse Fill="#1A1A1E"
+                             Stroke="#33FF7A00"
+                             StrokeThickness="1"/>
+
+                    <Image Source="/Assets/Images/forge-logo.png"
+                           Width="80"
+                           Height="80"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
+
+                </Grid>
 
             </Grid>
 
         </Border>
 
-        <!-- RECOMMENDED CONTENT -->
+        <!-- FEATURE CARDS (4 in a row) -->
 
         <Grid Grid.Row="1"
-              Margin="0,18,0,0">
+              Margin="0,0,0,16">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="18"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Recommended apps -->
+            <!-- Card 1: Bulk Install Apps -->
 
-            <Border Grid.Column="0"
-                    Background="#1C130C"
-                    BorderBrush="#3D2C1D"
-                    BorderThickness="1"
-                    CornerRadius="16"
-                    Padding="20,16">
-
+            <Button Grid.Column="0"
+                    Style="{StaticResource FeatureCardStyle}"
+                    Click="Navigate_Click"
+                    Tag="apps">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                    <Path Grid.Column="0"
+                          Data="{StaticResource IconPackage}"
+                          Stroke="#FF7A00"
+                          StrokeThickness="1.5"
+                          Width="26"
+                          Height="26"
+                          Stretch="Uniform"
+                          VerticalAlignment="Top"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeEndLineCap="Round"/>
 
-                    <StackPanel Grid.Row="0"
-                                Margin="0,0,0,10">
+                    <StackPanel Grid.Column="1"
+                                Margin="14,0,0,0"
+                                VerticalAlignment="Center">
 
-                        <TextBlock Text="RECOMMENDED APPS"
-                                   FontSize="11"
-                                   FontWeight="Bold"
-                                   Foreground="#8A7462"/>
+                        <TextBlock Text="Bulk Install Apps"
+                                   FontWeight="SemiBold"
+                                   Foreground="#E8E0D8"
+                                   FontSize="13.5"/>
 
-                        <TextBlock x:Name="RecommendedSummaryText"
-                                   FontSize="12.5"
-                                   Foreground="#B39B85"
+                        <TextBlock Text="Install and manage your&#x0a;favorite applications"
+                                   Foreground="#9A9088"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
                                    Margin="0,4,0,0"/>
 
                     </StackPanel>
 
-                    <ItemsControl x:Name="RecommendedAppsList"
-                                  Grid.Row="1"
-                                  Margin="2,0,0,6">
+                    <Path Grid.Column="2"
+                          Data="{StaticResource IconArrowRight}"
+                          Stroke="#FF7A00"
+                          StrokeThickness="1.5"
+                          Width="14"
+                          Height="14"
+                          Stretch="Uniform"
+                          VerticalAlignment="Center"
+                          Margin="8,0,0,0"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeEndLineCap="Round"/>
 
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal"
-                                            Margin="0,5"
-                                            ToolTipService.InitialShowDelay="250"
-                                            ToolTipService.ShowDuration="20000">
+                </Grid>
+            </Button>
 
-                                    <StackPanel.ToolTip>
-                                        <StackPanel MaxWidth="270">
-                                            <TextBlock Text="{Binding Name}"
-                                                       FontWeight="Bold"
-                                                       FontSize="12.5"/>
-                                            <TextBlock Text="{Binding Description}"
-                                                       TextWrapping="Wrap"
-                                                       Margin="0,3,0,0"/>
-                                            <TextBlock Foreground="#B39B85"
-                                                       FontSize="10.5"
-                                                       Margin="0,5,0,0">
-                                                <Run Text="{Binding Publisher, Mode=OneWay}"/>
-                                                <Run Text="  -  "/>
-                                                <Run Text="{Binding Category, Mode=OneWay}"/>
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </StackPanel.ToolTip>
+            <!-- Card 2: Privacy & Performance -->
 
-                                    <Border Width="24"
-                                            Height="24"
-                                            CornerRadius="6"
-                                            Background="#241709">
-                                        <Image Source="{Binding IconDisplay}"
-                                               Width="16"
-                                               Height="16"/>
-                                    </Border>
+            <Button Grid.Column="2"
+                    Style="{StaticResource FeatureCardStyle}"
+                    Click="Navigate_Click"
+                    Tag="tweaks">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="{Binding Name}"
-                                               FontSize="12.5"
-                                               FontWeight="SemiBold"
-                                               Foreground="#FFF3E8"
-                                               VerticalAlignment="Center"
-                                               Margin="10,0,0,0"/>
+                    <Path Grid.Column="0"
+                          Data="{StaticResource IconShield}"
+                          Stroke="#FF7A00"
+                          StrokeThickness="1.5"
+                          Width="26"
+                          Height="26"
+                          Stretch="Uniform"
+                          VerticalAlignment="Top"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeEndLineCap="Round"/>
 
-                                    <TextBlock Text="installed"
-                                               FontSize="10.5"
-                                               Foreground="#22C55E"
-                                               VerticalAlignment="Center"
-                                               Margin="8,1,0,0"
-                                               Visibility="{Binding IsInstalled, Converter={StaticResource BoolToVis}}"/>
+                    <StackPanel Grid.Column="1"
+                                Margin="14,0,0,0"
+                                VerticalAlignment="Center">
 
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                        <TextBlock Text="Privacy &amp; Performance"
+                                   FontWeight="SemiBold"
+                                   Foreground="#E8E0D8"
+                                   FontSize="13.5"/>
 
-                    </ItemsControl>
+                        <TextBlock Text="Debloat and optimize&#x0a;Windows for more speed"
+                                   Foreground="#9A9088"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Margin="0,4,0,0"/>
 
-                    <Button Grid.Row="2"
-                            Content="Open App Manager"
-                            Style="{StaticResource PrimaryButtonStyle}"
-                            HorizontalAlignment="Left"
-                            Margin="0,12,0,0"
-                            Click="RecommendedApps_Click"/>
+                    </StackPanel>
+
+                    <Path Grid.Column="2"
+                          Data="{StaticResource IconArrowRight}"
+                          Stroke="#FF7A00"
+                          StrokeThickness="1.5"
+                          Width="14"
+                          Height="14"
+                          Stretch="Uniform"
+                          VerticalAlignment="Center"
+                          Margin="8,0,0,0"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeEndLineCap="Round"/>
+
+                </Grid>
+            </Button>
+
+            <!-- Card 3: Manage Updates -->
+
+            <Button Grid.Column="4"
+                    Style="{StaticResource FeatureCardStyle}"
+                    Click="Navigate_Click"
+                    Tag="updates">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Path Grid.Column="0"
+                          Data="{StaticResource IconRefresh}"
+                          Stroke="#FF7A00"
+                          StrokeThickness="1.5"
+                          Width="26"
+                          Height="26"
+                          Stretch="Uniform"
+                          VerticalAlignment="Top"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeEndLineCap="Round"/>
+
+                    <StackPanel Grid.Column="1"
+                                Margin="14,0,0,0"
+                                VerticalAlignment="Center">
+
+                        <TextBlock Text="Manage Updates"
+                                   FontWeight="SemiBold"
+                                   Foreground="#E8E0D8"
+                                   FontSize="13.5"/>
+
+                        <TextBlock Text="Keep your system and&#x0a;drivers up to date"
+                                   Foreground="#9A9088"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Margin="0,4,0,0"/>
+
+                    </StackPanel>
+
+                    <Path Grid.Column="2"
+                          Data="{StaticResource IconArrowRight}"
+                          Stroke="#FF7A00"
+                          StrokeThickness="1.5"
+                          Width="14"
+                          Height="14"
+                          Stretch="Uniform"
+                          VerticalAlignment="Center"
+                          Margin="8,0,0,0"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeEndLineCap="Round"/>
+
+                </Grid>
+            </Button>
+
+            <!-- Card 4: Custom Windows ISO -->
+
+            <Button Grid.Column="6"
+                    Style="{StaticResource FeatureCardStyle}"
+                    Click="Navigate_Click"
+                    Tag="iso">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Path Grid.Column="0"
+                          Data="{StaticResource IconDisc}"
+                          Stroke="#FF7A00"
+                          StrokeThickness="1.5"
+                          Width="26"
+                          Height="26"
+                          Stretch="Uniform"
+                          VerticalAlignment="Top"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeEndLineCap="Round"/>
+
+                    <StackPanel Grid.Column="1"
+                                Margin="14,0,0,0"
+                                VerticalAlignment="Center">
+
+                        <TextBlock Text="Custom Windows ISO"
+                                   FontWeight="SemiBold"
+                                   Foreground="#E8E0D8"
+                                   FontSize="13.5"/>
+
+                        <TextBlock Text="Create your perfect&#x0a;Windows installation media"
+                                   Foreground="#9A9088"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Margin="0,4,0,0"/>
+
+                    </StackPanel>
+
+                    <Path Grid.Column="2"
+                          Data="{StaticResource IconArrowRight}"
+                          Stroke="#FF7A00"
+                          StrokeThickness="1.5"
+                          Width="14"
+                          Height="14"
+                          Stretch="Uniform"
+                          VerticalAlignment="Center"
+                          Margin="8,0,0,0"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeEndLineCap="Round"/>
+
+                </Grid>
+            </Button>
+
+        </Grid>
+
+        <!-- BOTTOM ROW: Quick Tools + System Status -->
+
+        <Grid Grid.Row="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- QUICK TOOLS -->
+
+            <Border Grid.Column="0"
+                    Background="#252526"
+                    BorderBrush="#2A2A2A"
+                    BorderThickness="1"
+                    CornerRadius="14"
+                    Padding="0">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+
+                    <StackPanel Orientation="Horizontal"
+                                Margin="20,16,20,12">
+
+                        <Path Data="{StaticResource IconBolt}"
+                              Stroke="#FF7A00"
+                              StrokeThickness="1.5"
+                              Width="16"
+                              Height="16"
+                              Stretch="Uniform"
+                              VerticalAlignment="Center"
+                              Margin="0,0,8,0"
+                              StrokeLineJoin="Round"
+                              StrokeStartLineCap="Round"
+                              StrokeEndLineCap="Round"/>
+
+                        <TextBlock Text="Q U I C K   T O O L S"
+                                   FontSize="11"
+                                   FontWeight="Bold"
+                                   Foreground="#E8E0D8"
+                                   VerticalAlignment="Center"/>
+
+                    </StackPanel>
+
+                    <!-- Tool Rows -->
+
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  Padding="12,0,12,12">
+
+                        <StackPanel>
+
+                            <!-- Open Apps Manager -->
+
+                            <Button Style="{StaticResource QuickToolRowStyle}"
+                                    Click="Navigate_Click"
+                                    Tag="apps">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Path Grid.Column="0"
+                                          Data="{StaticResource IconApps}"
+                                          Stroke="#FF7A00"
+                                          StrokeThickness="1.5"
+                                          Width="16"
+                                          Height="16"
+                                          Stretch="Uniform"
+                                          VerticalAlignment="Center"
+                                          Margin="0,0,12,0"
+                                          StrokeLineJoin="Round"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"/>
+
+                                    <StackPanel Grid.Column="1"
+                                                VerticalAlignment="Center">
+
+                                        <TextBlock Text="Open Apps Manager"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#E8E0D8"
+                                                   FontSize="12.5"/>
+
+                                        <TextBlock Text="Install, update and remove applications"
+                                                   Foreground="#6E6460"
+                                                   FontSize="11"
+                                                   Margin="0,2,0,0"/>
+
+                                    </StackPanel>
+
+                                    <Path Grid.Column="2"
+                                          Data="{StaticResource IconArrowRight}"
+                                          Stroke="#FF7A00"
+                                          StrokeThickness="1.5"
+                                          Width="12"
+                                          Height="12"
+                                          Stretch="Uniform"
+                                          VerticalAlignment="Center"
+                                          Margin="8,0,0,0"
+                                          StrokeLineJoin="Round"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"/>
+
+                                </Grid>
+                            </Button>
+
+                            <!-- Open Tweaks -->
+
+                            <Button Style="{StaticResource QuickToolRowStyle}"
+                                    Click="Navigate_Click"
+                                    Tag="tweaks">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Path Grid.Column="0"
+                                          Data="{StaticResource IconTweaks}"
+                                          Stroke="#FF7A00"
+                                          StrokeThickness="1.5"
+                                          Width="16"
+                                          Height="16"
+                                          Stretch="Uniform"
+                                          VerticalAlignment="Center"
+                                          Margin="0,0,12,0"
+                                          StrokeLineJoin="Round"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"/>
+
+                                    <StackPanel Grid.Column="1"
+                                                VerticalAlignment="Center">
+
+                                        <TextBlock Text="Open Tweaks"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#E8E0D8"
+                                                   FontSize="12.5"/>
+
+                                        <TextBlock Text="Optimize Windows settings for your needs"
+                                                   Foreground="#6E6460"
+                                                   FontSize="11"
+                                                   Margin="0,2,0,0"/>
+
+                                    </StackPanel>
+
+                                    <Path Grid.Column="2"
+                                          Data="{StaticResource IconArrowRight}"
+                                          Stroke="#FF7A00"
+                                          StrokeThickness="1.5"
+                                          Width="12"
+                                          Height="12"
+                                          Stretch="Uniform"
+                                          VerticalAlignment="Center"
+                                          Margin="8,0,0,0"
+                                          StrokeLineJoin="Round"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"/>
+
+                                </Grid>
+                            </Button>
+
+                            <!-- System Info -->
+
+                            <Button Style="{StaticResource QuickToolRowStyle}"
+                                    Click="Navigate_Click"
+                                    Tag="system">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Path Grid.Column="0"
+                                          Data="{StaticResource IconInfo}"
+                                          Stroke="#FF7A00"
+                                          StrokeThickness="1.5"
+                                          Width="16"
+                                          Height="16"
+                                          Stretch="Uniform"
+                                          VerticalAlignment="Center"
+                                          Margin="0,0,12,0"
+                                          StrokeLineJoin="Round"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"/>
+
+                                    <StackPanel Grid.Column="1"
+                                                VerticalAlignment="Center">
+
+                                        <TextBlock Text="System Info"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#E8E0D8"
+                                                   FontSize="12.5"/>
+
+                                        <TextBlock Text="Hardware and system details"
+                                                   Foreground="#6E6460"
+                                                   FontSize="11"
+                                                   Margin="0,2,0,0"/>
+
+                                    </StackPanel>
+
+                                    <Path Grid.Column="2"
+                                          Data="{StaticResource IconArrowRight}"
+                                          Stroke="#FF7A00"
+                                          StrokeThickness="1.5"
+                                          Width="12"
+                                          Height="12"
+                                          Stretch="Uniform"
+                                          VerticalAlignment="Center"
+                                          Margin="8,0,0,0"
+                                          StrokeLineJoin="Round"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"/>
+
+                                </Grid>
+                            </Button>
+
+                            <!-- ISO Creator -->
+
+                            <Button Style="{StaticResource QuickToolRowStyle}"
+                                    Click="Navigate_Click"
+                                    Tag="iso">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Path Grid.Column="0"
+                                          Data="{StaticResource IconDisc}"
+                                          Stroke="#FF7A00"
+                                          StrokeThickness="1.5"
+                                          Width="16"
+                                          Height="16"
+                                          Stretch="Uniform"
+                                          VerticalAlignment="Center"
+                                          Margin="0,0,12,0"
+                                          StrokeLineJoin="Round"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"/>
+
+                                    <StackPanel Grid.Column="1"
+                                                VerticalAlignment="Center">
+
+                                        <TextBlock Text="ISO Creator"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#E8E0D8"
+                                                   FontSize="12.5"/>
+
+                                        <TextBlock Text="Build a customized Windows installation"
+                                                   Foreground="#6E6460"
+                                                   FontSize="11"
+                                                   Margin="0,2,0,0"/>
+
+                                    </StackPanel>
+
+                                    <Path Grid.Column="2"
+                                          Data="{StaticResource IconArrowRight}"
+                                          Stroke="#FF7A00"
+                                          StrokeThickness="1.5"
+                                          Width="12"
+                                          Height="12"
+                                          Stretch="Uniform"
+                                          VerticalAlignment="Center"
+                                          Margin="8,0,0,0"
+                                          StrokeLineJoin="Round"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"/>
+
+                                </Grid>
+                            </Button>
+
+                        </StackPanel>
+
+                    </ScrollViewer>
 
                 </Grid>
 
             </Border>
 
-            <!-- Essential tweaks -->
+            <!-- SYSTEM STATUS -->
 
             <Border Grid.Column="2"
-                    Background="#1C130C"
-                    BorderBrush="#3D2C1D"
+                    Background="#252526"
+                    BorderBrush="#2A2A2A"
                     BorderThickness="1"
-                    CornerRadius="16"
-                    Padding="20,16">
+                    CornerRadius="14"
+                    Padding="0">
 
                 <Grid>
-
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0"
-                                Margin="0,0,0,10">
+                    <!-- Header -->
 
-                        <TextBlock Text="ESSENTIAL TWEAKS"
+                    <StackPanel Orientation="Horizontal"
+                                Margin="20,16,20,12">
+
+                        <Path Data="{StaticResource IconChart}"
+                              Stroke="#FF7A00"
+                              StrokeThickness="1.5"
+                              Width="16"
+                              Height="16"
+                              Stretch="Uniform"
+                              VerticalAlignment="Center"
+                              Margin="0,0,8,0"
+                              StrokeLineJoin="Round"
+                              StrokeStartLineCap="Round"
+                              StrokeEndLineCap="Round"/>
+
+                        <TextBlock Text="S Y S T E M   S T A T U S"
                                    FontSize="11"
                                    FontWeight="Bold"
-                                   Foreground="#8A7462"/>
-
-                        <TextBlock x:Name="EssentialSummaryText"
-                                   FontSize="12.5"
-                                   Foreground="#B39B85"
-                                   Margin="0,4,0,0"/>
+                                   Foreground="#E8E0D8"
+                                   VerticalAlignment="Center"/>
 
                     </StackPanel>
 
-                    <ItemsControl x:Name="EssentialTweaksList"
-                                  Grid.Row="1"
-                                  Margin="2,0,0,6">
+                    <!-- Status Rows -->
 
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal"
-                                            Margin="0,5">
+                    <StackPanel Grid.Row="1"
+                                Margin="20,0,20,16">
 
-                                    <TextBlock Text="&#x26A1;"
-                                               FontSize="13"
-                                               VerticalAlignment="Center"/>
+                        <!-- Windows Version -->
 
-                                    <TextBlock Text="{Binding Name}"
-                                               FontSize="12.5"
-                                               FontWeight="SemiBold"
-                                               Foreground="#FFF3E8"
-                                               VerticalAlignment="Center"
-                                               Margin="9,0,0,0"/>
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                            <Path Grid.Column="0"
+                                  Data="{StaticResource IconWindows}"
+                                  Stroke="#FF7A00"
+                                  StrokeThickness="1.5"
+                                  Width="14"
+                                  Height="14"
+                                  Stretch="Uniform"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,10,0"
+                                  StrokeLineJoin="Round"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"/>
 
-                    </ItemsControl>
+                            <TextBlock Grid.Column="1"
+                                       Text="Windows Version"
+                                       Foreground="#9A9088"
+                                       FontSize="12.5"
+                                       VerticalAlignment="Center"/>
 
-                    <Button Grid.Row="2"
-                            Content="Open Tweaks"
-                            Style="{StaticResource ForgeButtonStyle}"
-                            HorizontalAlignment="Left"
-                            Margin="0,12,0,0"
-                            Click="EssentialTweaks_Click"/>
+                            <TextBlock Grid.Column="2"
+                                       x:Name="StatusWindows"
+                                       Text="Windows 11 Pro"
+                                       Foreground="#E8E0D8"
+                                       FontSize="12.5"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+
+                        </Grid>
+
+                        <!-- System Health -->
+
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Path Grid.Column="0"
+                                  Data="{StaticResource IconCheckCircle}"
+                                  Stroke="#FF7A00"
+                                  StrokeThickness="1.5"
+                                  Width="14"
+                                  Height="14"
+                                  Stretch="Uniform"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,10,0"
+                                  StrokeLineJoin="Round"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="System Health"
+                                       Foreground="#9A9088"
+                                       FontSize="12.5"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Column="2"
+                                       x:Name="StatusHealth"
+                                       Text="All Good"
+                                       Foreground="#E8E0D8"
+                                       FontSize="12.5"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+
+                        </Grid>
+
+                        <!-- Updates -->
+
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Path Grid.Column="0"
+                                  Data="{StaticResource IconRefresh}"
+                                  Stroke="#FF7A00"
+                                  StrokeThickness="1.5"
+                                  Width="14"
+                                  Height="14"
+                                  Stretch="Uniform"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,10,0"
+                                  StrokeLineJoin="Round"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="Updates"
+                                       Foreground="#9A9088"
+                                       FontSize="12.5"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Column="2"
+                                       x:Name="StatusUpdates"
+                                       Text="Up to Date"
+                                       Foreground="#E8E0D8"
+                                       FontSize="12.5"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+
+                        </Grid>
+
+                        <!-- Storage -->
+
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Path Grid.Column="0"
+                                  Data="{StaticResource IconStorage}"
+                                  Stroke="#FF7A00"
+                                  StrokeThickness="1.5"
+                                  Width="14"
+                                  Height="14"
+                                  Stretch="Uniform"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,10,0"
+                                  StrokeLineJoin="Round"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="Storage"
+                                       Foreground="#9A9088"
+                                       FontSize="12.5"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Column="2"
+                                       x:Name="StatusStorage"
+                                       Text="1.2 TB free"
+                                       Foreground="#E8E0D8"
+                                       FontSize="12.5"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+
+                        </Grid>
+
+                        <!-- Memory -->
+
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Path Grid.Column="0"
+                                  Data="{StaticResource IconMemory}"
+                                  Stroke="#FF7A00"
+                                  StrokeThickness="1.5"
+                                  Width="14"
+                                  Height="14"
+                                  Stretch="Uniform"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,10,0"
+                                  StrokeLineJoin="Round"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="Memory"
+                                       Foreground="#9A9088"
+                                       FontSize="12.5"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Column="2"
+                                       x:Name="StatusMemory"
+                                       Text="32 GB"
+                                       Foreground="#E8E0D8"
+                                       FontSize="12.5"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+
+                        </Grid>
+
+                        <!-- GPU -->
+
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Path Grid.Column="0"
+                                  x:Name="IconGpuPath"
+                                  Data="{StaticResource IconCpu}"
+                                  Stroke="#FF7A00"
+                                  StrokeThickness="1.5"
+                                  Width="14"
+                                  Height="14"
+                                  Stretch="Uniform"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,10,0"
+                                  StrokeLineJoin="Round"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="GPU"
+                                       Foreground="#9A9088"
+                                       FontSize="12.5"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Column="2"
+                                       x:Name="StatusGpu"
+                                       Text="Detecting..."
+                                       Foreground="#E8E0D8"
+                                       FontSize="12.5"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+
+                        </Grid>
+
+                        <!-- CPU -->
+
+                        <Grid Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Path Grid.Column="0"
+                                  Data="{StaticResource IconCpu}"
+                                  Stroke="#FF7A00"
+                                  StrokeThickness="1.5"
+                                  Width="14"
+                                  Height="14"
+                                  Stretch="Uniform"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,10,0"
+                                  StrokeLineJoin="Round"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="CPU"
+                                       Foreground="#9A9088"
+                                       FontSize="12.5"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Column="2"
+                                       x:Name="StatusCpu"
+                                       Text="AMD Ryzen 9 7900X"
+                                       Foreground="#E8E0D8"
+                                       FontSize="12.5"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+
+                        </Grid>
+
+                    </StackPanel>
 
                 </Grid>
 
             </Border>
 
         </Grid>
+
+        <!-- Hidden data binding elements (required by code-behind) -->
+
+        <StackPanel Visibility="Collapsed">
+            <ItemsControl x:Name="RecommendedAppsList"/>
+            <TextBlock x:Name="RecommendedSummaryText"/>
+            <ItemsControl x:Name="EssentialTweaksList"/>
+            <TextBlock x:Name="EssentialSummaryText"/>
+            <TextBlock x:Name="StatAppsText"/>
+            <TextBlock x:Name="StatTweaksText"/>
+        </StackPanel>
 
     </Grid>
 

@@ -1,3 +1,70 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Navigation Icons (24x24 viewBox, stroke-based) -->
+
+    <!-- Home: house with roof and door -->
+    <Geometry x:Key="IconHome">M 3 12 L 12 3 L 21 12 M 5 11 V 20 H 10 V 14 H 14 V 20 H 19 V 11</Geometry>
+
+    <!-- Apps: 2x2 grid -->
+    <Geometry x:Key="IconApps">M 3 3 H 10 V 10 H 3 Z M 14 3 H 21 V 10 H 14 Z M 3 14 H 10 V 21 H 3 Z M 14 14 H 21 V 21 H 14 Z</Geometry>
+
+    <!-- Tweaks: sliders -->
+    <Geometry x:Key="IconTweaks">M 4 8 H 20 M 4 16 H 20 M 8 5 V 11 M 16 13 V 19</Geometry>
+
+    <!-- System: monitor with stand -->
+    <Geometry x:Key="IconSystem">M 3 4 H 21 V 14 H 3 Z M 9 18 H 15 M 12 14 V 18</Geometry>
+
+    <!-- Updates: circular refresh arrows -->
+    <Geometry x:Key="IconUpdates">M 17.65 6.35 C 16 5 14.08 4.5 12 5 C 7.58 5 4 8.58 4 13 C 4 17.42 7.58 21 12 21 C 15.93 21 19.14 18.15 19.88 14.38 M 19.88 14.38 L 20 10 L 16.12 14.38 M 4.12 9.62 L 4 13 L 7.88 9.62</Geometry>
+
+    <!-- Drivers: chip/processor -->
+    <Geometry x:Key="IconDrivers">M 8 8 H 16 V 16 H 8 Z M 11 4 V 8 M 13 4 V 8 M 4 11 H 8 M 4 13 H 8 M 11 16 V 20 M 13 16 V 20 M 16 11 H 20 M 16 13 H 20</Geometry>
+
+    <!-- ISO Creator: disc -->
+    <Geometry x:Key="IconDisc">M 12 2 A 10 10 0 1 0 12 22 A 10 10 0 1 0 12 2 M 12 7 A 5 5 0 1 0 12 17 A 5 5 0 1 0 12 7</Geometry>
+
+    <!-- Settings: gear with teeth -->
+    <Geometry x:Key="IconSettings">M 12 15 A 3 3 0 1 0 12 9 A 3 3 0 1 0 12 15 M 19.4 15 A 1.65 1.65 0 0 0 17.78 16.25 L 16.32 17.03 C 16.1 16.72 15.85 16.44 15.56 16.19 L 14.68 17.07 C 15.12 18.21 15.3 19.42 15.3 20.5 H 8.7 C 8.7 19.42 8.88 18.21 9.32 17.07 L 8.44 16.19 C 8.15 16.44 7.9 16.72 7.68 17.03 L 6.22 16.25 C 6.02 16.12 5.87 15.92 5.8 15.7 C 5.2 13.86 5.7 11.88 7.13 10.54 L 7.93 11.12 C 7.8 11.35 7.7 11.62 7.64 11.9 C 7.5 12.56 7.5 13.24 7.62 13.9 L 6.88 14.48 C 5.69 13.57 5.2 12.08 5.7 10.64 L 6.5 10.06 C 7.93 11.4 9.9 12.05 11.86 11.71 L 12 8.5 L 12.14 11.71 C 14.1 12.05 16.07 11.4 17.5 10.06 L 18.3 10.64 C 18.8 12.08 18.31 13.57 17.12 14.48 L 16.38 13.9 C 16.5 13.24 16.5 12.56 16.36 11.9 C 16.3 11.62 16.2 11.35 16.07 11.12 L 16.87 10.54 C 18.3 11.88 18.8 13.86 18.2 15.7 C 18.13 15.92 17.98 16.12 17.78 16.25 L 16.32 17.03 C 16.1 16.72 15.85 16.44 15.56 16.19</Geometry>
+
+    <!-- Feature Card Icons -->
+
+    <!-- Package/Install: box with arrow -->
+    <Geometry x:Key="IconPackage">M 12 3 L 5 8 V 18 L 12 23 L 19 18 V 8 Z M 12 12 V 18 M 9 15 L 12 18 L 15 15</Geometry>
+
+    <!-- Shield: security shield -->
+    <Geometry x:Key="IconShield">M 12 2 L 4 6 V 12 C 4 17 8 21 12 22 C 16 21 20 17 20 12 V 6 Z</Geometry>
+
+    <!-- Refresh: simple sync -->
+    <Geometry x:Key="IconRefresh">M 4 12 A 8 8 0 0 1 12 4 M 12 4 L 16 4 M 12 4 L 12 8 M 20 12 A 8 8 0 0 1 12 20 M 12 20 L 8 20 M 12 20 L 12 16</Geometry>
+
+    <!-- Arrow Right -->
+    <Geometry x:Key="IconArrowRight">M 5 12 H 19 M 14 7 L 19 12 L 14 17</Geometry>
+
+    <!-- Windows Logo (4 panes) -->
+    <Geometry x:Key="IconWindows">M 2 4 H 10 V 12 H 2 Z M 13 4 H 22 V 12 H 13 Z M 2 14 H 10 V 22 H 2 Z M 13 14 H 22 V 22 H 13 Z</Geometry>
+
+    <!-- Status Icons -->
+
+    <!-- Info circle -->
+    <Geometry x:Key="IconInfo">M 12 2 A 10 10 0 1 0 12 22 A 10 10 0 1 0 12 2 M 12 10 V 14 M 12 16.5 V 17</Geometry>
+
+    <!-- Check circle -->
+    <Geometry x:Key="IconCheckCircle">M 12 2 A 10 10 0 1 0 12 22 A 10 10 0 1 0 12 2 M 8 12 L 11 15 L 16 9</Geometry>
+
+    <!-- Storage/database -->
+    <Geometry x:Key="IconStorage">M 4 6 H 20 V 18 H 4 Z M 4 10 H 20 M 4 14 H 20</Geometry>
+
+    <!-- Memory/RAM stick -->
+    <Geometry x:Key="IconMemory">M 5 4 H 19 V 20 H 5 Z M 8 1 V 4 M 12 1 V 4 M 16 1 V 4 M 8 20 V 23 M 12 20 V 23 M 16 20 V 23</Geometry>
+
+    <!-- CPU/Chip -->
+    <Geometry x:Key="IconCpu">M 8 8 H 16 V 16 H 8 Z M 10 4 V 8 M 14 4 V 8 M 4 10 H 8 M 4 14 H 8 M 10 16 V 20 M 14 16 V 20 M 16 10 H 20 M 16 14 H 20</Geometry>
+
+    <!-- Chart/Bar chart for System Status -->
+    <Geometry x:Key="IconChart">M 4 20 H 20 M 7 16 V 10 M 11 16 V 6 M 15 16 V 12 M 19 16 V 8</Geometry>
+
+    <!-- Lightning bolt for Quick Tools -->
+    <Geometry x:Key="IconBolt">M 13 2 L 4 14 H 12 L 11 22 L 20 10 H 12 Z</Geometry>
+
 </ResourceDictionary>

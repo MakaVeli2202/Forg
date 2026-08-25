@@ -16,8 +16,8 @@
                     Orientation="Horizontal"
                     Margin="4,0,0,14">
 
-            <Border Background="#1C130C"
-                    BorderBrush="#33FF7A00"
+            <Border Background="#252526"
+                    BorderBrush="#8CFF7A00"
                     BorderThickness="1"
                     CornerRadius="12"
                     Padding="16,10"
@@ -26,16 +26,16 @@
                     <TextBlock Text="DEVICES SCANNED"
                                FontSize="10"
                                FontWeight="Bold"
-                               Foreground="#8A7462"/>
+                               Foreground="#6E6460"/>
                     <TextBlock x:Name="ChipTotal"
                                Text="-"
                                FontSize="22"
                                FontWeight="Bold"
-                               Foreground="#FFF3E8"/>
+                               Foreground="#E8E0D8"/>
                 </StackPanel>
             </Border>
 
-            <Border Background="#1C130C"
+            <Border Background="#252526"
                     BorderBrush="#66F87171"
                     BorderThickness="1"
                     CornerRadius="12"
@@ -45,7 +45,7 @@
                     <TextBlock Text="NEED ATTENTION"
                                FontSize="10"
                                FontWeight="Bold"
-                               Foreground="#8A7462"/>
+                               Foreground="#6E6460"/>
                     <TextBlock x:Name="ChipProblem"
                                Text="-"
                                FontSize="22"
@@ -54,7 +54,7 @@
                 </StackPanel>
             </Border>
 
-            <Border Background="#1C130C"
+            <Border Background="#252526"
                     BorderBrush="#6622C55E"
                     BorderThickness="1"
                     CornerRadius="12"
@@ -63,7 +63,7 @@
                     <TextBlock Text="HEALTHY"
                                FontSize="10"
                                FontWeight="Bold"
-                               Foreground="#8A7462"/>
+                               Foreground="#6E6460"/>
                     <TextBlock x:Name="ChipOk"
                                Text="-"
                                FontSize="22"
@@ -99,8 +99,8 @@
                       Height="34"
                       Margin="10,0,0,0"
                       VerticalContentAlignment="Center"
-                      Background="#1C130C"
-                      Foreground="#FFF3E8"
+                      Background="#252526"
+                      Foreground="#E8E0D8"
                       SelectedIndex="0"
                       SelectionChanged="Filter_SelectionChanged">
                 <ComboBoxItem Content="All devices"/>
@@ -140,8 +140,8 @@
         <!-- Device list -->
 
         <Border Grid.Row="2"
-                Background="#171009"
-                BorderBrush="#3D2C1D"
+                Background="#1E1E1E"
+                BorderBrush="#2A2A2A"
                 BorderThickness="1"
                 CornerRadius="14">
 
@@ -157,7 +157,7 @@
                            Grid.Row="0"
                            Text="Click Scan Devices to check every hardware device and its driver state."
                            FontSize="12"
-                           Foreground="#B39B85"
+                           Foreground="#9A9088"
                            Margin="6,2,0,10"/>
 
                 <ListBox x:Name="DeviceList"
@@ -176,7 +176,7 @@
                     <TextBlock Text="MANUFACTURER UPDATE TOOLS DETECTED"
                                FontSize="10"
                                FontWeight="Bold"
-                               Foreground="#8A7462"
+                               Foreground="#6E6460"
                                Margin="0,0,0,6"/>
 
                     <WrapPanel x:Name="OemTools"/>
