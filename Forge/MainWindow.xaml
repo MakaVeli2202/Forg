@@ -381,26 +381,6 @@
                             </StackPanel>
                         </Button>
 
-                        <Button x:Name="BtnIso"
-                                Style="{StaticResource NavButtonStyle}"
-                                ToolTip="ISO Creator - Create bootable media"
-                                Click="BtnIso_Click">
-                            <StackPanel Orientation="Horizontal">
-                                <Path x:Name="IconIsoPath"
-                                      Data="{StaticResource IconDisc}"
-                                      Stroke="#9A9088"
-                                      StrokeThickness="1.5"
-                                      Width="18" Height="18"
-                                      Stretch="Uniform"
-                                      Margin="0,0,10,0"
-                                      StrokeLineJoin="Round"
-                                      StrokeStartLineCap="Round"
-                                      StrokeEndLineCap="Round"
-                                      VerticalAlignment="Center"/>
-                                <TextBlock x:Name="TextIso" Text="ISO Creator" Foreground="#9A9088" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-
                         <Button x:Name="BtnSettings"
                                 Style="{StaticResource NavButtonStyle}"
                                 ToolTip="Settings - Application settings"

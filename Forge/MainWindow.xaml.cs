@@ -33,7 +33,6 @@ namespace Forge
             BtnSystem.Tag = null;
             BtnUpdates.Tag = null;
             BtnDrivers.Tag = null;
-            BtnIso.Tag = null;
             BtnSettings.Tag = null;
 
             SetNavColors(IconHomePath, TextHome, false);
@@ -42,7 +41,6 @@ namespace Forge
             SetNavColors(IconSystemPath, TextSystem, false);
             SetNavColors(IconUpdatesPath, TextUpdates, false);
             SetNavColors(IconDriversPath, TextDrivers, false);
-            SetNavColors(IconIsoPath, TextIso, false);
             SetNavColors(IconSettingsPath, TextSettings, false);
         }
 
@@ -56,7 +54,6 @@ namespace Forge
             else if (button == BtnSystem) SetNavColors(IconSystemPath, TextSystem, true);
             else if (button == BtnUpdates) SetNavColors(IconUpdatesPath, TextUpdates, true);
             else if (button == BtnDrivers) SetNavColors(IconDriversPath, TextDrivers, true);
-            else if (button == BtnIso) SetNavColors(IconIsoPath, TextIso, true);
             else if (button == BtnSettings) SetNavColors(IconSettingsPath, TextSettings, true);
         }
 
@@ -140,12 +137,6 @@ namespace Forge
                     ActivateNav(BtnDrivers);
                     PageTitle.Text = "DRIVERS";
                     MainContent.Content = new DriversView();
-                    break;
-
-                case "iso":
-                    ActivateNav(BtnIso);
-                    PageTitle.Text = "ISO CREATOR";
-                    MainContent.Content = new IsoCreatorView();
                     break;
 
                 case "settings":

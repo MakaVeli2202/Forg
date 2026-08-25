@@ -15,8 +15,7 @@ public class MainViewModel : BaseViewModel
             "Apps",
             "Tweaks",
             "System",
-            "Updates",
-            "ISO Creator"
+            "Updates"
         };
 
         Apps = new ObservableCollection<AppItem>();
