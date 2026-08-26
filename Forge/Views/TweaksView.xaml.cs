@@ -340,4 +340,96 @@ public partial class TweaksView : UserControl
     {
         _tweakService.Cancel();
     }
+
+    private async void BtnGamingPreset_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        if (_isBusy)
+        {
+            return;
+        }
+
+        var result = MessageBox.Show(
+            "Apply the Gaming Preset?\n\n" +
+            "This will apply these recommended tweaks for gaming:\n" +
+            "- Game Mode (ON)\n" +
+            "- Ultimate Performance Profile\n" +
+            "- Hibernation (OFF)\n" +
+            "- Background Apps (OFF)\n" +
+            "- Delivery Optimization (OFF)\n" +
+            "- Services (Set to Manual)\n" +
+            "- Visual Effects (Best Performance)\n\n" +
+            "Continue?",
+            "Gaming Preset",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Question);
+
+        if (result != MessageBoxResult.Yes)
+        {
+            return;
+        }
+
+        string[] gamingTweakIds =
+        [
+            "GameMode",
+            "AddUltPerf",
+            "Hiber",
+            "DisableBGapps",
+            "DeliveryOptimization",
+            "Services",
+            "Display"
+        ];
+
+        var tweaks = _tweakService.LoadTweaks();
+
+        var selected = tweaks
+            .Where(t => gamingTweakIds.Contains(t.Id))
+            .ToList();
+
+        BeginBusy($"Applying Gaming Preset ({selected.Count} tweaks)...");
+
+        try
+        {
+            foreach (var tweak in selected)
+            {
+                if (tweak.Id == "AddUltPerf")
+                {
+                    bool active = _tweakService.GetUltimatePerformanceActive();
+                    if (!active)
+                    {
+                        LogLine($"Applying: {tweak.Name}");
+                        await _tweakService.SetUltimatePerformanceAsync(true, CancellationToken.None);
+                    }
+                    continue;
+                }
+
+                if (tweak.IsApplied == true)
+                {
+                    LogLine($"Already applied: {tweak.Name}");
+                    continue;
+                }
+
+                LogLine($"Applying: {tweak.Name}");
+                await _tweakService.ApplyAsync(tweak, CancellationToken.None);
+                tweak.IsApplied = SafeState(tweak);
+            }
+
+            LogLine("Gaming Preset applied successfully.");
+        }
+        catch (OperationCanceledException)
+        {
+            LogLine("Cancelled.");
+        }
+        catch (Exception ex)
+        {
+            LogLine($"Error: {ex.Message}");
+        }
+        finally
+        {
+            TweaksList.ItemsSource = null;
+            TweaksList.ItemsSource = tweaks;
+            EndBusy();
+        }
+    }
 }

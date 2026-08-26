@@ -357,6 +357,21 @@
 
                 <DockPanel Grid.Row="0">
 
+                    <Button x:Name="BtnGamingPreset"
+                            Content="Gaming Preset"
+                            DockPanel.Dock="Right"
+                            Style="{StaticResource ForgeButtonStyle}"
+                            Background="#2D2D30"
+                            Foreground="#E8E0D8"
+                            BorderBrush="#8CFF7A00"
+                            BorderThickness="1"
+                            Width="110"
+                            Height="26"
+                            FontSize="10.5"
+                            Margin="0,0,8,0"
+                            ToolTip="Apply recommended gaming tweaks: Game Mode, Ultimate Performance, disable hibernation, background apps, and more"
+                            Click="BtnGamingPreset_Click"/>
+
                     <Button x:Name="BtnCancel"
                             Content="Cancel"
                             DockPanel.Dock="Right"

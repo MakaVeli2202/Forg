@@ -14,6 +14,8 @@ public class InstallService
 
     public event EventHandler<string>? DefaultApplied;
 
+    public event EventHandler<string>? PreInstallMessage;
+
     public InstallService()
     {
         _packageManager = new WingetPackageManager();
@@ -47,6 +49,16 @@ public class InstallService
                         current,
                         total,
                         app.Name));
+
+                if (!string.IsNullOrWhiteSpace(app.PreInstallMessage))
+                {
+                    PreInstallMessage?.Invoke(this, app.PreInstallMessage);
+                }
+
+                if (!string.IsNullOrWhiteSpace(app.DependsOn))
+                {
+                    await InstallDependencyIfNeeded(app);
+                }
 
                 if (!string.IsNullOrWhiteSpace(app.InstallUrl))
                 {
@@ -83,6 +95,38 @@ public class InstallService
                 app.Status = AppStatus.Failed;
             }
         }
+    }
+
+    private async Task InstallDependencyIfNeeded(AppItem app)
+    {
+        var allApps = AppService.LoadApps();
+        var dep = allApps.FirstOrDefault(a =>
+            string.Equals(a.WingetId, app.DependsOn, StringComparison.OrdinalIgnoreCase));
+
+        if (dep is null)
+        {
+            return;
+        }
+
+        if (dep.IsInstalled)
+        {
+            return;
+        }
+
+        OutputLine?.Invoke(this,
+            $"Installing dependency: {dep.Name} for {app.Name}...");
+
+        dep.Status = AppStatus.Installing;
+
+        await _packageManager.InstallAsync(
+            dep.WingetId,
+            dep.Source);
+
+        dep.Status = AppStatus.Installed;
+        dep.IsInstalled = true;
+
+        OutputLine?.Invoke(this,
+            $"Dependency {dep.Name} installed successfully.");
     }
 
     public async Task UpgradeAppsAsync(

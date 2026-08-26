@@ -171,4 +171,35 @@ public partial class HomeView : UserControl
 
     private void EssentialTweaks_Click(object sender, RoutedEventArgs e) =>
         (Window.GetWindow(this) as MainWindow)?.NavigateTo("tweaks");
+
+    private void QuickSetup_Click(object sender, RoutedEventArgs e)
+    {
+        var apps = AppService.LoadApps();
+        int recommendedCount = apps.Count(a => a.Recommended);
+
+        var result = MessageBox.Show(
+            $"QUICK SETUP\n\n" +
+            $"This will set up your PC with recommended settings:\n\n" +
+            $"  APPS ({recommendedCount} recommended)\n" +
+            $"  Install all recommended applications including:\n" +
+            $"  Chrome, Discord, Spotify, Steam, VLC, 7-Zip,\n" +
+            $"  PowerToys, Notepad++, Wallpaper Engine, and more.\n\n" +
+            $"  TWEAKS\n" +
+            $"  Apply essential performance & privacy tweaks\n" +
+            $"  Enable Ultimate Performance power plan\n" +
+            $"  Disable hibernation, telemetry, and background apps\n\n" +
+            $"This process may take several minutes.\n" +
+            $"A system restart is recommended afterward.\n\n" +
+            $"Continue with Quick Setup?",
+            "Forge Quick Setup",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Question);
+
+        if (result != MessageBoxResult.Yes)
+        {
+            return;
+        }
+
+        (Window.GetWindow(this) as MainWindow)?.NavigateTo("apps");
+    }
 }

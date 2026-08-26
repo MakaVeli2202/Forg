@@ -60,6 +60,12 @@ public class AppItem : INotifyPropertyChanged
     [JsonPropertyName("tags")]
     public List<string> Tags { get; set; } = [];
 
+    [JsonPropertyName("dependsOn")]
+    public string? DependsOn { get; set; }
+
+    [JsonPropertyName("preInstallMessage")]
+    public string? PreInstallMessage { get; set; }
+
     [JsonPropertyName("postInstallAction")]
     public string? PostInstallAction { get; set; }
 

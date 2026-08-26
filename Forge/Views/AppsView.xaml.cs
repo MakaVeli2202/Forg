@@ -25,6 +25,7 @@ public partial class AppsView : UserControl
         _installService.ProgressChanged += InstallService_ProgressChanged;
         _installService.OutputLine += InstallService_OutputLine;
         _installService.DefaultApplied += InstallService_DefaultApplied;
+        _installService.PreInstallMessage += InstallService_PreInstallMessage;
     }
 
     private async void AppsView_Loaded(
@@ -626,6 +627,16 @@ public partial class AppsView : UserControl
         Dispatcher.Invoke(() =>
         {
             LogInfo($"DEFAULTS  {message}");
+        });
+    }
+
+    private void InstallService_PreInstallMessage(
+        object? sender,
+        string message)
+    {
+        Dispatcher.Invoke(() =>
+        {
+            LogWarning($"PRE-INSTALL: {message}");
         });
     }
 

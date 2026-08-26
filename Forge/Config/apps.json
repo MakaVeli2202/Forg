@@ -560,21 +560,7 @@
                      "audio"
                  ]
     },
-    {
-        "name":  "Spotify",
-        "wingetId":  "Spotify.Spotify",
-        "category":  "Multimedia",
-        "description":  "Music streaming client for desktop playback and playlists.",
-        "icon":  "/Assets/Images/Apps/Spotify.Spotify.png",
-        "recommended":  false,
-        "publisher":  "Spotify",
-        "homepage":  "https://www.spotify.com/",
-        "tags":  [
-                     "music",
-                     "streaming",
-                     "audio"
-                 ]
-    },
+
     {
         "name":  "OBS Studio",
         "wingetId":  "OBSProject.OBSStudio",
@@ -1103,22 +1089,7 @@
                      "cleanup"
                  ]
     },
-    {
-        "name":  "NVIDIA App",
-        "wingetId":  "XP8CLZL93F5Z4P",
-        "source":  "msstore",
-        "category":  "Pro Tools",
-        "description":  "Keep drivers updated, optimize games and capture moments.",
-        "icon":  "/Assets/Images/Apps/XP8CLZL93F5Z4P.png",
-        "recommended":  false,
-        "publisher":  "NVIDIA Corp.",
-        "homepage":  "https://www.nvidia.com/en-us/geforce/app/",
-        "tags":  [
-                     "nvidia",
-                     "drivers",
-                     "gpu"
-                 ]
-    },
+
     {
         "name":  "Nmap",
         "wingetId":  "Insecure.Nmap",
@@ -1265,6 +1236,8 @@
         "icon":  "/Assets/Images/Apps/Steam.WallpaperEngine.png",
         "recommended":  true,
         "installUrl":  "steam://install/431960",
+        "dependsOn":  "Valve.Steam",
+        "preInstallMessage":  "Wallpaper Engine requires Steam to be installed first. Steam will be installed automatically if not already present.",
         "publisher":  "Steam",
         "homepage":  "https://store.steampowered.com/app/431960/",
         "featured":  false,
@@ -1324,23 +1297,7 @@
                      "benchmark"
                  ]
     },
-    {
-        "name":  "Cinebench R23",
-        "wingetId":  "Maxon.CinebenchR23",
-        "category":  "Benchmarks",
-        "description":  "Industry-standard CPU rendering benchmark for single and multi-core performance.",
-        "icon":  "/Assets/Images/Apps/Maxon.CinebenchR23.png",
-        "recommended":  false,
-        "installUrl":  null,
-        "publisher":  "Maxon",
-        "homepage":  "https://www.maxon.net/en/cinebench",
-        "featured":  false,
-        "tags":  [
-                     "cpu",
-                     "benchmark",
-                     "rendering"
-                 ]
-    },
+
     {
         "name":  "Unigine Superposition",
         "wingetId":  "Unigine.SuperpositionBenchmark",
@@ -1375,23 +1332,7 @@
                      "stability"
                  ]
     },
-    {
-        "name":  "HWiNFO",
-        "wingetId":  "REALiX.HWiNFO",
-        "category":  "Benchmarks",
-        "description":  "Deep system information and live sensor monitoring while you stress test.",
-        "icon":  "/Assets/Images/Apps/REALiX.HWiNFO.png",
-        "recommended":  false,
-        "installUrl":  null,
-        "publisher":  "REALiX",
-        "homepage":  "https://www.hwinfo.com/",
-        "featured":  false,
-        "tags":  [
-                     "sensors",
-                     "monitoring",
-                     "info"
-                 ]
-    },
+
     {
         "name":  "NVIDIA App",
         "wingetId":  "Nvidia.NVIDIAApp",
