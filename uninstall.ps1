@@ -7,9 +7,8 @@
     Completely removes Forge and all associated files.
 #>
 
-$ErrorActionPreference = 'Stop'
 $installDir = Join-Path $env:LOCALAPPDATA "Forge"
-$startMenuDir = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs"
+$startMenuDir = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs"
 $shortcutPath = Join-Path $startMenuDir "Forge.lnk"
 $buildCache = Join-Path $env:TEMP "Forge_Build"
 $installCache = Join-Path $env:TEMP "Forge_Install"
@@ -37,13 +36,13 @@ try {
     $procs = Get-Process -Name "Forge" -ErrorAction SilentlyContinue
     if ($procs) {
         Write-Host "  Stopping Forge..." -ForegroundColor Yellow
-        $procs | Stop-Process -Force
-        Start-Sleep -Seconds 1
+        $procs | Stop-Process -Force -ErrorAction SilentlyContinue
+        Start-Sleep -Seconds 2
     }
 
     if ($exists) {
         Write-Host "  Removing $installDir ..." -ForegroundColor Gray
-        Remove-Item -Path $installDir -Recurse -Force
+        Remove-Item -Path $installDir -Recurse -Force -ErrorAction SilentlyContinue
         Write-Host "  Removed install directory." -ForegroundColor Green
     }
 
@@ -55,23 +54,20 @@ try {
 
     if (Test-Path $buildCache) {
         Write-Host "  Removing build cache ($buildCache)..." -ForegroundColor Gray
-        Remove-Item -Path $buildCache -Recurse -Force
+        Remove-Item -Path $buildCache -Recurse -Force -ErrorAction SilentlyContinue
         Write-Host "  Removed build cache." -ForegroundColor Green
     }
 
     if (Test-Path $installCache) {
         Write-Host "  Removing download cache ($installCache)..." -ForegroundColor Gray
-        Remove-Item -Path $installCache -Recurse -Force
+        Remove-Item -Path $installCache -Recurse -Force -ErrorAction SilentlyContinue
         Write-Host "  Removed download cache." -ForegroundColor Green
     }
 
-    $tempForge = Join-Path $env:TEMP "Forge_*"
-    $tempFiles = Get-Item -Path $tempForge -ErrorAction SilentlyContinue
+    $tempFiles = Get-Item -Path (Join-Path $env:TEMP "Forge_*") -ErrorAction SilentlyContinue
     foreach ($f in $tempFiles) {
-        if ($f.Name -ne "Forge_Build") {
-            Write-Host "  Removing $($f.FullName)..." -ForegroundColor Gray
-            Remove-Item -Path $f.FullName -Recurse -Force -ErrorAction SilentlyContinue
-        }
+        Write-Host "  Removing $($f.FullName)..." -ForegroundColor Gray
+        Remove-Item -Path $f.FullName -Recurse -Force -ErrorAction SilentlyContinue
     }
 
     Write-Host ""
