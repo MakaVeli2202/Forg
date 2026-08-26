@@ -6,13 +6,23 @@ A powerful Windows PC setup and optimization toolkit. Install apps, apply system
 
 ## Quick Install
 
-Run this single command in PowerShell (as Administrator):
+Run this in PowerShell (as Administrator):
 
 ```powershell
-irm https://raw.githubusercontent.com/MakaVeli2202/Forg/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/MakaVeli2202/Forg/main/install.ps1 -OutFile "$env:TEMP\forge_install.ps1"; & "$env:TEMP\forge_install.ps1"
 ```
 
-This will download and launch the latest version of Forge automatically.
+This will clone, build, and install Forge to `%LOCALAPPDATA%\Forge`.
+
+## Uninstall
+
+To completely remove Forge and all its files:
+
+```powershell
+irm https://raw.githubusercontent.com/MakaVeli2202/Forg/main/uninstall.ps1 -OutFile "$env:TEMP\forge_uninstall.ps1"; & "$env:TEMP\forge_uninstall.ps1"
+```
+
+This removes the install directory, Start Menu shortcut, build cache, and all temp files.
 
 ## Features
 
@@ -43,6 +53,8 @@ For the best gaming experience, apply these tweaks in the Tweaks section:
 - Windows 10/11
 - Administrator privileges
 - PowerShell 5.1+
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [Git](https://git-scm.com/download/win)
 
 ## Building from Source
 
