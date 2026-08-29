@@ -781,6 +781,7 @@
         "featured":  true,
         "publisher":  "Google",
         "homepage":  "https://www.google.com/chrome/",
+        "directUrl":  "https://dl.google.com/dl/chrome/install/googlechromestandaloneenterprise64.msi",
         "postInstallAction":  "setAsDefaultBrowser",
         "tags":  [
                      "browser",
@@ -918,6 +919,7 @@
         "recommended":  false,
         "publisher":  "WhatsApp LLC",
         "homepage":  "https://www.whatsapp.com/",
+        "preInstallMessage":  "This app requires the Microsoft Store. Make sure you are signed in to the Store before continuing.",
         "tags":  [
                      "chat",
                      "messaging",
@@ -1160,6 +1162,7 @@
         "recommended":  false,
         "publisher":  "OpenAI",
         "homepage":  "https://chatgpt.com/",
+        "preInstallMessage":  "This app requires the Microsoft Store. Make sure you are signed in to the Store before continuing.",
         "tags":  [
                      "ai",
                      "chat",
@@ -1340,7 +1343,6 @@
         "description":  "One hub for GeForce drivers, optimization and game settings.",
         "icon":  "/Assets/Images/Apps/Nvidia.NVIDIAApp.png",
         "recommended":  true,
-        "installUrl":  "https://www.nvidia.com/en-us/software/nvidia-app/",
         "publisher":  "NVIDIA",
         "homepage":  "https://www.nvidia.com/en-us/software/nvidia-app/",
         "featured":  false,
@@ -1374,6 +1376,7 @@
         "icon":  "/Assets/Images/Apps/Spotify.Spotify.png",
         "recommended":  true,
         "installUrl":  null,
+        "directUrl":  "https://download.scdn.co/SpotifySetup.exe",
         "publisher":  "Spotify",
         "homepage":  "https://open.spotify.com/",
         "featured":  false,

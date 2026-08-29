@@ -32,6 +32,9 @@ public class AppItem : INotifyPropertyChanged
     [JsonPropertyName("installUrl")]
     public string? InstallUrl { get; set; }
 
+    [JsonPropertyName("directUrl")]
+    public string? DirectUrl { get; set; }
+
     [JsonIgnore]
     public bool IsGitHubSource =>
         string.Equals(Source, "github", StringComparison.OrdinalIgnoreCase);

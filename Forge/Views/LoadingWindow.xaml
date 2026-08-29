@@ -22,7 +22,7 @@
     <Border BorderBrush="#8CFF7A00"
             BorderThickness="1"
             CornerRadius="18"
-            Background="#1E1E1E">
+            Background="#991E1E1E">
 
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Center">

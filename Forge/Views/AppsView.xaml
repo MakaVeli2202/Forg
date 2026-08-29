@@ -47,7 +47,7 @@
                          Columns="4"
                          VerticalAlignment="Center">
 
-                <Border Background="#252526"
+                <Border Background="#99252526"
                         BorderBrush="#2A2A2A"
                         BorderThickness="1"
                         CornerRadius="8"
@@ -159,7 +159,7 @@
 
         <Border x:Name="SearchSection"
                 Grid.Row="1"
-                Background="#252526"
+                Background="#99252526"
                 BorderBrush="#2A2A2A"
                 BorderThickness="1"
                 CornerRadius="10"
@@ -173,21 +173,14 @@
                          FontSize="12"
                          Padding="34,0,10,0"
                          VerticalContentAlignment="Center"
-                         Background="#1E1E1E"
+                         Background="#991E1E1E"
                          Foreground="White"
                          BorderBrush="#3A3A3A"
                          BorderThickness="1"/>
 
-                <TextBlock Text="&#x1F50D;  Search apps..."
-                           Margin="11,0,0,0"
-                           VerticalAlignment="Center"
-                           Foreground="#9A9088"
-                           FontSize="11"
-                           IsHitTestVisible="False"/>
-
                 <TextBlock x:Name="PlaceholderText"
-                           Text="Search applications..."
-                           Margin="34,0,0,0"
+                           Text="&#x1F50D;  Search apps..."
+                           Margin="11,0,0,0"
                            VerticalAlignment="Center"
                            Foreground="#6E6460"
                            FontSize="11"
@@ -206,7 +199,6 @@
                       VerticalScrollBarVisibility="Disabled">
 
             <ListBox x:Name="CategoriesList"
-                     SelectionChanged="CategoriesList_SelectionChanged"
                      Background="Transparent"
                      BorderThickness="0"
                      SelectedIndex="0">
@@ -230,7 +222,7 @@
                                 <ControlTemplate TargetType="ListBoxItem">
 
                                     <Border x:Name="Chip"
-                                            Background="#252526"
+                                            Background="#99252526"
                                             BorderBrush="#3A3A3A"
                                             BorderThickness="1"
                                             CornerRadius="12"
@@ -320,12 +312,11 @@
                               Width="140"
                               Height="24"
                               FontSize="11"
-                              Background="#252526"
+                              Background="#99252526"
                               Foreground="#E8E0D8"
                               BorderBrush="#2A2A2A"
                               BorderThickness="1"
-                              SelectedIndex="0"
-                              SelectionChanged="SortComboBox_SelectionChanged">
+                              SelectedIndex="0">
 
                         <ComboBoxItem Content="Name (A-Z)"/>
                         <ComboBoxItem Content="Name (Z-A)"/>
@@ -339,7 +330,7 @@
                 </StackPanel>
 
                 <Border x:Name="SelectionSection"
-                        Background="#252526"
+                        Background="#99252526"
                         BorderBrush="#2A2A2A"
                         BorderThickness="1"
                         CornerRadius="8"
@@ -352,7 +343,7 @@
                         <Button x:Name="BtnSelectAll"
                                 Content="Select All"
                                 Style="{StaticResource ForgeButtonStyle}"
-                                Background="#252526"
+                                Background="#99252526"
                                 Height="26"
                                 MinWidth="80"
                                 FontSize="11"
@@ -363,7 +354,7 @@
                         <Button x:Name="BtnSelectRecommended"
                                 Content="Recommended"
                                 Style="{StaticResource ForgeButtonStyle}"
-                                Background="#252526"
+                                Background="#99252526"
                                 Height="26"
                                 MinWidth="95"
                                 FontSize="11"
@@ -374,7 +365,7 @@
                         <Button x:Name="BtnClearSelection"
                                 Content="Clear"
                                 Style="{StaticResource ForgeButtonStyle}"
-                                Background="#252526"
+                                Background="#99252526"
                                 Height="26"
                                 MinWidth="60"
                                 FontSize="11"
@@ -395,7 +386,7 @@
 
             <!-- Skeleton Loader -->
             <Border x:Name="SkeletonGrid"
-                    Background="#1E1E1E"
+                    Background="#991E1E1E"
                     CornerRadius="12"
                     Padding="2"
                     VerticalAlignment="Stretch">
@@ -427,7 +418,7 @@
                                         Padding="8,7"
                                         Width="168"
                                         MinHeight="82"
-                                        Background="#252526"
+                                        Background="#99252526"
                                         BorderBrush="#2A2A2A"
                                         BorderThickness="1"
                                         CornerRadius="9">
@@ -527,7 +518,7 @@
             </Border>
 
             <Border x:Name="AppsContent"
-                    Background="#1E1E1E"
+                    Background="#991E1E1E"
                     CornerRadius="12"
                     Padding="2"
                     VerticalAlignment="Stretch"
@@ -794,7 +785,7 @@
                StaysOpen="False"
                PopupAnimation="Fade">
 
-            <Border Background="#1E1E1E"
+            <Border Background="#991E1E1E"
                     x:Name="AppPreviewBorder"
                     CornerRadius="12"
                     Padding="14"
@@ -855,7 +846,7 @@
 
         <Border x:Name="ActivitySection"
                 Grid.Row="5"
-                Background="#252526"
+                Background="#99252526"
                 BorderBrush="#2A2A2A"
                 BorderThickness="1"
                 CornerRadius="10"
@@ -890,7 +881,7 @@
 
         <Border x:Name="StatusSection"
                 Grid.Row="6"
-                Background="#252526"
+                Background="#99252526"
                 BorderBrush="#2A2A2A"
                 BorderThickness="1"
                 CornerRadius="10"
@@ -919,7 +910,7 @@
 
         <Border x:Name="ActionsSection"
                 Grid.Row="7"
-                Background="#252526"
+                Background="#99252526"
                 BorderBrush="#2A2A2A"
                 BorderThickness="1"
                 CornerRadius="10"

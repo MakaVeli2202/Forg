@@ -42,6 +42,7 @@ public class WingetPackageManager : IPackageManager
 
         await RunAsync(
             $"install --id \"{packageId}\" --exact --silent " +
+            "--disable-interactivity " +
             "--accept-package-agreements --accept-source-agreements" +
             SourceArg(source));
     }

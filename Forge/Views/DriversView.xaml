@@ -16,7 +16,7 @@
                     Orientation="Horizontal"
                     Margin="4,0,0,14">
 
-            <Border Background="#252526"
+            <Border Background="#99252526"
                     BorderBrush="#8CFF7A00"
                     BorderThickness="1"
                     CornerRadius="12"
@@ -35,7 +35,7 @@
                 </StackPanel>
             </Border>
 
-            <Border Background="#252526"
+            <Border Background="#99252526"
                     BorderBrush="#66F87171"
                     BorderThickness="1"
                     CornerRadius="12"
@@ -54,7 +54,7 @@
                 </StackPanel>
             </Border>
 
-            <Border Background="#252526"
+            <Border Background="#99252526"
                     BorderBrush="#6622C55E"
                     BorderThickness="1"
                     CornerRadius="12"
@@ -99,7 +99,7 @@
                       Height="34"
                       Margin="10,0,0,0"
                       VerticalContentAlignment="Center"
-                      Background="#252526"
+                      Background="#99252526"
                       Foreground="#E8E0D8"
                       SelectedIndex="0"
                       SelectionChanged="Filter_SelectionChanged">
@@ -140,7 +140,7 @@
         <!-- Device list -->
 
         <Border Grid.Row="2"
-                Background="#1E1E1E"
+                Background="#991E1E1E"
                 BorderBrush="#2A2A2A"
                 BorderThickness="1"
                 CornerRadius="14">

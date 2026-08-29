@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
@@ -396,6 +397,7 @@ try {
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(16) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(260) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
             var glyph = new TextBlock
             {
@@ -461,6 +463,24 @@ try {
             grid.Children.Add(badge);
             grid.Children.Add(spacer);
             grid.Children.Add(statusBlock);
+
+            var uninstallBtn = new Button
+            {
+                Content = "Uninstall",
+                FontSize = 11,
+                FontWeight = FontWeights.SemiBold,
+                Height = 26,
+                Padding = new Thickness(10, 0, 10, 0),
+                Margin = new Thickness(10, 0, 0, 0),
+                VerticalAlignment = VerticalAlignment.Center,
+                ToolTip = $"Uninstall the driver for this device ({d.PnpId})"
+            };
+            uninstallBtn.Style = (Style)FindResource("ForgeButtonStyle");
+            var captured = d;
+            uninstallBtn.Click += async (_, _) => await UninstallDeviceAsync(captured);
+            Grid.SetColumn(uninstallBtn, 5);
+
+            grid.Children.Add(uninstallBtn);
 
             row.Child = grid;
             DeviceList.Items.Add(row);
@@ -586,6 +606,68 @@ try {
         catch
         {
         }
+    }
+
+    private async Task UninstallDeviceAsync(DeviceInfo device)
+    {
+        var confirm = MessageBox.Show(
+            $"Remove the driver for:\n\n{device.Name}\n\n{device.PnpId}\n\n" +
+            "This will uninstall the device and delete its driver package from the system. " +
+            "Windows may reinstall it automatically, or you can reinstall it manually afterwards.\n\n" +
+            "Continue?",
+            "Uninstall Driver",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Warning);
+
+        if (confirm != MessageBoxResult.Yes) return;
+
+        SetMsg($"Removing driver: {device.Name}...", 0xFFB155);
+        LogRow($"Uninstalling: {device.Name} ({device.PnpId})");
+
+        try
+        {
+            bool ok = await Task.Run(() =>
+            {
+                var psi = new ProcessStartInfo
+                {
+                    FileName = "pnputil.exe",
+                    Arguments = $"/remove-device \"{device.PnpId}\"",
+                    UseShellExecute = true,
+                    Verb = "runas",
+                    CreateNoWindow = true
+                };
+
+                try
+                {
+                    using var p = Process.Start(psi);
+                    if (p == null) return false;
+                    p.WaitForExit(60000);
+                    return p.ExitCode == 0;
+                }
+                catch (System.ComponentModel.Win32Exception)
+                {
+                    return false; // user cancelled UAC / not elevated
+                }
+            });
+
+            if (ok)
+            {
+                SetMsg("Driver removed. Re-scanning devices...", 0x22C55E);
+                LogRow("Device removed successfully.");
+            }
+            else
+            {
+                SetMsg("Could not remove the driver (permission denied or operation cancelled).", 0xF87171);
+                LogRow("! Failed to remove device - it may require administrator approval.");
+            }
+        }
+        catch (Exception ex)
+        {
+            SetMsg($"Uninstall failed: {ex.Message}", 0xF87171);
+            LogRow("! " + ex.Message);
+        }
+
+        await ScanCoreAsync();
     }
 
     private void DetectOemTools()

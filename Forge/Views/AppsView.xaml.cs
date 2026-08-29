@@ -1,9 +1,11 @@
 using Forge.Models;
 using Forge.Services;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace Forge.Views;
 
@@ -13,25 +15,50 @@ public partial class AppsView : UserControl
     private List<AppItem> _visibleApps = [];
     private string _selectedCategory = "All";
     private string _currentOperation = string.Empty;
+    private bool _isBusy;
+    private bool _isLoaded;
 
     private readonly InstallService _installService = new();
     private readonly DetectionService _detectionService = new();
+    private readonly DispatcherTimer _spinnerTimer = new();
+    private int _spinnerIndex;
+    private string _statusBase = string.Empty;
+    private static readonly string[] SpinnerFrames = ["-", "\\", "|", "/"];
 
     public AppsView()
     {
         InitializeComponent();
+
+        _spinnerTimer.Interval = TimeSpan.FromMilliseconds(150);
+        _spinnerTimer.Tick += SpinnerTimer_Tick;
 
         Loaded += AppsView_Loaded;
         _installService.ProgressChanged += InstallService_ProgressChanged;
         _installService.OutputLine += InstallService_OutputLine;
         _installService.DefaultApplied += InstallService_DefaultApplied;
         _installService.PreInstallMessage += InstallService_PreInstallMessage;
+        SearchBox.TextChanged += SearchBox_TextChanged;
+        CategoriesList.SelectionChanged += CategoriesList_SelectionChanged;
+        SortComboBox.SelectionChanged += SortComboBox_SelectionChanged;
+    }
+
+    private void SpinnerTimer_Tick(object? sender, EventArgs e)
+    {
+        _spinnerIndex = (_spinnerIndex + 1) % SpinnerFrames.Length;
+        StatusText.Text = $"  {(SpinnerFrames[_spinnerIndex])}  {_statusBase}";
     }
 
     private async void AppsView_Loaded(
         object sender,
         RoutedEventArgs e)
     {
+        if (_isLoaded)
+        {
+            return;
+        }
+
+        _isLoaded = true;
+
         try
         {
             LogInfo("Loading apps catalog.");
@@ -53,7 +80,6 @@ public partial class AppsView : UserControl
 
             LogInfo("Installed apps scan completed.");
 
-
             foreach (var app in _apps)
             {
                 if (app.IsInstalled)
@@ -69,8 +95,6 @@ public partial class AppsView : UserControl
             {
                 AppsHeaderText.Text = $"Apps ({_apps.Count})";
             }
-
-            SearchBox.TextChanged += SearchBox_TextChanged;
 
             CategoriesList.SelectedIndex = 0;
         }
@@ -262,14 +286,22 @@ public partial class AppsView : UserControl
             return;
         }
 
+        var chrome = selectedApps
+            .FirstOrDefault(a => a.Name.Contains("Chrome", StringComparison.OrdinalIgnoreCase));
+
+        if (chrome is not null)
+        {
+            selectedApps.Remove(chrome);
+            selectedApps.Insert(0, chrome);
+        }
+
         try
         {
             _currentOperation = "Installing";
 
             LogInfo($"Install requested for {selectedApps.Count} app(s): {FormatAppList(selectedApps)}");
 
-            BtnInstall.IsEnabled = false;
-            BtnCancel.IsEnabled = true;
+            SetBusy(true);
 
             foreach (var app in selectedApps)
             {
@@ -322,8 +354,7 @@ public partial class AppsView : UserControl
         }
         finally
         {
-            BtnInstall.IsEnabled = true;
-            BtnCancel.IsEnabled = false;
+            SetBusy(false);
             _currentOperation = string.Empty;
         }
     }
@@ -353,8 +384,7 @@ public partial class AppsView : UserControl
             app.IsSelected = false;
         }
 
-        BtnInstall.IsEnabled = true;
-        BtnCancel.IsEnabled = false;
+        SetBusy(false);
         UpdateStatistics();
     }
 
@@ -364,21 +394,58 @@ public partial class AppsView : UserControl
         double progress,
         bool autoReset = false)
     {
-        StatusText.Text = $"Status: {text}";
-        InstallProgressBar.Value = progress;
+        _statusBase = text;
+        _spinnerIndex = 0;
+        StatusText.Text = $"  -  {text}";
+
+        if (progress > 0)
+        {
+            StopSpinner();
+            InstallProgressBar.IsIndeterminate = false;
+            InstallProgressBar.Value = progress;
+        }
+        else
+        {
+            InstallProgressBar.IsIndeterminate = true;
+        }
+
         InstallProgressBar.Visibility =
             text.Equals("Ready", StringComparison.OrdinalIgnoreCase)
                 ? Visibility.Collapsed
                 : Visibility.Visible;
 
+        if (text.Equals("Ready", StringComparison.OrdinalIgnoreCase))
+        {
+            StopSpinner();
+        }
+        else
+        {
+            StartSpinner();
+        }
+
         if (autoReset)
         {
-            await Task.Delay(1000);
+            await Task.Delay(1500);
 
             StatusText.Text = "Status: Ready";
             InstallProgressBar.Value = 0;
             InstallProgressBar.Visibility = Visibility.Collapsed;
+            StopSpinner();
         }
+    }
+
+    private void StartSpinner()
+    {
+        _spinnerIndex = 0;
+        if (!_spinnerTimer.IsEnabled)
+        {
+            _spinnerTimer.Start();
+        }
+    }
+
+    private void StopSpinner()
+    {
+        _spinnerTimer.Stop();
     }
 
     private async void BtnUpgrade_Click(
@@ -405,7 +472,7 @@ public partial class AppsView : UserControl
 
             LogInfo($"Upgrade requested for {selectedApps.Count} app(s): {FormatAppList(selectedApps)}");
 
-            BtnUpgrade.IsEnabled = false;
+            SetBusy(true);
 
             foreach (var app in selectedApps)
             {
@@ -458,7 +525,7 @@ public partial class AppsView : UserControl
         }
         finally
         {
-            BtnUpgrade.IsEnabled = true;
+            SetBusy(false);
             _currentOperation = string.Empty;
         }
     }
@@ -504,7 +571,7 @@ public partial class AppsView : UserControl
 
             LogInfo($"Uninstall confirmed for {FormatAppList(selectedApps)}");
 
-            BtnUninstall.IsEnabled = false;
+            SetBusy(true);
 
             foreach (var app in selectedApps)
             {
@@ -557,7 +624,7 @@ public partial class AppsView : UserControl
         }
         finally
         {
-            BtnUninstall.IsEnabled = true;
+            SetBusy(false);
             _currentOperation = string.Empty;
         }
     }
@@ -566,6 +633,11 @@ public partial class AppsView : UserControl
         object sender,
         MouseButtonEventArgs e)
     {
+        if (_isBusy)
+        {
+            return;
+        }
+
         if (sender is not Border border)
         {
             return;
@@ -694,6 +766,19 @@ public partial class AppsView : UserControl
         }
 
         UpdateStatistics();
+    }
+
+    private void SetBusy(bool busy)
+    {
+        _isBusy = busy;
+        BtnInstall.IsEnabled = !busy;
+        BtnUpgrade.IsEnabled = !busy;
+        BtnUninstall.IsEnabled = !busy;
+        BtnDetectInstalled.IsEnabled = !busy;
+        BtnCancel.IsEnabled = busy;
+        BtnSelectAll.IsEnabled = !busy;
+        BtnSelectRecommended.IsEnabled = !busy;
+        BtnClearSelection.IsEnabled = !busy;
     }
 
     public void SetSectionVisibility(string sectionName, bool isVisible)

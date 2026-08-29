@@ -1,4 +1,4 @@
-﻿<UserControl
+<UserControl
     x:Class="Forge.Views.HomeView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -18,11 +18,11 @@
         <!-- HERO SECTION -->
 
         <Border Grid.Row="0"
-                Background="#252526"
+                Background="#99252526"
                 BorderBrush="#2A2A2A"
                 BorderThickness="1"
                 CornerRadius="18"
-                Padding="32,28"
+                Height="560"
                 Margin="0,0,0,16">
 
             <Border.Effect>
@@ -32,87 +32,10 @@
                                   Opacity="0.06"/>
             </Border.Effect>
 
-            <Grid>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <StackPanel VerticalAlignment="Center">
-
-                    <TextBlock Text="T H E   W I N D O W S   W O R K S H O P"
-                               FontSize="10"
-                               FontWeight="Bold"
-                               Foreground="#FF7A00"
-                               Margin="0,0,0,10"/>
-
-                    <TextBlock FontSize="34"
-                               FontWeight="Bold"
-                               Foreground="#E8E0D8"
-                               TextWrapping="NoWrap">
-                        <Run Text="Forge" Foreground="#FF7A00"/>
-                        <Run Text=" Your Windows."/>
-                    </TextBlock>
-
-                    <TextBlock Text="Powerful tools. Smart tweaks. A cleaner, faster Windows."
-                               FontSize="13.5"
-                               Foreground="#9A9088"
-                               Margin="0,10,0,12"/>
-
-                    <Button Style="{StaticResource PrimaryButtonStyle}"
-                            Background="#FF7A00"
-                            Foreground="White"
-                            FontSize="12"
-                            FontWeight="SemiBold"
-                            Height="34"
-                            MinWidth="180"
-                            Padding="18,0"
-                            HorizontalAlignment="Left"
-                            Click="QuickSetup_Click"
-                            ToolTip="Install recommended apps, apply essential tweaks and enable Ultimate Performance">
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#x26A1;"
-                                       FontSize="13"
-                                       VerticalAlignment="Center"
-                                       Margin="0,0,8,0"/>
-                            <TextBlock Text="Quick Setup"
-                                       VerticalAlignment="Center"/>
-                        </StackPanel>
-
-                    </Button>
-
-                </StackPanel>
-
-                <!-- Forge visual - logo with glow -->
-
-                <Grid Grid.Column="1"
-                      Width="140"
-                      Height="140"
-                      VerticalAlignment="Center"
-                      Margin="30,0,10,0">
-
-                    <Grid.Effect>
-                        <DropShadowEffect Color="#FF7A00"
-                                          BlurRadius="45"
-                                          ShadowDepth="0"
-                                          Opacity="0.35"/>
-                    </Grid.Effect>
-
-                    <Ellipse Fill="#1A1A1E"
-                             Stroke="#33FF7A00"
-                             StrokeThickness="1"/>
-
-                    <Image Source="/Assets/Images/forge-logo.png"
-                           Width="80"
-                           Height="80"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"/>
-
-                </Grid>
-
-            </Grid>
+            <Image Source="/Assets/Images/Hero.png"
+                   Stretch="Uniform"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Center"/>
 
         </Border>
 
@@ -378,7 +301,7 @@
             <!-- QUICK TOOLS -->
 
             <Border Grid.Column="0"
-                    Background="#252526"
+                    Background="#99252526"
                     BorderBrush="#2A2A2A"
                     BorderThickness="1"
                     CornerRadius="14"
@@ -606,7 +529,7 @@
             <!-- SYSTEM STATUS -->
 
             <Border Grid.Column="2"
-                    Background="#252526"
+                    Background="#99252526"
                     BorderBrush="#2A2A2A"
                     BorderThickness="1"
                     CornerRadius="14"

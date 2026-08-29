@@ -155,7 +155,6 @@ namespace Forge
         private void BtnDrivers_Click(object sender, RoutedEventArgs e) => NavigateTo("drivers");
         private void BtnIso_Click(object sender, RoutedEventArgs e) => NavigateTo("iso");
         private void BtnSettings_Click(object sender, RoutedEventArgs e) => NavigateTo("settings");
-        private void BtnIsoPromo_Click(object sender, MouseButtonEventArgs e) => NavigateTo("iso");
 
         private static readonly Dictionary<string, bool> SectionStates = new()
         {

@@ -15,6 +15,35 @@
         ResizeMode="CanResize"
         AllowsTransparency="True">
 
+    <Window.Resources>
+        <Storyboard x:Key="ForgeMarqueeStoryboard" RepeatBehavior="Forever">
+            <!-- Top edge -->
+            <DoubleAnimation Storyboard.TargetName="MarqTopA" Storyboard.TargetProperty="Offset" From="-0.2" To="1.3" Duration="0:0:6" BeginTime="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="MarqTopB" Storyboard.TargetProperty="Offset" From="-0.12" To="1.38" Duration="0:0:6" BeginTime="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="MarqTopC" Storyboard.TargetProperty="Offset" From="-0.08" To="1.42" Duration="0:0:6" BeginTime="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="MarqTopD" Storyboard.TargetProperty="Offset" From="-0.04" To="1.46" Duration="0:0:6" BeginTime="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="MarqTopE" Storyboard.TargetProperty="Offset" From="0.04" To="1.54" Duration="0:0:6" BeginTime="0:0:0"/>
+            <!-- Right edge -->
+            <DoubleAnimation Storyboard.TargetName="MarqRightA" Storyboard.TargetProperty="Offset" From="-0.2" To="1.3" Duration="0:0:6" BeginTime="0:0:1.5"/>
+            <DoubleAnimation Storyboard.TargetName="MarqRightB" Storyboard.TargetProperty="Offset" From="-0.12" To="1.38" Duration="0:0:6" BeginTime="0:0:1.5"/>
+            <DoubleAnimation Storyboard.TargetName="MarqRightC" Storyboard.TargetProperty="Offset" From="-0.08" To="1.42" Duration="0:0:6" BeginTime="0:0:1.5"/>
+            <DoubleAnimation Storyboard.TargetName="MarqRightD" Storyboard.TargetProperty="Offset" From="-0.04" To="1.46" Duration="0:0:6" BeginTime="0:0:1.5"/>
+            <DoubleAnimation Storyboard.TargetName="MarqRightE" Storyboard.TargetProperty="Offset" From="0.04" To="1.54" Duration="0:0:6" BeginTime="0:0:1.5"/>
+            <!-- Bottom edge -->
+            <DoubleAnimation Storyboard.TargetName="MarqBottomA" Storyboard.TargetProperty="Offset" From="-0.2" To="1.3" Duration="0:0:6" BeginTime="0:0:3"/>
+            <DoubleAnimation Storyboard.TargetName="MarqBottomB" Storyboard.TargetProperty="Offset" From="-0.12" To="1.38" Duration="0:0:6" BeginTime="0:0:3"/>
+            <DoubleAnimation Storyboard.TargetName="MarqBottomC" Storyboard.TargetProperty="Offset" From="-0.08" To="1.42" Duration="0:0:6" BeginTime="0:0:3"/>
+            <DoubleAnimation Storyboard.TargetName="MarqBottomD" Storyboard.TargetProperty="Offset" From="-0.04" To="1.46" Duration="0:0:6" BeginTime="0:0:3"/>
+            <DoubleAnimation Storyboard.TargetName="MarqBottomE" Storyboard.TargetProperty="Offset" From="0.04" To="1.54" Duration="0:0:6" BeginTime="0:0:3"/>
+            <!-- Left edge -->
+            <DoubleAnimation Storyboard.TargetName="MarqLeftA" Storyboard.TargetProperty="Offset" From="-0.2" To="1.3" Duration="0:0:6" BeginTime="0:0:4.5"/>
+            <DoubleAnimation Storyboard.TargetName="MarqLeftB" Storyboard.TargetProperty="Offset" From="-0.12" To="1.38" Duration="0:0:6" BeginTime="0:0:4.5"/>
+            <DoubleAnimation Storyboard.TargetName="MarqLeftC" Storyboard.TargetProperty="Offset" From="-0.08" To="1.42" Duration="0:0:6" BeginTime="0:0:4.5"/>
+            <DoubleAnimation Storyboard.TargetName="MarqLeftD" Storyboard.TargetProperty="Offset" From="-0.04" To="1.46" Duration="0:0:6" BeginTime="0:0:4.5"/>
+            <DoubleAnimation Storyboard.TargetName="MarqLeftE" Storyboard.TargetProperty="Offset" From="0.04" To="1.54" Duration="0:0:6" BeginTime="0:0:4.5"/>
+        </Storyboard>
+    </Window.Resources>
+
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0"
                       ResizeBorderThickness="6"
@@ -25,10 +54,16 @@
     </WindowChrome.WindowChrome>
 
     <Border CornerRadius="14"
-            Background="#1E1E1E"
             BorderBrush="#33FF7A00"
             BorderThickness="1"
             ClipToBounds="True">
+
+        <Border.Background>
+            <ImageBrush ImageSource="/Assets/Images/Background.png"
+                        Stretch="UniformToFill"
+                        AlignmentX="Center"
+                        AlignmentY="Center"/>
+        </Border.Background>
 
         <Grid>
 
@@ -46,7 +81,7 @@
 
         <Border Grid.Row="0"
                 Grid.ColumnSpan="2"
-                Background="#171717"
+                Background="Transparent"
                 CornerRadius="14,14,0,0"
                 BorderThickness="0,0,0,1"
                 BorderBrush="#2A2A2A"
@@ -182,7 +217,7 @@
 
         <Border Grid.Row="1"
                 Grid.Column="0"
-                Background="#171717"
+                Background="Transparent"
                 CornerRadius="0,0,0,14">
 
             <Border.Effect>
@@ -203,7 +238,7 @@
 
                 <Border Grid.Row="0"
                         Height="96"
-                        Background="#1A1A1E"
+                        Background="Transparent"
                         CornerRadius="0,0,14,14"
                         BorderThickness="0,0,0,1"
                         BorderBrush="#2A2A2A">
@@ -405,62 +440,6 @@
 
                 </ScrollViewer>
 
-                <!-- Bottom Promo Card: Create Custom Windows ISO -->
-
-                <Border Grid.Row="2"
-                        Margin="8,6,8,10"
-                        Padding="14,12"
-                        Background="#1A1A1E"
-                        BorderBrush="#8CFF7A00"
-                        BorderThickness="1"
-                        CornerRadius="12"
-                        Cursor="Hand"
-                        MouseLeftButtonDown="BtnIsoPromo_Click">
-
-                    <Border.Effect>
-                        <DropShadowEffect Color="#FF7A00"
-                                          BlurRadius="14"
-                                          ShadowDepth="0"
-                                          Opacity="0.1"/>
-                    </Border.Effect>
-
-                    <StackPanel Orientation="Horizontal">
-
-                        <Path Data="{StaticResource IconWindows}"
-                              Stroke="#FF7A00"
-                              StrokeThickness="1.5"
-                              Width="28"
-                              Height="28"
-                              Stretch="Uniform"
-                              VerticalAlignment="Center"
-                              StrokeLineJoin="Round"
-                              StrokeStartLineCap="Round"
-                              StrokeEndLineCap="Round"/>
-
-                        <StackPanel Margin="12,0,0,0"
-                                    VerticalAlignment="Center">
-
-                            <TextBlock Text="Create"
-                                       FontWeight="SemiBold"
-                                       Foreground="#E8E0D8"
-                                       FontSize="12"/>
-
-                            <TextBlock Text="Custom"
-                                       FontWeight="SemiBold"
-                                       Foreground="#E8E0D8"
-                                       FontSize="12"/>
-
-                            <TextBlock Text="Windows ISO"
-                                       FontWeight="SemiBold"
-                                       Foreground="#FF7A00"
-                                       FontSize="12"/>
-
-                        </StackPanel>
-
-                    </StackPanel>
-
-                </Border>
-
             </Grid>
 
         </Border>
@@ -480,7 +459,7 @@
             <!-- Header -->
 
             <Border Grid.Row="0"
-                    Background="#1E1E1E"
+                    Background="Transparent"
                     Padding="24,0">
 
                 <StackPanel Orientation="Horizontal"
@@ -507,7 +486,7 @@
             <!-- Content -->
 
             <Border Grid.Row="1"
-                    Background="#1E1E1E">
+                    Background="Transparent">
 
                 <ContentControl x:Name="MainContent"/>
 
@@ -516,7 +495,7 @@
             <!-- Footer (hidden but kept for structure) -->
 
             <Border Grid.Row="2"
-                    Background="#1E1E1E"
+                    Background="Transparent"
                     Visibility="Collapsed">
 
                 <DockPanel Margin="15,0">
@@ -529,6 +508,73 @@
             </Border>
 
         </Grid>
+
+        <!-- Animated fiery marquee rim around the window edge -->
+
+        <Rectangle x:Name="MarqTop" Height="3" Margin="3,3,3,0"
+                   Grid.RowSpan="2" Grid.ColumnSpan="2"
+                   VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                   RadiusX="2" RadiusY="2" IsHitTestVisible="False">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop x:Name="MarqTopA" Color="#00FF7A00" Offset="-0.2"/>
+                    <GradientStop x:Name="MarqTopB" Color="#5FFF7A00" Offset="-0.12"/>
+                    <GradientStop x:Name="MarqTopC" Color="#FFFFB84D" Offset="-0.08"/>
+                    <GradientStop x:Name="MarqTopD" Color="#5FFF7A00" Offset="-0.04"/>
+                    <GradientStop x:Name="MarqTopE" Color="#00FF7A00" Offset="0.04"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+            <Rectangle.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard Storyboard="{StaticResource ForgeMarqueeStoryboard}"/>
+                </EventTrigger>
+            </Rectangle.Triggers>
+        </Rectangle>
+
+        <Rectangle x:Name="MarqRight" Width="3" Margin="0,3,3,3"
+                   Grid.RowSpan="2" Grid.ColumnSpan="2"
+                   VerticalAlignment="Stretch" HorizontalAlignment="Right"
+                   RadiusX="2" RadiusY="2" IsHitTestVisible="False">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop x:Name="MarqRightA" Color="#00FF7A00" Offset="-0.2"/>
+                    <GradientStop x:Name="MarqRightB" Color="#5FFF7A00" Offset="-0.12"/>
+                    <GradientStop x:Name="MarqRightC" Color="#FFFFB84D" Offset="-0.08"/>
+                    <GradientStop x:Name="MarqRightD" Color="#5FFF7A00" Offset="-0.04"/>
+                    <GradientStop x:Name="MarqRightE" Color="#00FF7A00" Offset="0.04"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Rectangle x:Name="MarqBottom" Height="3" Margin="0,0,3,3"
+                   Grid.RowSpan="2" Grid.ColumnSpan="2"
+                   VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                   RadiusX="2" RadiusY="2" IsHitTestVisible="False">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                    <GradientStop x:Name="MarqBottomA" Color="#00FF7A00" Offset="-0.2"/>
+                    <GradientStop x:Name="MarqBottomB" Color="#5FFF7A00" Offset="-0.12"/>
+                    <GradientStop x:Name="MarqBottomC" Color="#FFFFB84D" Offset="-0.08"/>
+                    <GradientStop x:Name="MarqBottomD" Color="#5FFF7A00" Offset="-0.04"/>
+                    <GradientStop x:Name="MarqBottomE" Color="#00FF7A00" Offset="0.04"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Rectangle x:Name="MarqLeft" Width="3" Margin="3,3,0,3"
+                   Grid.RowSpan="2" Grid.ColumnSpan="2"
+                   VerticalAlignment="Stretch" HorizontalAlignment="Left"
+                   RadiusX="2" RadiusY="2" IsHitTestVisible="False">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                    <GradientStop x:Name="MarqLeftA" Color="#00FF7A00" Offset="-0.2"/>
+                    <GradientStop x:Name="MarqLeftB" Color="#5FFF7A00" Offset="-0.12"/>
+                    <GradientStop x:Name="MarqLeftC" Color="#FFFFB84D" Offset="-0.08"/>
+                    <GradientStop x:Name="MarqLeftD" Color="#5FFF7A00" Offset="-0.04"/>
+                    <GradientStop x:Name="MarqLeftE" Color="#00FF7A00" Offset="0.04"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
 
         </Grid>
 

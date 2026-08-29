@@ -1,6 +1,8 @@
 ﻿using Forge.Models;
 using Forge.Services.PackageManager;
 using System.Diagnostics;
+using System.IO;
+using System.Net.Http;
 
 namespace Forge.Services;
 
@@ -63,14 +65,69 @@ public class InstallService
                 if (!string.IsNullOrWhiteSpace(app.InstallUrl))
                 {
                     OpenExternalInstaller(app);
+
+                    bool isProtocolUrl = app.InstallUrl.Contains("://") &&
+                        !app.InstallUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase);
+
+                    if (isProtocolUrl)
+                    {
+                        app.Status = AppStatus.Installed;
+                        app.IsInstalled = true;
+
+                        string defaultResult = DefaultAppService.ApplyDefaults(app.PostInstallAction);
+
+                        if (!string.IsNullOrEmpty(defaultResult))
+                        {
+                            DefaultApplied?.Invoke(this, $"{app.Name}: {defaultResult}");
+                        }
+                    }
+                    else
+                    {
+                        OutputLine?.Invoke(this,
+                            $"Opening download page for {app.Name}. Install it manually from the website.");
+                        app.Status = AppStatus.Available;
+                    }
+
+                    continue;
+                }
+
+                if (!string.IsNullOrWhiteSpace(app.DirectUrl))
+                {
+                    OutputLine?.Invoke(this,
+                        $"Downloading and installing {app.Name}...");
+
+                    await DownloadAndRunAsync(app.DirectUrl);
+
                     app.Status = AppStatus.Installed;
                     app.IsInstalled = true;
 
-                    string defaultResult = DefaultAppService.ApplyDefaults(app.PostInstallAction);
+                    string directDefaultResult = DefaultAppService.ApplyDefaults(app.PostInstallAction);
 
-                    if (!string.IsNullOrEmpty(defaultResult))
+                    if (!string.IsNullOrEmpty(directDefaultResult))
                     {
-                        DefaultApplied?.Invoke(this, $"{app.Name}: {defaultResult}");
+                        DefaultApplied?.Invoke(this, $"{app.Name}: {directDefaultResult}");
+                    }
+
+                    continue;
+                }
+
+                string? bundledInstaller = FindBundledInstaller(app);
+
+                if (bundledInstaller is not null)
+                {
+                    OutputLine?.Invoke(this,
+                        $"Using bundled installer for {app.Name}...");
+
+                    await RunBundledInstallerAsync(bundledInstaller);
+
+                    app.Status = AppStatus.Installed;
+                    app.IsInstalled = true;
+
+                    string bundledDefaultResult = DefaultAppService.ApplyDefaults(app.PostInstallAction);
+
+                    if (!string.IsNullOrEmpty(bundledDefaultResult))
+                    {
+                        DefaultApplied?.Invoke(this, $"{app.Name}: {bundledDefaultResult}");
                     }
 
                     continue;
@@ -227,6 +284,67 @@ public class InstallService
         }
     }
 
+    private static readonly Dictionary<string, string> BundledInstallers = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["NVIDIA App"] = "NVIDIA_app_v11.0.8.299.exe"
+    };
+
+    private static string? FindBundledInstaller(AppItem app)
+    {
+        if (!BundledInstallers.TryGetValue(app.Name, out string? fileName))
+        {
+            return null;
+        }
+
+        string appDir = AppDomain.CurrentDomain.BaseDirectory;
+
+        string[] searchPaths =
+        [
+            Path.Combine(appDir, "Resources", "Installers", fileName),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", fileName)
+        ];
+
+        foreach (string path in searchPaths)
+        {
+            if (File.Exists(path))
+            {
+                return path;
+            }
+        }
+
+        return null;
+    }
+
+    private static async Task RunBundledInstallerAsync(string installerPath)
+    {
+        bool isMsi = installerPath.EndsWith(".msi", StringComparison.OrdinalIgnoreCase);
+
+        using var process = new Process();
+
+        process.StartInfo = isMsi
+            ? new ProcessStartInfo
+            {
+                FileName = "msiexec.exe",
+                Arguments = $"/i \"{installerPath}\" /qn /norestart",
+                UseShellExecute = false
+            }
+            : new ProcessStartInfo
+            {
+                FileName = installerPath,
+                Arguments = "/silent /install",
+                UseShellExecute = false
+            };
+
+        process.Start();
+        await process.WaitForExitAsync();
+
+        if (process.ExitCode != 0)
+        {
+            throw new InvalidOperationException(
+                $"Bundled installer '{Path.GetFileName(installerPath)}' exited with code {process.ExitCode}.");
+        }
+    }
+
     private static void OpenExternalInstaller(AppItem app)
     {
         using var process = new Process();
@@ -238,6 +356,70 @@ public class InstallService
         };
 
         process.Start();
+    }
+
+    private static readonly HttpClient Http = CreateHttpClient();
+
+    private static async Task DownloadAndRunAsync(string url)
+    {
+        string tempDir = Path.Combine(Path.GetTempPath(), "Forge", "Installers");
+
+        Directory.CreateDirectory(tempDir);
+
+        string fileName = url.Split('?')[0].Split('/').Last();
+
+        string localPath = Path.Combine(tempDir, fileName);
+
+        using (var download = await Http.GetAsync(
+            url,
+            HttpCompletionOption.ResponseHeadersRead))
+        {
+            download.EnsureSuccessStatusCode();
+
+            using var sourceStream = await download.Content.ReadAsStreamAsync();
+            using var fileStream = File.Create(localPath);
+
+            await sourceStream.CopyToAsync(fileStream);
+        }
+
+        bool isMsi = fileName.EndsWith(".msi", StringComparison.OrdinalIgnoreCase);
+
+        using var process = new Process();
+
+        process.StartInfo = isMsi
+            ? new ProcessStartInfo
+            {
+                FileName = "msiexec.exe",
+                Arguments = $"/i \"{localPath}\" /qn /norestart",
+                UseShellExecute = false
+            }
+            : new ProcessStartInfo
+            {
+                FileName = localPath,
+                Arguments = "/SILENT /SUPPRESSMSGBOXES /NORESTART /SP-",
+                UseShellExecute = false
+            };
+
+        process.Start();
+
+        await process.WaitForExitAsync();
+
+        if (process.ExitCode != 0)
+        {
+            throw new InvalidOperationException(
+                $"Installer '{fileName}' exited with code {process.ExitCode}.");
+        }
+    }
+
+    private static HttpClient CreateHttpClient()
+    {
+        var client = new HttpClient();
+
+        client.Timeout = TimeSpan.FromMinutes(20);
+
+        client.DefaultRequestHeaders.UserAgent.ParseAdd("Forge-App-Manager");
+
+        return client;
     }
 }
 
